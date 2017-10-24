@@ -15,8 +15,8 @@ const UserSchema = mongoose.Schema({
         required: true
     },
     person_id:{
-        type: String,
-        required: true
+        type: mongoose.Schema.Types.ObjectId,
+        required:true
     }
 });
 

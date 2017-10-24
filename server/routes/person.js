@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Person = require('../models/person');
 const User = require('../models/user');
+const mongoose = require('mongoose');
 
 /***************/
 //REGISTER PERSON
@@ -32,7 +33,7 @@ router.post('/add', (req, res, next) => {
                 password: req.body.password,
                 role: "user",
                 date_account_created: JSON.stringify(Date.now()),
-                person_id: person._id
+                person_id: new mongoose.Types.ObjectId(person._id)
             });
 
             User.addUser(newUser, (err, user) => {

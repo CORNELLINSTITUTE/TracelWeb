@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Switch, BrowserRouter as Router, Route } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import RouterComponent from './components/Router';
+import history from './components/history';
 
 ReactDOM.render(
-    <Router>
+    <Router history={history}>
         <App />
     </Router>, document.getElementById('root')
 );

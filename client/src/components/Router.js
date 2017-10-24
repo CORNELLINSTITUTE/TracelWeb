@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import {
   Switch,
   Route,
-  Link
+  Link  
 } from 'react-router-dom';
 
-import Header from './layout/Masterpage/Header';
-import Footer from './layout/Masterpage/Footer';
-import AddPerson from './AddPerson';
+import Header from './layout/Header';
+import Footer from './layout/Footer';
+import AddPerson from './person/AddPerson';
 import Dashboard from './dashboard/Dashboard';
 import Login from './login/Login';
 import Home from './home/Home';
@@ -23,16 +23,14 @@ const routes = [
   },
   {
     path: '/person/add',
-    header: () => <Header />,
     content: () => <AddPerson />,
-    footer: () => <Footer />
   },
   {
     path: '/login',
     exact: true,
-    header: () => <Header />,
-    content: () => <Login />,
-    footer: () => <Footer />
+    
+    content: () => <Login />
+    
   },
   {
     path: '/dashboard',
@@ -45,11 +43,8 @@ const routes = [
 ]
 
 const RouterComponent = () => (
-  <main>
-  <Switch>
     <div>
-      {/* HEADER */}
-      <div>
+      <div className="Header">
         {routes.map((route, index) => (
           <Route
             key={index}
@@ -60,8 +55,7 @@ const RouterComponent = () => (
         ))}
       </div>
 
-      {/* CONTENT */}
-      <div>
+      <div className="Content">
         {routes.map((route, index) => (
           <Route
             key={index}
@@ -72,8 +66,7 @@ const RouterComponent = () => (
         ))}
       </div>
 
-      {/* FOOTER */}
-      <div>
+      <div className="Footer">
         {routes.map((route, index) => (
           <Route
             key={index}
@@ -84,8 +77,6 @@ const RouterComponent = () => (
         ))}
       </div>
     </div>
-  </Switch>
-  </main>
 )
 
-export default RouterComponent
+export default RouterComponent;
