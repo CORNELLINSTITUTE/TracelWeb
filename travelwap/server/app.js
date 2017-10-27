@@ -47,10 +47,12 @@ app.use(function(req, res, next) {
 //Define path to the route files
 const person = require('./routes/person');
 const user = require('./routes/user');
+const country = require('./routes/country');
 
 //Access route file
 app.use('/person', person);
 app.use('/user', user);
+app.use('/country', country);
 
 /***************************************************/
 //ROUTERS

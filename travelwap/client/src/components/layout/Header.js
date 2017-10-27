@@ -65,7 +65,7 @@ export default class Header extends Component {
                                     <ul className="nav navbar-nav pull-right hide-on-med-and-down navbar-right">
                                         <li className="dropdown">
                                             {isLoggedIn ? (
-                                                <a className="dropdown-toggle" data-toggle="dropdown">{this.state.cookies.get('username')}</a>
+                                                <a className="dropdown-toggle pointer" data-toggle="dropdown">{this.state.cookies.get('username')}</a>
                                             ) : (
                                                     <Link to={'/login'} >Sign In</Link>
                                             )}
@@ -92,7 +92,7 @@ export default class Header extends Component {
                                                         <div className="navbar-footer-content">
                                                             <div className="row">
                                                                 <div className="col-md-12 right">
-                                                                    <a onClick={this.SignOut.bind(this)} className="btn btn-danger">Sign Out</a>
+                                                                    <a onClick={this.SignOut.bind(this)} className="btn btn-danger btn-size">Sign Out</a>
                                                                 </div>
                                                             </div>
                                                         </div>

@@ -65,7 +65,36 @@ export default class Home extends Component {
 
 		return (
 			<div className="Home">
-				<section className="section-showcase">
+				<section className="section-showcase" id="showcase">
+					<div className="container showcase-content">
+						<strong>Europe on sale</strong> ends 1 Dec 2017
+					</div>
+					<div className="row package-list">
+						<a href="#">
+							<div className="col-lg-3 package-item">
+								<h2>Portugal</h2>
+								<div className="package-prefix">from</div>
+								<div className="package-price"><small>$</small> 500</div>
+							</div>
+						</a>
+						<a href="#">
+							<div className="col-lg-3 package-item">
+								<h3>Spain</h3>
+							</div>
+						</a>
+						<a href="#">
+							<div className="col-lg-3 package-item">
+								<h3>Germany</h3>
+							</div>
+						</a>
+						<a href="#">
+							<div className="col-lg-3 package-item">
+								<h3>United Kingdom</h3>
+							</div>
+						</a>
+					</div>
+				</section>
+				<section className="section-showcase-second">
 					<section id="labels">
 						<div className="container">
 							<div className="row">
