@@ -1,32 +1,77 @@
 import React, { Component } from "react";
+import "./Footer.css";
 
 export default class Footer extends Component {
     render() {
         return (
             <div>
-                <footer className="page-footer">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col l6 s12">
-                                <h5 className="white-text">Footer Content</h5>
-                                <p className="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+                <footer class="nb-footer">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="about">
+                                    <img src="images/logo.png" class="img-responsive center-block" alt="" />
+                                    <div class="social-media">
+                                        <ul class="list-inline">
+                                            <li><a href="http://www.nextbootstrap.com/" title=""><i class="fa fa-facebook"></i></a></li>
+                                            <li><a href="http://www.nextbootstrap.com/" title=""><i class="fa fa-twitter"></i></a></li>
+                                            <li><a href="http://www.nextbootstrap.com/" title=""><i class="fa fa-google-plus"></i></a></li>
+                                            <li><a href="http://www.nextbootstrap.com/" title=""><i class="fa fa-linkedin"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="col l4 offset-l2 s12">
-                                <h5 className="white-text">Links</h5>
-                                <ul>
-                                    <li><a className="grey-text text-lighten-3" href="#!">Link 1</a></li>
-                                    <li><a className="grey-text text-lighten-3" href="#!">Link 2</a></li>
-                                    <li><a className="grey-text text-lighten-3" href="#!">Link 3</a></li>
-                                    <li><a className="grey-text text-lighten-3" href="#!">Link 4</a></li>
-                                </ul>
+
+                            <div class="col-md-3 col-sm-6">
+                                <div class="footer-info-single">
+                                    <h2 class="title">Help Center</h2>
+                                    <ul class="list-unstyled">
+                                        <li><a href="http://www.nextbootstrap.com/" title=""><i class="fa fa-angle-double-right"></i> How to Pay</a></li>
+                                        <li><a href="http://www.nextbootstrap.com/" title=""><i class="fa fa-angle-double-right"></i> FAQ's</a></li>
+                                        <li><a href="http://www.nextbootstrap.com/" title=""><i class="fa fa-angle-double-right"></i> Sitemap</a></li>
+                                        <li><a href="http://www.nextbootstrap.com/" title=""><i class="fa fa-angle-double-right"></i> Delivery Info</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 col-sm-6">
+                                <div class="footer-info-single">
+                                    <h2 class="title">Customer information</h2>
+                                    <ul class="list-unstyled">
+                                        <li><a href="http://www.nextbootstrap.com/" title=""><i class="fa fa-angle-double-right"></i> About Us</a></li>
+                                        <li><a href="http://www.nextbootstrap.com/" title=""><i class="fa fa-angle-double-right"></i> FAQ's</a></li>
+                                        <li><a href="http://www.nextbootstrap.com/" title=""><i class="fa fa-angle-double-right"></i> Sell Your Items</a></li>
+                                        <li><a href="http://www.nextbootstrap.com/" title=""><i class="fa fa-angle-double-right"></i> Contact Us</a></li>
+                                        <li><a href="http://www.nextbootstrap.com/" title=""><i class="fa fa-angle-double-right"></i> RSS</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 col-sm-6">
+                                <div class="footer-info-single">
+                                    <h2 class="title">Security & privacy</h2>
+                                    <ul class="list-unstyled">
+                                        <li><a href="http://www.nextbootstrap.com/" title=""><i class="fa fa-angle-double-right"></i> Terms Of Use</a></li>
+                                        <li><a href="http://www.nextbootstrap.com/" title=""><i class="fa fa-angle-double-right"></i> Privacy Policy</a></li>
+                                        <li><a href="http://www.nextbootstrap.com/" title=""><i class="fa fa-angle-double-right"></i> Return / Refund Policy</a></li>
+                                        <li><a href="http://www.nextbootstrap.com/" title=""><i class="fa fa-angle-double-right"></i> Store Locations</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 col-sm-6">
+                                <div class="footer-info-single">
+                                    <h2 class="title">Payment</h2>
+                                    <p>Sample HTML page with Twitter's Bootstrap. Code example of Easy Sticky Footer using HTML, Javascript, jQuery, and CSS. This bootstrap tutorial covers all the major elements of responsive</p>
+
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div className="footer-copyright">
-                        <div className="container">
-                            © 2014 Copyright Text <a className="grey-text text-lighten-4 right" href="#!">More Links</a>
-                        </div>
-                    </div>
+
+                    <section class="copyright">
+                        Copyright © 2017. Travelwap
+                    </section>
                 </footer>
             </div>
         );

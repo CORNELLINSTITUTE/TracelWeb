@@ -4,16 +4,20 @@ export default class Packages extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            item: props.item
+            item: props.item          
         }
     }
 
 
     render() {
+        let divImage = {
+            backgroundImage: "linear-gradient(to bottom, rgba(0,0,0,0.50) 0%,rgba(0,0,0,0.50) 100%), url(" + this.state.item.imagePath + ")"
+        }
+
         return (
             <div className="Packages">
                 <div className="col-sm-6 col-md-3">
-                    <div className="dl">
+                    <div className="dl" style={divImage}>
                         <div className="brand">
                             <h2>{this.state.item.title}</h2>
                         </div>
