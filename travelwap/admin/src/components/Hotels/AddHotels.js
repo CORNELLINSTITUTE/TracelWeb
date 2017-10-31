@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import { Card, CardText } from 'material-ui/Card';
@@ -11,6 +11,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
 import FlatButton from 'material-ui/FlatButton';
 // import Proptypes from 'prop-types';
+import { ValidatorForm } from 'react-form-validator-core';
+import { TextValidator } from 'react-material-ui-form-validator';
 
 const styles = {
     appBar: {
@@ -86,7 +88,7 @@ class AddHotels extends Component {
         hotelData.title = '';
         hotelData.description = '';
         hotelData.category = '';
-        
+
         this.setState({
             hotelData: hotelData
         })
@@ -112,15 +114,18 @@ class AddHotels extends Component {
             <Card>
                 <AppBar title="Add Hotel Package" iconClassNameRight="muidocs-icon-navigation-expand-more" showMenuIconButton={false} style={styles.appBar} />
                 <CardText>
-                    <form onSubmit={this.handleSubmit.bind(this)} style={styles.formStyle}>
+                    <ValidatorForm onSubmit={this.handleSubmit.bind(this)} style={styles.formStyle}>
 
-                        <TextField type="text" name='title' value={hotelData.title} onChange={this.handleChange} floatingLabelText="Title" style={styles.textField} underlineShow={false} />
-                        <Divider />
-                        <TextField name="description" value={hotelData.description} onChange={this.handleChange} floatingLabelText="Description" style={styles.textField} underlineShow={false} />
-                        <Divider />
-                        <TextField type="text" name="category" value={hotelData.airline} onChange={this.handleChange} floatingLabelText="Category" style={styles.textField} underlineShow={false} />
-                        <Divider />
-                        
+                        <TextValidator  type="text" name='title' value={hotelData.title} onChange={this.handleChange} 
+                                        floatingLabelText="Title" style={styles.textField} 
+                                        validators={['required']} errorMessages={['this field is required']}/>
+                        <TextValidator  name="description" value={hotelData.description} onChange={this.handleChange}
+                                        floatingLabelText="Description" style={styles.textField} 
+                                        validators={['required']} errorMessages={['this field is required']}/>
+                        <TextValidator  type="text" name="category" value={hotelData.airline} onChange={this.handleChange}
+                                        floatingLabelText="Category" style={styles.textField} 
+                                        validators={['required']} errorMessages={['this field is required']}/>
+                        <br />
                         <RaisedButton type="submit" label="Add Hotel Package" primary={true} style={styles.raisedButton}></RaisedButton>
 
                         <Dialog
@@ -131,7 +136,7 @@ class AddHotels extends Component {
                             onRequestClose={this.handleClose}>
                             Hotel Package has been Added.
                         </Dialog>
-                    </form>
+                    </ValidatorForm>
 
                 </CardText>
             </Card>

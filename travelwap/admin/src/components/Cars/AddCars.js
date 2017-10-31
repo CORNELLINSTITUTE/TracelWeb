@@ -10,6 +10,10 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
 import FlatButton from 'material-ui/FlatButton';
+
+import { ValidatorForm } from 'react-form-validator-core';
+import { TextValidator } from 'react-material-ui-form-validator';
+
 // import Proptypes from 'prop-types';
 
 const styles = {
@@ -112,15 +116,18 @@ class AddCars extends Component {
             <Card>
                 <AppBar title="Add Car Package" iconClassNameRight="muidocs-icon-navigation-expand-more" showMenuIconButton={false} style={styles.appBar} />
                 <CardText>
-                    <form onSubmit={this.handleSubmit.bind(this)} style={styles.formStyle}>
+                    <ValidatorForm onSubmit={this.handleSubmit.bind(this)} style={styles.formStyle}>
 
-                        <TextField type="text" name='title' value={carData.title} onChange={this.handleChange} floatingLabelText="Title" style={styles.textField} underlineShow={false} />
-                        <Divider />
-                        <TextField name="description" value={carData.description} onChange={this.handleChange} floatingLabelText="Description" style={styles.textField} underlineShow={false} />
-                        <Divider />
-                        <TextField type="text" name="category" value={carData.airline} onChange={this.handleChange} floatingLabelText="Category" style={styles.textField} underlineShow={false} />
-                        <Divider />
-                        
+                        <TextValidator  type="text" name='title' value={carData.title} onChange={this.handleChange}
+                                    floatingLabelText="Title" style={styles.textField}
+                                    validators={['required']} errorMessages={['this field is required']}/>
+                        <TextValidator  name="description" value={carData.description} onChange={this.handleChange}
+                                    floatingLabelText="Description" style={styles.textField}
+                                    validators={['required']} errorMessages={['this field is required']}/>
+                        <TextValidator  type="text" name="category" value={carData.airline} onChange={this.handleChange}
+                                    floatingLabelText="Category" style={styles.textField}
+                                    validators={['required']} errorMessages={['this field is required']}/>
+                        <br />
                         <RaisedButton type="submit" label="Add Car Package" primary={true} style={styles.raisedButton}></RaisedButton>
 
                         <Dialog
@@ -131,8 +138,7 @@ class AddCars extends Component {
                             onRequestClose={this.handleClose}>
                             Car Package has been Added.
                         </Dialog>
-                    </form>
-
+                    </ValidatorForm>
                 </CardText>
             </Card>
         )

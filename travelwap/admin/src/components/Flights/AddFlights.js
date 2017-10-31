@@ -9,6 +9,10 @@ import DatePicker from 'material-ui/DatePicker';
 import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
 import FlatButton from 'material-ui/FlatButton';
+
+import { ValidatorForm } from 'react-form-validator-core';
+import { TextValidator, DateValidator } from 'react-material-ui-form-validator';
+
 // import Proptypes from 'prop-types';
 
 const styles = {
@@ -118,21 +122,29 @@ class AddFlights extends Component {
             <Card>
                 <AppBar title="Add Flight Package" iconClassNameRight="muidocs-icon-navigation-expand-more" showMenuIconButton={false} style={styles.appBar} />
                 <CardText>
-                    <form onSubmit={this.handleSubmit.bind(this)} style={styles.formStyle}>
+                    <ValidatorForm onSubmit={this.handleSubmit.bind(this)} style={styles.formStyle}>
 
-                        <TextField type="text" name='title' value={flightData.title} onChange={this.handleChange} floatingLabelText="Title" style={styles.textField} underlineShow={false} />
-                        <Divider />
-                        <TextField name="description" value={flightData.description} onChange={this.handleChange} floatingLabelText="Description" style={styles.textField} underlineShow={false} />
-                        <Divider />
-                        <TextField type="text" name="airline" value={flightData.airline} onChange={this.handleChange} floatingLabelText="Airline" style={styles.textField} underlineShow={false} />
-                        <Divider />
-                        <TextField type="text" name="country" value={flightData.country} onChange={this.handleChange} floatingLabelText="Country" style={styles.textField} underlineShow={false} />
-                        <Divider />
-                        <TextField type="text" name="origin" value={flightData.origin} onChange={this.handleChange} floatingLabelText="Origin" style={styles.textField} underlineShow={false} />
-                        <Divider />
-                        <TextField type="text" name="destination" value={flightData.destination} onChange={this.handleChange} floatingLabelText="Destination" style={styles.textField} underlineShow={false} />
-                        <Divider />
-                        <DatePicker type="text" mode="landscape" name="expiry" floatingLabelText="Expiry Date" value={flightData.expiry} onChange={this.handleChangeDate} />
+                        <TextValidator  type="text" name='title' value={flightData.title} onChange={this.handleChange} 
+                                    floatingLabelText="Title" style={styles.textField}
+                                    validators={['required']} errorMessages={['this field is required']}/>
+                        <TextValidator  name="description" value={flightData.description} onChange={this.handleChange}
+                                    floatingLabelText="Description" style={styles.textField}
+                                    validators={['required']} errorMessages={['this field is required']}/>
+                        <TextValidator  type="text" name="airline" value={flightData.airline} onChange={this.handleChange}
+                                    floatingLabelText="Airline" style={styles.textField}
+                                    validators={['required']} errorMessages={['this field is required']}/>
+                        <TextValidator  type="text" name="country" value={flightData.country} onChange={this.handleChange}
+                                    floatingLabelText="Country" style={styles.textField}
+                                    validators={['required']} errorMessages={['this field is required']}/>
+                        <TextValidator  type="text" name="origin" value={flightData.origin} onChange={this.handleChange}
+                                    floatingLabelText="Origin" style={styles.textField}
+                                    validators={['required']} errorMessages={['this field is required']}/>
+                        <TextValidator  type="text" name="destination" value={flightData.destination} onChange={this.handleChange}
+                                    floatingLabelText="Destination" style={styles.textField}
+                                    validators={['required']} errorMessages={['this field is required']}/>
+                        <DateValidator type="text" mode="landscape" name="expiry"
+                                    floatingLabelText="Expiry Date" value={flightData.expiry} onChange={this.handleChangeDate}
+                                    validators={['required']} errorMessages={['you must pick a date']}/>
                         <RaisedButton type="submit" label="Add Flight Package" primary={true} style={styles.raisedButton}></RaisedButton>
 
                         <Dialog
@@ -143,7 +155,7 @@ class AddFlights extends Component {
                             onRequestClose={this.handleClose}>
                             Flight Package has been Added.
                         </Dialog>
-                    </form>
+                    </ValidatorForm>
 
                 </CardText>
             </Card>
