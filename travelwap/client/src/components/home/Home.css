@@ -144,7 +144,6 @@ section {
 }
 
 .dl:before {
-  content: " ";
   height: 20px;
   width: 20px;
   background: #ddd;
@@ -220,29 +219,11 @@ section {
   margin-bottom: 10px;
 }
 
-.dl .coupon {
-  min-height: 50px;
+.Packages .countdown{
   text-align: center;
   
-  text-transform: uppercase;
-  font-weight: bold;
-  font-size: 18px;
-  padding: 20px 15px;
 }
 
-.dl .coupon a.open-code {
-  color: #16a085;
-}
-
-.dl .coupon .code {
-  letter-spacing: 1px;
-  border-radius: 4px;
-  margin-top: 10px;
-  padding: 10px 15px;
-  color: #f1c40f;
-  background: #f0f0f0;
-}
- 
 /* Packages */
 .package-list{
   text-align: center;

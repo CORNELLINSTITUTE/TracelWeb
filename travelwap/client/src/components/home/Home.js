@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
-import './Home.css';
 import Packages from './Packages';
 import RaisedButton from 'material-ui/RaisedButton';
+import { Link } from "react-router-dom";
+import './Home.css';
 
 export default class Home extends Component {
 	/**********************/
@@ -22,7 +23,8 @@ export default class Home extends Component {
 					description: " Japan is an amazing country, with thousands of places to explore",
 					conditions: "* Conditions and restrictions apply.",
 					color: "alizarin",
-					imagePath: require('../../images/tokyo.jpeg')
+					imagePath: require('../../images/tokyo.jpeg'),
+					expire_date: '11/05/2017 10:55 AM'
 				},
 				{
 					title: "Manila",
@@ -32,7 +34,8 @@ export default class Home extends Component {
 					description: " Come to the amazing city of Manila and explore this amazing city",
 					conditions: "* Conditions and restrictions apply.",
 					color: "peter-river",
-					imagePath: require('../../images/manila.jpeg')
+					imagePath: require('../../images/manila.jpeg'),
+					expire_date: '12/12/2017 10:55 AM'
 				},
 				{
 					title: "Sao Paulo",
@@ -42,7 +45,8 @@ export default class Home extends Component {
 					description: " Complete pack with Hotel, Car rent and Flight for a cheap price",
 					conditions: "* Conditions and restrictions apply.",
 					color: "amethyst",
-					imagePath: require('../../images/sao_paulo.jpg')
+					imagePath: require('../../images/sao_paulo.jpg'),
+					expire_date: '01/01/2018 10:55 AM'
 				},
 				{
 					title: "Pattaya",
@@ -52,14 +56,15 @@ export default class Home extends Component {
 					description: " Asia's largest beach resorts and the second most visited city in Thailand",
 					conditions: "* Conditions and restrictions apply.",
 					color: "emerald",
-					imagePath: require('../../images/pattaya.jpg')
+					imagePath: require('../../images/pattaya.jpg'),
+					expire_date: '02/11/2018 10:55 AM'
 				},
 			]
 		}
 	}
 
 	/**********************/
-	//TEMPLATE
+	//TEMPLATE	
 	/**********************/
 	render() {
 		const packageItem = this.state.packages.map((packageItem, i) => {
@@ -67,7 +72,6 @@ export default class Home extends Component {
 				<Packages key={packageItem.id} item={packageItem} />
 			)
 		})
-
 		return (
 			<div className="Home">
 				{/* Packages */}
@@ -135,40 +139,40 @@ export default class Home extends Component {
 					<div className="container">
 						<div className="row service-align">
 							<div className="col-lg-4 flight-animation">
-								<a href="#">
+								<Link to={'/SearchFlight'}>
 									<div className="round-item flight-img"></div>
-								</a>
+								</Link>
 								<div className="content-title">
 									Arrivals and departures
 									</div>
 								<div className="content-description">
 									For up to date flight status information. Book your flight now!
 									</div>
-								<a href="#">Find Flights</a>
+								<Link to={'/SearchFlight'}>Find Flights</Link>
 							</div>
 							<div className="col-lg-4 car-animation">
-								<a href="#">
+								<Link to={'/SearchFlight'}>
 									<div className="round-item car-img"></div>
-								</a>
+								</Link>
 								<div className="content-title">
 									Rent and Pick-up
 									</div>
 								<div className="content-description">
 									Find out about more about our amazing selection of vehicles
 									</div>
-								<a href="#">Find Cars</a>
+									<Link to={'/SearchFlight'}>Find Cars</Link>
 							</div>
 							<div className="col-lg-4 hotel-animation">
-								<a href="#">
+								<Link to={'/SearchFlight'}>
 									<div className="round-item hotel-img"></div>
-								</a>
+								</Link>
 								<div className="content-title">
 									Book your stay
 									</div>
 								<div className="content-description">
 									Amazing selection of hotels, search a wide variaty of available hotels across the globe
 									</div>
-								<a href="#">Find Hotels</a>
+									<Link to={'/SearchFlight'}>Find Hotels</Link>
 							</div>
 						</div>
 					</div>

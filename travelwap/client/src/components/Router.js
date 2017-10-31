@@ -1,9 +1,5 @@
-import React, { Component } from 'react'
-import {
-  Switch,
-  Route,
-  Link  
-} from 'react-router-dom';
+import React from 'react'
+import {Route} from 'react-router-dom';
 
 import Header from './layout/Header';
 import Footer from './layout/Footer';
@@ -11,6 +7,12 @@ import AddPerson from './person/AddPerson';
 import Dashboard from './dashboard/Dashboard';
 import Login from './login/Login';
 import Home from './home/Home';
+import Profile from './profile/Profile';
+import Flight from './flight/Flight';
+import Hotel from './hotel/Hotel';
+import Car from './car/Car';
+import SearchFlights from './flight/SearchFlights';
+import SearchFlightDetail from './flight/SearchFlightDetail';
 
 //Define the routing of the webpages
 const routes = [
@@ -28,9 +30,7 @@ const routes = [
   {
     path: '/login',
     exact: true,
-    
     content: () => <Login />
-    
   },
   {
     path: '/dashboard',
@@ -38,8 +38,47 @@ const routes = [
     header: () => <Header />,
     content: () => <Dashboard />,
     footer: () => <Footer />
+  },
+  {
+    path: '/flight',
+    exact: true,
+    header: () => <Header />,
+    content: () => <Flight />,
+    footer: () => <Footer />
+  },
+  {
+    path: '/SearchFlight',
+    exact: true,
+    header: () => <Header />,
+    content: () => <SearchFlights />,
+    footer: () => <Footer />
+  },
+  {
+    path: '/SearchFlightDetail',
+    exact: true,
+    header: () => <Header />,
+    content: () => <SearchFlightDetail />,
+    footer: () => <Footer />
+  },
+  {
+    path: '/hotel',
+    exact: true,
+    header: () => <Header />,
+    content: () => <Hotel />,
+    footer: () => <Footer />
+  },
+  {
+    path: '/car',
+    exact: true,
+    header: () => <Header />,
+    content: () => <Car />,
+    footer: () => <Footer />
+  },
+  {
+    path:'/profile',
+    exact: true,
+    content: () => <Profile/>
   }
-
 ]
 
 const RouterComponent = () => (

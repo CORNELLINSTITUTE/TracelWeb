@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import './Person.css';
-import history from "../history";
 import RaisedButton from 'material-ui/RaisedButton';
 import { ValidatorForm } from 'react-form-validator-core';
 import { TextValidator, DateValidator, SelectValidator } from 'react-material-ui-form-validator';
 import MenuItem from "material-ui/MenuItem";
-import Dialog, {DialogActions,DialogContent,DialogContentText,DialogTitle,} from 'material-ui/Dialog';
+import Dialog from 'material-ui/Dialog';
 import { Link } from "react-router-dom";
 import FlatButton from 'material-ui/FlatButton';
 
@@ -25,12 +24,11 @@ export default class AddPerson extends Component {
 
         this.state = {
             countries: [],
-            // startDate: moment(),
             person: {
                 name: '',
                 email: '',
                 country: '',
-                date_of_birth: new Object,
+                date_of_birth: new Object(),
                 phone: '',
                 username: '',
                 password: '',
@@ -62,6 +60,7 @@ export default class AddPerson extends Component {
         });
     }
 
+    //Retrieve the list of countries
     getCountries() {
         axios.get('http://localhost:4000/country/getAll')
             .then(response => {
@@ -74,6 +73,7 @@ export default class AddPerson extends Component {
             }).catch(err => console.log(err));
     }
 
+    //Add data of the person 
     addPerson(person) {
         axios.request({
             method: 'post',
@@ -84,15 +84,18 @@ export default class AddPerson extends Component {
         }).catch(err => console.log(err));
     }
 
+    //Submit the form with the information of the person
     onSubmit(e) {
         this.addPerson(this.state.person);
         e.preventDefault();
     }
 
+    //Retrieve data from the target field
     getFieldValue(target) {
         return target.type === 'checkbox' ? target.checked : target.value;
     }
 
+    //Handles changes in the form
     handleChange(e) {
         let personData = this.state.person;
         personData[e.target.name] = this.getFieldValue(e.target);
@@ -102,6 +105,7 @@ export default class AddPerson extends Component {
         });
     }
 
+    //Handle changes in the date field
     handleChangeDate(e, date) {
         let personData = this.state.person;
         personData.date_of_birth = date;
@@ -111,6 +115,7 @@ export default class AddPerson extends Component {
         })
     }
 
+    //Handles the changes in the country field
     handleChangeCountry(e, index, country) {
         let personData = this.state.person;
         personData.country = country;
@@ -118,10 +123,12 @@ export default class AddPerson extends Component {
         this.setState({person: personData});
     };
 
+    //Handle the opening of the message 
     handleOpen = () => {
         this.setState({ open: true });
     };
 
+    //Handle the closing of the message 
     handleClose = () => {
         this.setState({ open: false });
     };
@@ -184,7 +191,7 @@ export default class AddPerson extends Component {
                                     <div className="col-md-6">
                                         <SelectValidator
                                             floatingLabelText="Country"
-                                            name="country"
+                                            name="country"  
                                             value={this.state.person.country}
                                             onChange={this.handleChangeCountry}
                                             validators={['required']}

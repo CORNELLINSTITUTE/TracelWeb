@@ -44,23 +44,10 @@ export default class Header extends Component {
                                 </div>
                                 <div id="navbar" className="navbar-collapse collapse">
                                     <ul className="nav navbar-nav">
-                                        <li className="active"><a href="#">Home</a></li>
-                                        <li className=" dropdown">
-                                            <a href="#" className="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Flights<span className="caret"></span></a>
-                                            <ul className="dropdown-menu">
-                                                <li className=" dropdown">
-                                                    <a href="#" className="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">View Departments</a>
-                                                </li>
-                                                <li><a href="#">Add New</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="#">Hotels</a></li>
-                                        <li className=" dropdown"><a href="#" className="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Rent a Car<span className="caret"></span></a>
-                                            <ul className="dropdown-menu">
-                                                <li><a href="#">View Managers</a></li>
-                                                <li><a href="#">Add New</a></li>
-                                            </ul>
-                                        </li>
+                                        <li ><Link to={'/'}>Home</Link></li>
+                                        <li ><Link to={'/flight'}>Flights</Link></li>
+                                        <li ><Link to={'/hotel'}>Hotels</Link></li>
+                                        <li ><Link to={'/car'}>Rent a Car</Link></li>
                                     </ul>
                                     <ul className="nav navbar-nav pull-right hide-on-med-and-down navbar-right">
                                         <li className="dropdown">
@@ -84,7 +71,7 @@ export default class Header extends Component {
                                                                     {this.state.cookies.get('name')}</p>
                                                                 <div className="divider">
                                                                 </div>
-                                                                <a href="#" className="btn btn-primary active">View Profile</a>
+                                                                <Link to={'/profile'} className="btn btn-primary active">View Profile</Link>
                                                             </div>
                                                         </div>
                                                     </div>
