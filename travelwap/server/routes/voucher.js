@@ -7,20 +7,19 @@ const Voucher = require('../models/voucher');
 /***************/
 // Create Voucher
 /***************/
-router.post('/add', (req, res, next) => {
-    let voucher = new Voucher({
-        name: req.body.name,
-        code: req.body.code
-    });
+router.post('/add', Voucher.addVoucher);
 
-    res.json(req.body);
-});
 
 /***************/
 // Get Voucher
 /***************/
-router.get('/:code', (req, res, next) => {
+router.get('/getAll', Voucher.getAllVouchers);
 
+/***************/
+// Get Voucher
+/***************/
+router.get('/getVoucher/:id', (req, res, next) => {
+    
 });
 
 

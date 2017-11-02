@@ -7,8 +7,7 @@ const config = require('./config/database');
 //DATABASE CONNECTOR
 /*********************/
 //Connect to database
-// , { useMongoClient: true }
-mongoose.connect(config.database);
+mongoose.connect(config.database, { useMongoClient: true });
 mongoose.Promise = global.Promise;
 
 //Check if the connection was stablished
