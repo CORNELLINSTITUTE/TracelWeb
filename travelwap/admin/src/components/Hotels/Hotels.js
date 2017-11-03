@@ -1,6 +1,6 @@
 import React from 'react';
 import HotelsHeader from './HotelsHeader';
-import HotelsrRouter from './HotelsRouter';
+import HotelsRouter from './HotelsRouter';
 
 const styles = {
     hotels: {
@@ -12,7 +12,7 @@ const Hotels = () => {
     return (
         <div style={styles.hotels}>
             <HotelsHeader />
-            <HotelsrRouter />
+            <HotelsRouter />
         </div>
     )
 }

@@ -18,9 +18,7 @@ router.get('/getAll', Voucher.getAllVouchers);
 /***************/
 // Get Voucher
 /***************/
-router.get('/getVoucher/:id', (req, res, next) => {
-    
-});
+router.get('/getVoucher/:id', Voucher.getVoucher);
 
 
 module.exports = router;

@@ -25,6 +25,7 @@ const styles = {
 
 class HotelsMain extends Component {
     state = { hotels: [] }
+    
     componentDidMount() {
         axios.get('http://localhost:4000/api/hotels')
             .then(resp => {

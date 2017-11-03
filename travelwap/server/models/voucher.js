@@ -46,7 +46,7 @@ module.exports.getAllVouchers = (req, res) => {
 };
 
 module.exports.getVoucher = (req, res) => {
-    Voucher.find(req.params.id, (err, voucher) => {
+    Voucher.findById(req.params.id, (err, voucher) => {
         if (err) {
             res.json({ success: false, msg: 'Failed to retrieve voucher' });
         }
