@@ -36,6 +36,24 @@ module.exports.addVoucher = (req, res) => {
     });
 };
 
+module.exports.updateVoucher = (req, res) => {
+    Voucher.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true }, (err, voucher) => {
+        if (err) {
+            res.json({ success: false, msg: 'Failed to update voucher' });
+        }
+        res.json({ success: true, msg: 'Voucher updated' });
+    });
+};
+
+module.exports.deleteVoucher = (req, res) => {
+    Voucher.findByIdAndRemove({ _id: req.params.id }, (err, hotel) => {
+        if (err) {
+            res.json({ success: false, msg: 'Failed to delete voucher' });
+        }
+        res.json({ success: true, msg: 'Voucher deleted' });
+    });
+};
+
 module.exports.getAllVouchers = (req, res) => {
     Voucher.find({}, (err, vouchers) => {
         if (err) {

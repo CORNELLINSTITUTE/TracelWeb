@@ -5,10 +5,11 @@ const Voucher = require('../models/voucher');
 
 
 /***************/
-// Create Voucher
+// Voucher CRUD
 /***************/
 router.post('/add', Voucher.addVoucher);
-
+router.post('/update/:id', Voucher.updateVoucher);
+router.delete('/delete/:id', Voucher.deleteVoucher);
 
 /***************/
 // Get Voucher
