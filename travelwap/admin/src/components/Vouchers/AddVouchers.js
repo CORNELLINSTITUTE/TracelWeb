@@ -52,25 +52,6 @@ class AddVouchers extends Component {
         this.handleChangeDateEnd = this.handleChangeDateEnd.bind(this);
     };
 
-    componentDidMount() {
-        let voucherId = this.props.match.params.id;
-        axios.get(`http://localhost:4000/voucher/getVoucher/${voucherId}`)
-            .then(resp => {
-                let voucherResp = {
-                    name: resp.data.voucher.name,
-                    code: resp.data.voucher.code,
-                    discount: resp.data.voucher.discount,
-                    date_start: this.formatDate(resp.data.voucher.date_start),
-                    date_end: this.formatDate(resp.data.voucher.date_end),
-                }
-                this.setState({
-                    voucherData: voucherResp
-                })
-                console.log(this.state.voucherData)
-            })
-            .catch(console.error);
-    };
-
     formatDate(date) {
         let d = new Date(date),
             year = d.getFullYear(),
@@ -108,9 +89,8 @@ class AddVouchers extends Component {
 
     addVoucher(voucherData) {
         let voucherId = this.props.match.params.id;
-        axios.post(`http://localhost:4000/voucher/update/${voucherId}`,
-            voucherData)
-            .then(resp => {
+        axios.post(`http://localhost:4000/voucher/add`,
+            voucherData).then(resp => {
                 this.handleOpen();
                 console.log(resp);
             }).catch(err => console.log(err));
@@ -174,7 +154,7 @@ class AddVouchers extends Component {
                             modal={false}
                             open={this.state.open}
                             onRequestClose={this.handleClose}>
-                            Voucher has been Updated.
+                            Voucher has been Added.
                         </Dialog>
                     </ValidatorForm>
 

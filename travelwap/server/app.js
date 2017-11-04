@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const config = require('./config/database');
 
 /*********************/
@@ -21,6 +22,9 @@ mongoose.connection.on('connected', () => {
 //Set up express app
 const app = express();
 
+// access control allow methods permission
+app.use(cors());
+app.options('*', cors());
 /***************************************************/
 //REACT FOLDER
 /***************************************************/

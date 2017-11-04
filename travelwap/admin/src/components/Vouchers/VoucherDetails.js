@@ -47,6 +47,7 @@ class VoucherDetails extends Component {
         };
 
         this.handleSubmitUpdate = this.handleSubmitUpdate.bind(this);
+        this.deleteVoucher = this.deleteVoucher.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleChangeDateStart = this.handleChangeDateStart.bind(this);
         this.handleChangeDateEnd = this.handleChangeDateEnd.bind(this);
@@ -116,6 +117,14 @@ class VoucherDetails extends Component {
             }).catch(err => console.log(err));
     }
 
+    deleteVoucher() {
+        let voucherId= this.props.match.params.id;
+        axios.delete(`http://localhost:4000/voucher/delete/${voucherId}`)
+        .then(resp => {
+            this.props.history.push('/vouchers');
+        }).catch(err => console.log(err));
+    }
+
     getFieldValue(target) {
         return target.type === 'checkbox' ? target.checked : target.value;
     }
@@ -150,6 +159,15 @@ class VoucherDetails extends Component {
                 <FlatButton label="Ok" primary={true} keyboardFocused={true} onClick={this.handleClose} />
             </Link>,
         ];
+        let actionsDelete = [
+            <FlatButton
+                label="Cancel"
+                primary={true}
+                keyboardFocused={true}
+                onClick={this.handleClose}
+            />,
+            <FlatButton label="Yes" primary={true} onClick={this.deleteVoucher} />
+        ];
         return (
             <Card>
                 <AppBar title="Voucher Details" iconClassNameRight="muidocs-icon-navigation-expand-more" showMenuIconButton={false} style={styles.appBar} />
@@ -177,11 +195,11 @@ class VoucherDetails extends Component {
 
                         <Dialog
                             title="Message"
-                            actions={actions}
+                            actions={(actionType === 'update') ? actions : actionsDelete}
                             modal={false}
                             open={this.state.open}
                             onRequestClose={this.handleClose}>
-                            Voucher has been Updated.
+                            {actionMsg}
                         </Dialog>
                     </ValidatorForm>
 

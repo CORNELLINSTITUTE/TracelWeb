@@ -10,9 +10,10 @@
   "author": "Rodrigo Adati",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "*",
+    "cors": "^2.8.4",
     "express": "*",
-    "mongoose": "*",
-    "body-parser": "*"
+    "mongoose": "*"
   },
   "devDependencies": {
     "nodemon": "^1.12.1"
