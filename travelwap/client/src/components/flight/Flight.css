@@ -92,9 +92,14 @@
     border-top-right-radius: 25px;
     border-top-left-radius: 25px;
 }
- 
+
+.SearchFlightItemList .detail-content{
+    background-color: #d1d0d0;
+}
+
+
 .SearchFlightDetail .detail-content .detail-list{    
-    border: 2px solid black;
+    border: 2px solid black;    
 }
 
 .SearchFlightDetail .detail-content .detail-list-image{    
@@ -122,47 +127,92 @@
     text-align: right;
 }
 
-.action {
-  font-family: 'Raleway', Arial, sans-serif;
-  border: 2px solid #20a3a3;
-  box-shadow: 5px 5px 5px #888888;
-  border-radius: 5px;
-  overflow: hidden;
-  color: #ffffff;
-  cursor: pointer;
-  padding: 0px 20px 0px 60px;
-  text-align: center;
-  display: inline-block;
-  margin: 20px 10px;
-  font-weight: 600;
-  outline: none;
-  position: relative;
-  font-size: 15px;
-  line-height: 40px;
-  background-color: #20a3a3;
-  letter-spacing: 1px;
-  -webkit-transition: all 0.3s ease;
-  transition: all 0.3s ease;
+.SearchFlightDetail .detail-content .btn-action{
+    margin: 10px 10px;
 }
-.action i {
-  font-size: 4em;
-  width: 30px;
-  line-height: 40px;
-  position: absolute;
-  left: -2px;
-  top: 5px;
-  -webkit-transform: rotate(-25deg) scale(1);
-  transform: rotate(-25deg) scale(1);
-  -webkit-transition: all 0.3s ease;
-  transition: all 0.3s ease;
+
+/* FLIGHT ITEM LIST DETAIL */
+.SearchFlightItemListDetail {    
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
 }
-.action:hover,
-.action.hover {
-  color: #ffffff;
-  background-color: #28c5c5;
+
+.SearchFlightItemListDetail .detail-main{
+    margin-top: 10px;   
 }
-.action:hover i,
-.action.hover i {
-  -webkit-transform: rotate(-20deg) scale(1.3);
-  transform: rotate(-20deg) scale(1.3);
+
+.SearchFlightItemListDetail .title{
+    font-size: 50px;
+    font-family: "Pacifico";
+    padding-left:10px;
 }
+
+.SearchFlightItemListDetail .description{
+    font-size: 30px;
+    font-family: "Pacifico";
+    padding-left:10px;
+    margin-bottom:20px;
+}
+
+.SearchFlightItemListDetail .image{    
+    height: 200px;
+    width: 97.5%;
+    background-position: 50% 30%;
+    background-size: cover;
+    border: 2px solid black;
+    border-top-right-radius: 25px;
+    border-top-left-radius: 25px;
+    margin: 0 auto;
+}
+
+.SearchFlightItemListDetail .content{    
+    border: 2px solid black;    
+    height: 800px;
+}
+
+.SearchFlightItemListDetail .row-align{
+    margin: 20px 0px;
+    width: 100%;
+    background-color: #19839e;
+    box-shadow: 4px 4px 4px #888888;
+    color: white;
+}
+
+.SearchFlightItemListDetail .main-text{
+    font-weight: bold;
+    font-size: 25px;
+    text-align: left;
+}
+
+.SearchFlightItemListDetail .content-item{
+    padding-top: 6px;
+}
+
+.SearchFlightItemListDetail .content-item-list{
+    padding-top: 6px;
+    margin-left: -15px;
+}
+
+.SearchFlightItemListDetail .available-flights{
+    width: 100%;
+    text-align: center;
+    margin:0 auto;
+    font-size: 25px;
+    border: 2px solid black;
+}
+
+.SearchFlightItemListDetail .available-flights-tab{
+    margin-top: 20px;
+}
+    
+/* RADAR */
+.SearchPriceRadar .form-radar{
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+}
+.SearchPriceRadar .form-radar{
+    width: 90%;
+}
+

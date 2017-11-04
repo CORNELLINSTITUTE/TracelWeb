@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import SearchFlightItem from "./SearchFlightItem";
+import "./Flight.css";
 
 export default class SearchFlight extends Component {
     constructor(props){
@@ -12,32 +13,32 @@ export default class SearchFlight extends Component {
                 {
                     id: 1,
                     name: "Oceania",
-                    imagePath: require("../../images/search/oceania.jpeg")                    
+                    nameImage: "oceania.jpeg"
                 },
                 {
                     id: 2,
                     name: "Asia",
-                    imagePath: require("../../images/search/asia.jpeg"),
+                    nameImage: "asia.jpeg"
                 },
                 {
                     id: 3,
                     name: "North America",
-                    imagePath: require("../../images/search/north_america.jpeg"),
+                    nameImage: "north_america.jpeg"
                 },
                 {
                     id: 4,
                     name: "South America",
-                    imagePath: require("../../images/search/south_america.jpeg"),
+                    nameImage: "south_america.jpeg"
                 },
                 {
                     id: 5,
                     name: "Africa",
-                    imagePath: require("../../images/search/africa.jpeg"),
+                    nameImage: "africa.jpeg"
                 },
                 {
                     id: 6,
                     name: "Europe",
-                    imagePath: require("../../images/search/europe.jpeg"),
+                    nameImage: "europe.jpeg"
                 }
             ]
         }

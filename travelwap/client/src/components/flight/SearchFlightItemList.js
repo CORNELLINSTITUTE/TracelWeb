@@ -1,23 +1,94 @@
 import React, { Component } from "react";
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
+import SearchFlightItemListDetail from "./SearchFlightItemListDetail";
+import { Link } from "react-router-dom";
+
+const customContentStyle = {
+    width: '95%',
+    maxWidth: 'none',
+};
+
+const styles = {
+    btn_action: {
+        color: "white",
+        margin: "10px 10px",
+        border: "2px solid #26d8ef"
+    }
+};
 
 export default class SearchFlightItemList extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            item: props.item
+            item: props.item,
+            flightDetail:
+            {
+                airline: "Qantas",
+                from:
+                [
+                    {
+                        id: 1,
+                        name: "Auckland"
+                    },
+                    {
+                        id: 2,
+                        name: "Wellington"
+                    },
+                    {
+                        id: 3,
+                        name: "Christchurch"
+                    }
+                ],
+                travelDates:
+                [
+                    {
+                        id: 1,
+                        date: "02 november 2017"
+                    },
+                    {
+                        id: 2,
+                        date: "16 november 2017"
+                    },
+                    {
+                        id: 3,
+                        date: "20 november 2018"
+                    }
+                ],
+                bookBy: "13 November 2017"
+            },
         }
     }
 
+    //Open detail modal
+    handleOpen = () => {
+        this.setState({ open: true });
+    };
+
+    //Close detail modal
+    handleClose = () => {
+        this.setState({ open: false });
+    };
+
     render() {
+        const actions = [
+            <FlatButton
+                label="Cancel"
+                primary={true}
+                onClick={this.handleClose}
+            />
+        ];
+
         let detailImage = {
-            backgroundImage: "linear-gradient(to bottom, rgba(0,0,0,0.20) 0%,rgba(0,0,0,0.20) 100%), url(" + this.state.item.imagePath + ")",
+            backgroundImage: "linear-gradient(to bottom, rgba(0,0,0,0.20) 0%,rgba(0,0,0,0.20) 100%), url(" + require("../../images/search/" + this.state.item.imageName) + ")",
         }
 
         return (
             <div className="SearchFlightItemList">
                 <div className="detail-content">
-                    <div className="detail-list container">
+                    <div className="container">
                         <div className="row">
                             <div className="detail-list">
                                 <div className="col-md-2 detail-list-image" style={detailImage}></div>
@@ -31,13 +102,23 @@ export default class SearchFlightItemList extends Component {
                                 </div>
                                 <div className="col-md-5 detail-list-actions">
                                     <div className="detail-list-price">{this.state.item.price}</div>
-                                    <button class="action">More<i class="ion-plus-circled"></i></button>
-                                    <button class="action">Enquire<i class="ion-clipboard"></i></button>
+                                    <RaisedButton style={styles.btn_action} onClick={this.handleOpen} primary={true}>More</RaisedButton>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <Dialog
+                    title="Flight Details"
+                    actions={actions}
+                    modal={false}
+                    open={this.state.open}
+                    onRequestClose={this.handleClose}
+                    contentStyle={customContentStyle}
+                    autoScrollBodyContent={true}
+                >
+                    <SearchFlightItemListDetail flightDetail={this.state.flightDetail} />
+                </Dialog>
             </div>
         )
     }

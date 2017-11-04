@@ -2,48 +2,46 @@ import React, { Component } from "react";
 import SearchFlightItemList from "./SearchFlightItemList";
 
 export default class SearchFlightDetail extends Component {
-    constructor() {
-        super();
-
+    constructor(props) {
+        super(props);
+        
         this.state = {
-            title: "Oceania Flights",
-            imagePath: require("../../images/search/oceania.jpeg"),
             detailList: 
             [
                 {
                     title: "Melbourne with Qantas",
                     description: "One Way Economy Class Flight",
-                    imagePath: require("../../images/search/oceania.jpeg"),
+                    imageName: "oceania.jpeg",
                     price: "$199"                    
                 },
                 {
                     title: "Sydney with Qantas",
                     description: "One Way Economy Class Flight",
-                    imagePath: require("../../images/search/asia.jpeg"),
+                    imageName: "asia.jpeg",
                     price: "$199"                    
                 },
                 {
                     title: "Brisbane with Qantas",
                     description: "One Way Economy Class Flight",
-                    imagePath: require("../../images/search/north_america.jpeg"),
+                    imageName: "oceania.jpeg",
                     price: "$199"                    
                 },
                 {
                     title: "Auckland with Qantas",
                     description: "One Way Economy Class Flight",
-                    imagePath: require("../../images/search/south_america.jpeg"),
+                    imageName: "oceania.jpeg",
                     price: "$199"                    
                 },
                 {
                     title: "Christchurch with Qantas",
                     description: "One Way Economy Class Flight",
-                    imagePath: require("../../images/search/africa.jpeg"),
+                    imageName: "oceania.jpeg",
                     price: "$199"                    
                 },
                 {
                     title: "Queenstown with Qantas",
                     description: "One Way Economy Class Flight",
-                    imagePath: require("../../images/search/europe.jpeg"),
+                    imageName: "oceania.jpeg",
                     price: "$199"                    
                 }
             ]            
@@ -58,9 +56,8 @@ export default class SearchFlightDetail extends Component {
         });
 
         let divImage = {
-            backgroundImage: "linear-gradient(to bottom, rgba(0,0,0,0.20) 0%,rgba(0,0,0,0.20) 100%), url(" + this.state.imagePath + ")",
+            backgroundImage: "linear-gradient(to bottom, rgba(0,0,0,0.20) 0%,rgba(0,0,0,0.20) 100%), url(" + require("../../images/search/" + this.props.match.params.image) + ")",
         }
-
 
         return (
             <div className="SearchFlightDetail">
@@ -68,14 +65,13 @@ export default class SearchFlightDetail extends Component {
                     <div className="container">
                         <div className="row">
                             <div className="title">
-                                {this.state.title}
+                                {this.props.match.params.name}
                             </div>
                         </div>
                         <div className="row">
                             <div className="detail-image" style={divImage}></div>
                             {items}                            
                         </div>
-                        
                     </div>
                 </div>
             </div>

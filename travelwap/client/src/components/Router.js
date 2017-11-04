@@ -4,15 +4,14 @@ import {Route} from 'react-router-dom';
 import Header from './layout/Header';
 import Footer from './layout/Footer';
 import AddPerson from './person/AddPerson';
-import Dashboard from './dashboard/Dashboard';
 import Login from './login/Login';
 import Home from './home/Home';
 import Profile from './profile/Profile';
-import Flight from './flight/Flight';
 import Hotel from './hotel/Hotel';
 import Car from './car/Car';
 import SearchFlights from './flight/SearchFlights';
 import SearchFlightDetail from './flight/SearchFlightDetail';
+import SearchFlightItemListDetail from './flight/SearchFlightItemListDetail';
 
 //Define the routing of the webpages
 const routes = [
@@ -33,20 +32,6 @@ const routes = [
     content: () => <Login />
   },
   {
-    path: '/dashboard',
-    exact: true,
-    header: () => <Header />,
-    content: () => <Dashboard />,
-    footer: () => <Footer />
-  },
-  {
-    path: '/flight',
-    exact: true,
-    header: () => <Header />,
-    content: () => <Flight />,
-    footer: () => <Footer />
-  },
-  {
     path: '/SearchFlight',
     exact: true,
     header: () => <Header />,
@@ -54,10 +39,17 @@ const routes = [
     footer: () => <Footer />
   },
   {
-    path: '/SearchFlightDetail',
+    path: '/SearchFlightDetail/:name/:image',
     exact: true,
     header: () => <Header />,
-    content: () => <SearchFlightDetail />,
+    content: (props) => <SearchFlightDetail  {...props}/>,
+    footer: () => <Footer />
+  },
+  {
+    path: '/SearchFlightItemListDetail',
+    exact: true,
+    header: () => <Header />,
+    content: (props) => <SearchFlightItemListDetail  {...props}/>,
     footer: () => <Footer />
   },
   {
