@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 //Person Schema
-const PersonSchema = mongoose.Schema({
+const BookSchema = mongoose.Schema({
   user_id:{
       type: mongoose.Schema.Types.ObjectId,
       required:true
@@ -17,24 +17,20 @@ const PersonSchema = mongoose.Schema({
   type_name:{
       type: String,
       required:true
-  },
-  phone:{
-      type: String,
-      required:true
   }
 });
 
 /*******************/
 //FUNCTIONS
 /*******************/
-const Person = module.exports = mongoose.model('Person', PersonSchema);
+const Book = module.exports = mongoose.model('Book', BookSchema);
 
-//Get the person by Id
-module.exports.getPersonById = (id, callback) => {
-    Person.findById(id, callback);
+//Get the Booking by Id
+module.exports.getBookById = (id, callback) => {
+    Book.findById(id, callback);
 }
 
-//Add new Person
-module.exports.addPerson = (newPerson, callback) => {
-    newPerson.save(callback);    
+//Add new Booking
+module.exports.addBook = (newBook, callback) => {
+    newBook.save(callback);    
 }
