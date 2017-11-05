@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import SearchFlightItemList from "./SearchFlightItemList";
+import axios from "axios";
 
 export default class SearchFlightDetail extends Component {
     constructor(props) {
@@ -44,12 +45,35 @@ export default class SearchFlightDetail extends Component {
                     imageName: "oceania.jpeg",
                     price: "$199"                    
                 }
-            ]            
+            ],
+            flightList: []            
         }
     }
+    /******************/
+    /*FUNCTION*/
+    /******************/
+    componentWillMount(){
+        this.getFlights(this.props.match.params.name);
+    }
 
+    getFlights(region){
+        axios.get('http://localhost:4000/flight/getFlightsByRegion?region='+region)
+        .then(response => {
+            if (response.data.length !== 0) {
+                console.log(response.data);
+                this.setState({ flightList: response.data })
+            }
+            else {
+                alert('No flights available');
+            }
+        }).catch(err => console.log(err));
+    }
+
+    /******************/
+    /*TEMPLATE*/
+    /******************/
     render() {
-        const items = this.state.detailList.map((item, i) => {
+        const items = this.state.flightList.map((item, i) => {
 			return (
 				<SearchFlightItemList item={item} />
 			)

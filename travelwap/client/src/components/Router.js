@@ -1,6 +1,13 @@
 import React from 'react'
 import {Route} from 'react-router-dom';
 
+
+import HeaderAdmin from './layout/HeaderAdmin';
+import Admin from './admin/Admin';
+import AdminFlight from './admin/flight/Flights';
+import AdminFlightMain from './admin/flight/FlightsMain';
+import AddFlights from './admin/flight/AddFlights';
+
 import Header from './layout/Header';
 import Footer from './layout/Footer';
 import AddPerson from './person/AddPerson';
@@ -70,6 +77,30 @@ const routes = [
     path:'/profile',
     exact: true,
     content: () => <Profile/>
+  },
+  /************************/
+  // ADMIN
+  /************************/
+  {
+    path:'/admin',
+    exact:true,
+    header: () => <HeaderAdmin/>,
+    content: () => <Admin />
+  },
+  {
+    path: '/adminFlight',
+    exact:true,
+    content: () => <AdminFlight/>
+  },
+  {
+    path: "/adminFlight/main",
+    exact:true,
+    content: () => <AdminFlightMain/>
+  },
+  {
+    path: '/adminFlight/add',
+    exact:true,
+    content: () => <AddFlights/>
   }
 ]
 

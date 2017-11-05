@@ -48,11 +48,17 @@ app.use(function(req, res, next) {
 const person = require('./routes/person');
 const user = require('./routes/user');
 const country = require('./routes/country');
+const region = require('./routes/region');
+const city = require('./routes/city');
+const flight = require('./routes/flight');
 
 //Access route file
 app.use('/person', person);
 app.use('/user', user);
 app.use('/country', country);
+app.use('/region', region);
+app.use('/city', city);
+app.use('/flight', flight);
 
 /***************************************************/
 //ROUTERS

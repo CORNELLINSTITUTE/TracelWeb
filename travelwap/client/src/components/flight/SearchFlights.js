@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import SearchFlightItem from "./SearchFlightItem";
+import axios from 'axios';
 import "./Flight.css";
 
 export default class SearchFlight extends Component {
@@ -7,48 +8,31 @@ export default class SearchFlight extends Component {
         super(props);
 
         this.state = {
-            // item: props.item,
-            searchItems: 
-            [
-                {
-                    id: 1,
-                    name: "Oceania",
-                    nameImage: "oceania.jpeg"
-                },
-                {
-                    id: 2,
-                    name: "Asia",
-                    nameImage: "asia.jpeg"
-                },
-                {
-                    id: 3,
-                    name: "North America",
-                    nameImage: "north_america.jpeg"
-                },
-                {
-                    id: 4,
-                    name: "South America",
-                    nameImage: "south_america.jpeg"
-                },
-                {
-                    id: 5,
-                    name: "Africa",
-                    nameImage: "africa.jpeg"
-                },
-                {
-                    id: 6,
-                    name: "Europe",
-                    nameImage: "europe.jpeg"
-                }
-            ]
+            regions: []
         }
     }
 
+    componentWillMount(){
+        this.getRegion();
+    }
+
+    //Retrieve the list of regions availables for flights
+    getRegion(){
+        axios.get('http://localhost:4000/region/getAll')
+            .then(response => {
+                if (response.data.length !== 0) {
+                    this.setState({ regions: response.data })
+                }
+                else {
+                    alert('No region available');
+                }
+            }).catch(err => console.log(err));
+    }
 
     render() {
-        const items = this.state.searchItems.map((searchItem, i) => {
+        const region = this.state.regions.map((region, i) => {
 			return (
-				<SearchFlightItem item={searchItem} />
+				<SearchFlightItem item={region} />
 			)
         })
         
@@ -57,7 +41,7 @@ export default class SearchFlight extends Component {
                 <div className="flight-main">
                     <div className="container">
                         <div className="row">
-                            {items}
+                            {region}
                         </div>   
                     </div>
                 </div>

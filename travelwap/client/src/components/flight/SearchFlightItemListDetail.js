@@ -14,7 +14,7 @@ const styles = {
         border: '2px solid #17aacf'
     },
     book: {
-        color:"white",
+        color: "white",
         border: "2px solid #26d8ef"
     }
 };
@@ -49,26 +49,32 @@ export default class SearchFlightItemListDetail extends Component {
         });
     };
 
+    formatDate(date) {
+        let formatDate = new Date(date);
+
+        return (formatDate.toLocaleDateString());
+    }
+
     book(){
-        //Axios
+        alert('Booked');
     }
 
     render() {
-        const fromList = this.state.flightDetail.from.map((item, i) => {
-            return (
-                <div className="col-md-12">
-                    {item.name}
-                </div>
-            )
-        });
+        // const fromList = this.state.flightDetail.from.map((item, i) => {
+        //     return (
+        //         <div className="col-md-12">
+        //             {item.name}
+        //         </div>
+        //     )
+        // });
 
-        const dateList = this.state.flightDetail.travelDates.map((item, i) => {
-            return (
-                <div className="col-md-12">
-                    {item.date}
-                </div>
-            )
-        });
+        // const dateList = this.state.flightDetail.travelDates.map((item, i) => {
+        //     return (
+        //         <div className="col-md-12">
+        //             {item.date}
+        //         </div>
+        //     )
+        // });
 
         const flights = this.state.availableFlights.map((item, i) => {
             return (
@@ -85,8 +91,8 @@ export default class SearchFlightItemListDetail extends Component {
                 <div className="container">
                     <div className="detail-main">
                         <Tabs>
-                            <Tab 
-                                label="Details" 
+                            <Tab
+                                label="Details"
                                 buttonStyle={styles.tab}>
                                 <div className="row row-align">
                                     <div className="col-md-6 main-text">
@@ -100,16 +106,16 @@ export default class SearchFlightItemListDetail extends Component {
                                     <div className="col-md-6 main-text">
                                         From
                                     </div>
-                                    <div className="col-md-6 content-item-list">
-                                        {fromList}
+                                    <div className="col-md-6 content-item">
+                                        {this.state.flightDetail.departure}
                                     </div>
                                 </div>
                                 <div className="row row-align">
                                     <div className="col-md-6 main-text">
                                         Travel Dates
                                         </div>
-                                    <div className="col-md-6 content-item-list">
-                                        {dateList}
+                                    <div className="col-md-6 content-item">
+                                        {this.formatDate(this.state.flightDetail.travelDate)}
                                     </div>
                                 </div>
                                 <div className="row row-align">
@@ -117,24 +123,32 @@ export default class SearchFlightItemListDetail extends Component {
                                         Book By
                                     </div>
                                     <div className="col-md-6 content-item">
-                                        {this.state.flightDetail.bookBy}
+                                        {this.formatDate(this.state.flightDetail.bookBy)}
                                     </div>
                                 </div>
                             </Tab>
-                            <Tab 
-                                label="Available Flights"
+                            <Tab
+                                label="Book"
                                 buttonStyle={styles.tab}>
                                 <div className="row available-flights available-flights-tab">
                                     <Table>
                                         <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                                             <TableRow>
                                                 <TableHeaderColumn>FROM</TableHeaderColumn>
+                                                <TableHeaderColumn>TO</TableHeaderColumn>
                                                 <TableHeaderColumn>PRICE</TableHeaderColumn>
+                                                <TableHeaderColumn>Flight Date</TableHeaderColumn>
                                                 <TableHeaderColumn>OPTION</TableHeaderColumn>
                                             </TableRow>
                                         </TableHeader>
                                         <TableBody displayRowCheckbox={false}>
-                                            {flights}
+                                            <TableRow>
+                                                <TableRowColumn>{this.state.flightDetail.departure}</TableRowColumn>
+                                                <TableRowColumn>{this.state.flightDetail.destination}</TableRowColumn>
+                                                <TableRowColumn>${this.state.flightDetail.price}</TableRowColumn>
+                                                <TableRowColumn>{this.formatDate(this.state.flightDetail.travelDate)}</TableRowColumn>
+                                                <TableRowColumn><RaisedButton style={styles.book} onClick={this.book} primary={true}>Book</RaisedButton></TableRowColumn>
+                                            </TableRow>
                                         </TableBody>
                                     </Table>
                                 </div>

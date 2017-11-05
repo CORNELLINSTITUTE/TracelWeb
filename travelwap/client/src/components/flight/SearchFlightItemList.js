@@ -24,41 +24,7 @@ export default class SearchFlightItemList extends Component {
 
         this.state = {
             item: props.item,
-            flightDetail:
-            {
-                airline: "Qantas",
-                from:
-                [
-                    {
-                        id: 1,
-                        name: "Auckland"
-                    },
-                    {
-                        id: 2,
-                        name: "Wellington"
-                    },
-                    {
-                        id: 3,
-                        name: "Christchurch"
-                    }
-                ],
-                travelDates:
-                [
-                    {
-                        id: 1,
-                        date: "02 november 2017"
-                    },
-                    {
-                        id: 2,
-                        date: "16 november 2017"
-                    },
-                    {
-                        id: 3,
-                        date: "20 november 2018"
-                    }
-                ],
-                bookBy: "13 November 2017"
-            },
+            open: false,
         }
     }
 
@@ -71,6 +37,10 @@ export default class SearchFlightItemList extends Component {
     handleClose = () => {
         this.setState({ open: false });
     };
+
+    book(){
+        alert("Book Successfull");
+    }
 
     render() {
         const actions = [
@@ -101,8 +71,9 @@ export default class SearchFlightItemList extends Component {
                                     </div>
                                 </div>
                                 <div className="col-md-5 detail-list-actions">
-                                    <div className="detail-list-price">{this.state.item.price}</div>
+                                    <div className="detail-list-price">${this.state.item.price}</div>
                                     <RaisedButton style={styles.btn_action} onClick={this.handleOpen} primary={true}>More</RaisedButton>
+                                    <RaisedButton style={styles.btn_action} onClick={this.book.bind(this)} primary={true}>Book</RaisedButton>
                                 </div>
                             </div>
                         </div>
@@ -117,7 +88,7 @@ export default class SearchFlightItemList extends Component {
                     contentStyle={customContentStyle}
                     autoScrollBodyContent={true}
                 >
-                    <SearchFlightItemListDetail flightDetail={this.state.flightDetail} />
+                    <SearchFlightItemListDetail flightDetail={this.state.item} />
                 </Dialog>
             </div>
         )

@@ -120,7 +120,7 @@ export default class Home extends Component {
 						</a>
 					</div>
 					<div className="button-search">
-						<button class="btnSearch hover">Search and Book<i class="ion-clipboard"></i></button>
+						<Link to='/SearchFlight' className="btnSearch hover">Search and Book<i className="ion-clipboard"></i></Link>
 					</div>
 				</section>
 				{/* Special Offers */}
@@ -187,7 +187,7 @@ export default class Home extends Component {
 										<div className="card-front extra-content">
 											EVENTS
 										</div>
-										<div class="card-back extra-content">
+										<div className="card-back extra-content">
 											New events just for you
 										</div>
 									</div>
@@ -199,7 +199,7 @@ export default class Home extends Component {
 										<div className="card-front extra-content">
 											WEDDING
 										</div>
-										<div class="card-back extra-content">
+										<div className="card-back extra-content">
 											Wedding and Honeymoon
 										</div>
 									</div>
@@ -211,7 +211,7 @@ export default class Home extends Component {
 										<div className="card-front extra-content">
 											UNIQUE EXPERIENCE
 										</div>
-										<div class="card-back extra-content">
+										<div className="card-back extra-content">
 											A unique experience in your life
 										</div>
 									</div>

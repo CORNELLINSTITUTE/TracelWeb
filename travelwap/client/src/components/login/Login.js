@@ -46,12 +46,15 @@ export default class Login extends Component {
             //User found
             if (response.data.length !== 0) {
                 //Add information of the user to cookie
-                console.log(response.data);
                 this.state.cookies.set('username', response.data[0].username, { path: '/' });
                 this.state.cookies.set('email', response.data[0].personDetails[0].email, { path: '/' });
-
+                this.state.cookies.set('role', response.data[0].role, {path: '/'});
+                
                 //Redirects the user to home page
-                // history.push('/');
+                if(response.data[0].role === 'user')
+                    history.push('/');
+                else
+                    history.push('/admin');
             }
             else {
                 this.handleOpen();                
