@@ -48,8 +48,9 @@ class AddFlights extends Component {
                 region: '',
                 travelDate: null,
                 bookBy: null,
-                featured: false,
+                featured: false
             }, open: false
+
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -60,12 +61,11 @@ class AddFlights extends Component {
     };
 
     addFlights(flightData) {
-        console.log(flightData.featured)
-        // axios.post('http://localhost:4000/flight/add',
-        //     flightData).then(resp => {
-        //         this.handleOpen();
-        //         console.log(resp);
-        //     }).catch(err => console.log(err));
+        axios.post('http://localhost:4000/flight/add',
+            flightData).then(resp => {
+                this.handleOpen();
+                console.log(resp);
+            }).catch(err => console.log(err));
     }
 
     handleSubmit(e) {
@@ -105,12 +105,11 @@ class AddFlights extends Component {
     }
 
     handleChangeFeatured(e) {
-        // let flightData = this.state.flightData;
-        // flightData.featured = !this.state.flightData;
-        // this.setState({
-        //     flightData: !flightData
-        // })
-        console.log('changed', e);
+        let flightData = this.state.flightData;
+        flightData.featured = e.target.checked;
+        this.setState({
+            flightData: flightData
+        })
     }
 
     handleOpen = () => {
@@ -134,9 +133,29 @@ class AddFlights extends Component {
                 <CardText>
                     <ValidatorForm onSubmit={this.handleSubmit.bind(this)} style={styles.formStyle}>
 
-                        
-                        <Checkbox   type="checkbox" label="Featured"  name="featured"
-                                    onChange={this.handleChangeFeatured} style={styles.checkbox} />
+                        <TextValidator type="text" name='title' value={flightData.title} onChange={this.handleChange}
+                            floatingLabelText="Title" style={styles.textField}
+                            validators={['required']} errorMessages={['this field is required']} />
+                        <TextValidator name="description" value={flightData.description} onChange={this.handleChange}
+                            floatingLabelText="Description" style={styles.textField}
+                            validators={['required']} errorMessages={['this field is required']} />
+                        <TextValidator type="text" name="airline" value={flightData.airline} onChange={this.handleChange}
+                            floatingLabelText="Airline" style={styles.textField}
+                            validators={['required']} errorMessages={['this field is required']} />
+                        <TextValidator type="text" name="departure" value={flightData.departure} onChange={this.handleChange}
+                            floatingLabelText="Departure" style={styles.textField}
+                            validators={['required']} errorMessages={['this field is required']} />
+                        <TextValidator type="text" name="region" value={flightData.region} onChange={this.handleChange}
+                            floatingLabelText="Region" style={styles.textField}
+                            validators={['required']} errorMessages={['this field is required']} />
+                        <DateValidator type="text" mode="landscape" name="travelDate"
+                            floatingLabelText="Travel Date" value={flightData.travelDate} onChange={this.handleChangeTravelDate}
+                            validators={['required']} errorMessages={['you must pick a date']} />
+                        <DateValidator type="text" mode="landscape" name="bookBy"
+                            floatingLabelText="Book By" value={flightData.bookBy} onChange={this.handleChangeBookBy}
+                            validators={['required']} errorMessages={['you must pick a date']} />
+                        <Checkbox type="checkbox" label="Featured" name="featured"
+                            checked={flightData.featured} onClick={this.handleChangeFeatured} style={styles.checkbox} />
                         <RaisedButton type="submit" label="Add Flight Package" primary={true} style={styles.raisedButton}></RaisedButton>
 
                         <Dialog
@@ -158,24 +177,3 @@ class AddFlights extends Component {
 export default AddFlights;
 
 
-// <TextValidator type="text" name='title' value={flightData.title} onChange={this.handleChange}
-//                             floatingLabelText="Title" style={styles.textField}
-//                             validators={['required']} errorMessages={['this field is required']} />
-//                         <TextValidator name="description" value={flightData.description} onChange={this.handleChange}
-//                             floatingLabelText="Description" style={styles.textField}
-//                             validators={['required']} errorMessages={['this field is required']} />
-//                         <TextValidator type="text" name="airline" value={flightData.airline} onChange={this.handleChange}
-//                             floatingLabelText="Airline" style={styles.textField}
-//                             validators={['required']} errorMessages={['this field is required']} />
-//                         <TextValidator type="text" name="departure" value={flightData.departure} onChange={this.handleChange}
-//                             floatingLabelText="Departure" style={styles.textField}
-//                             validators={['required']} errorMessages={['this field is required']} />
-//                         <TextValidator type="text" name="region" value={flightData.region} onChange={this.handleChange}
-//                             floatingLabelText="Region" style={styles.textField}
-//                             validators={['required']} errorMessages={['this field is required']} />
-//                         <DateValidator type="text" mode="landscape" name="travelDate"
-//                             floatingLabelText="Travel Date" value={flightData.travelDate} onChange={this.handleChangeTravelDate}
-//                             validators={['required']} errorMessages={['you must pick a date']} />
-//                         <DateValidator type="text" mode="landscape" name="bookBy"
-//                             floatingLabelText="Book By" value={flightData.bookBy} onChange={this.handleChangeBookBy}
-//                             validators={['required']} errorMessages={['you must pick a date']} />
