@@ -26,7 +26,7 @@ const styles = {
 class FlightsMain extends Component {
     state = { flights: [] }
     componentDidMount() {
-        axios.get('http://localhost:4000/api/flights')
+        axios.get('http://localhost:4000/flight/getAll')
             .then(resp => {
                 this.setState({
                     flights: resp.data.flights
@@ -48,7 +48,7 @@ class FlightsMain extends Component {
                                     flights.map((flight, index) => (
                                         <TableRow key={flight._id}>
                                             <TableRowColumn>
-                                                <Link to={`/flights/details/${flight._id}`}>
+                                                <Link to={`/adminFlight/details/${flight._id}`}>
                                                     <MenuItem>
                                                         {flight.title}
                                                     </MenuItem>

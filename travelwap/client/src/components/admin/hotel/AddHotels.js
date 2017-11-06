@@ -84,8 +84,6 @@ class AddHotels extends Component {
                 alert(response.data.msg);
             else
                 this.handleOpen();
-
-                console.log(response.data);
         }).catch(err => console.log(err));
     }
 

@@ -4,9 +4,10 @@ import {Route} from 'react-router-dom';
 
 import HeaderAdmin from './layout/HeaderAdmin';
 import Admin from './admin/Admin';
-import AdminFlight from './admin/flight/Flights';
+import AdminFlightsHeader from './admin/flight/FlightsHeader';
 import AdminFlightMain from './admin/flight/FlightsMain';
-import AddFlights from './admin/flight/AddFlights';
+import AdminFlightDetails from './admin/flight/FlightDetails';
+import AdminAddFlights from './admin/flight/AddFlights';
 import AdminHotelsHeader from './admin/hotel/HotelsHeader';
 import AdminHotelMain from './admin/hotel/HotelsMain';
 import AdminHotelDetails from './admin/hotel/HotelDetails';
@@ -104,39 +105,49 @@ const routes = [
   // ADMIN FLIGHT
   /************************/
   {
-    path: '/adminFlight',
+    path: "/adminFlight/",
     exact:true,
-    content: () => <AdminFlight/>
-  },
-  {
-    path: "/adminFlight/main",
-    exact:true,
+    header: () => <HeaderAdmin/>,
+    headerSub: () => <AdminFlightsHeader/>,
     content: () => <AdminFlightMain/>
   },
   {
     path: '/adminFlight/add',
     exact:true,
-    content: () => <AddFlights/>
+    header: () => <HeaderAdmin/>,
+    headerSub: () => <AdminFlightsHeader/>,
+    content: () => <AdminAddFlights/>
   },
+  {
+    path: '/adminFlight/details/:id',
+    exact:true,
+    header: () => <HeaderAdmin/>,
+    headerSub: () => <AdminFlightsHeader/>,
+    content: (props) => <AdminFlightDetails {...props}/>
+  },
+
    /************************/
   // ADMIN HOTEL
   /************************/
   {
     path: "/adminHotel/",
     exact:true,
-    header: () => <AdminHotelsHeader/>,
+    header: () => <HeaderAdmin/>,
+    headerSub: () => <AdminHotelsHeader/>,
     content: () => <AdminHotelMain/>
   },
   {
     path: '/adminHotel/add',
     exact:true,
-    header: () => <AdminHotelsHeader/>,
+    header: () => <HeaderAdmin/>,
+    headerSub: () => <AdminHotelsHeader/>,
     content: () => <AdminAddHotels/>
   },
   {
     path: '/adminHotel/details/:id',
     exact:true,
-    header: () => <AdminHotelsHeader/>,
+    header: () => <HeaderAdmin/>,
+    headerSub: () => <AdminHotelsHeader/>,
     content: (props) => <AdminHotelDetails {...props}/>
   }
 ]
@@ -150,6 +161,17 @@ const RouterComponent = () => (
             path={route.path}
             exact={route.exact}
             component={route.header}
+          />
+        ))}
+      </div>
+
+      <div className="Header-sub">
+        {routes.map((route, index) => (
+          <Route
+            key={index}
+            path={route.path}
+            exact={route.exact}
+            component={route.headerSub}
           />
         ))}
       </div>

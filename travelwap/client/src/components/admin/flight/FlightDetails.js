@@ -5,11 +5,14 @@ import axios from 'axios';
 import { Card, CardText } from 'material-ui/Card';
 import AppBar from 'material-ui/AppBar';
 import Dialog from 'material-ui/Dialog';
-import TextField from 'material-ui/TextField';
-import DatePicker from 'material-ui/DatePicker';
 import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
 import FlatButton from 'material-ui/FlatButton';
+import MenuItem from 'material-ui/MenuItem';
+import moment from 'moment';
+
+import { ValidatorForm } from 'react-form-validator-core';
+import { TextValidator, SelectValidator, DateValidator } from 'react-material-ui-form-validator';
 
 const styles = {
     appBar: {
@@ -23,7 +26,7 @@ const styles = {
         background: '#689F38'
     },
     textField: {
-        width: '800px'
+        width: '300px'
     }
 };
 
@@ -36,69 +39,109 @@ class FlightDetails extends Component {
                 title: '',
                 description: '',
                 airline: '',
-                country: '',
-                origin: '',
+                departure: '',
+                region: '',
                 destination: '',
-                expiry: null
-            }, open: false
-            , actionType: ''
-            , actionMsg: ''
+                travelDate: new Date(),
+                bookBy: new Date()
+            }, open: false,
+            actionType: '',
+            actionMsg: '',
+            regions: [],
+            cities: []
         };
-        // this.handleSubmitUpdate = this.handleSubmitUpdate.bind(this);
-        // this.handleSubmitDelete = this.handleSubmitDelete.bind(this);
         this.deleteFlight = this.deleteFlight.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.handleChangeDate = this.handleChangeDate.bind(this);
     }
 
     componentDidMount() {
         let flightId = this.props.match.params.id;
-        axios.get(`http://localhost:4000/api/flights/${flightId}`)
+        axios.get(`http://localhost:4000/flight/get/${flightId}`)
             .then(resp => {
-                let flightResp = {
-                    title: resp.data.flight.title,
-                    description: resp.data.flight.description,
-                    airline: resp.data.flight.airline,
-                    country: resp.data.flight.country,
-                    origin: resp.data.flight.origin,
-                    destination: resp.data.flight.destination,
-                    expiry: this.formatDate(resp.data.flight.expiry)
-                }
                 this.setState({
-                    flightData: flightResp
+                    flightData: resp.data.flight
                 })
-                console.log(this.state.flightData)
+
+                this.getRegion();
+                this.getCities(resp.data.flight.region);
             })
             .catch(console.error);
-
     };
+
+    //Handles the changes in the region field
+    handleChangeRegion(e, index, region) {
+        let hotelData = this.state.hotelData;
+        hotelData.region = region;
+
+        this.setState({ hotelData: hotelData });
+
+        //Get cities data by region
+        this.getCities(region);
+        this.setState({ disableCity: false });
+    };
+
+    handleChangeCity(e, index, city) {
+        let hotelData = this.state.hotelData;
+        hotelData.city = city;
+
+        this.setState({ hotelData: hotelData });
+    }
+
+    //Handles the changes in the region field
+    handleChangeRegion(e, index, region) {
+        let flightData = this.state.flightData;
+        flightData.region = region;
+
+        this.setState({ flightData: flightData });
+
+        //Get cities data by region
+        this.getCities(region);
+        this.setState({ disableCity: false });
+    };
+
+    //Handles the changes in the region field
+    handleChangeDestination(e, index, destination) {
+        let flightData = this.state.flightData;
+        flightData.destination = destination;
+
+        this.setState({ flightData: flightData });
+    };
+
+    //Handles the change in the Trave Date
+    handleChangeTravelDate(e, travelDate) {
+        let flightData = this.state.flightData;
+        flightData.travelDate = travelDate;
+
+        this.setState({
+            flightData: flightData
+        })
+    }
+
+    //Handles the change in the bookBy date
+    handleChangeBookBy(e, bookBy) {
+        let flightData = this.state.flightData;
+        flightData.bookBy = bookBy;
+
+        this.setState({
+            flightData: flightData
+        })
+    }
 
     updateflight(flightData) {
         let flightId = this.props.match.params.id;
-        axios.post(`http://localhost:4000/api/flights/${flightId}`,
+        axios.post(`http://localhost:4000/flight/update/${flightId}`,
             flightData)
             .then(resp => {
                 this.handleOpen();
-                console.log(resp);
             }).catch(err => console.log(err));
     }
 
     deleteFlight() {
         let flightId = this.props.match.params.id;
-        axios.delete(`http://localhost:4000/api/flights/${flightId}`)
+        axios.delete(`http://localhost:4000/flight/delete/${flightId}`)
             .then(resp => {
-                console.log(resp);
-                this.props.history.push('/flights');
+                this.props.history.push('/adminFlight');
             }).catch(err => console.log(err));
-    }
-
-    formatDate(date) {
-        let d = new Date(date),
-            year = d.getFullYear(),
-            month = ("0" + (d.getMonth() + 1)).slice(-2),
-            day = ("0" + (d.getDate())).slice(-2);
-        let dateFormat = year + '-' + month + '-' + day;
-        return (dateFormat === null) ? null : new Date(dateFormat);
     }
 
     handleSubmitUpdate(e) {
@@ -126,29 +169,6 @@ class FlightDetails extends Component {
         });
     }
 
-    handleChangeDate(e, expiry) {
-        let flightData = this.state.flightData;
-        flightData.expiry = expiry;
-
-        this.setState({
-            flightData: flightData
-        })
-    }
-
-    clearFields() {
-        let flightData = this.state.flightData;
-        flightData.title = '';
-        flightData.description = '';
-        flightData.airline = '';
-        flightData.country = '';
-        flightData.origin = '';
-        flightData.destination = '';
-        flightData.expiry = null;
-        this.setState({
-            flightData: flightData
-        })
-    }
-
     handleOpen = () => {
         this.setState({ open: true });
     };
@@ -157,12 +177,42 @@ class FlightDetails extends Component {
         this.setState({ open: false });
     };
 
+    getRegion() {
+        axios.get('http://localhost:4000/region/getAll')
+            .then(response => {
+                if (response.data.length !== 0) {
+                    this.setState({ regions: response.data })
+                }
+                else {
+                    alert('Region not found');
+                }
+            }).catch(err => console.log(err));
+    }
+
+    getCities(region) {
+        axios.get('http://localhost:4000/city/getCitiesByRegion?region=' + region)
+            .then(response => {
+                this.setState({ cities: response.data })
+            }).catch(err => console.log(err));
+    }
+
     render() {
+        const region = this.state.regions.map((region, i) => {
+            return (
+                <MenuItem key={i} value={region.name} primaryText={region.name} />
+            )
+        })
+        const cities = this.state.cities.map((city, i) => {
+            return (
+                <MenuItem key={i} value={city.name} primaryText={city.name} />
+            )
+        })
+
         const { flightData } = this.state;
         const actionType = this.state.actionType;
         const actionMsg = this.state.actionMsg;
         const actions = [
-            <Link to='/flights/'>
+            <Link to='/adminFlight/'>
                 <FlatButton label="Ok" primary={true} keyboardFocused={true} onClick={this.handleClose} />
             </Link>,
         ];
@@ -180,23 +230,89 @@ class FlightDetails extends Component {
             <Card>
                 <AppBar title="Flight Package Details" iconClassNameRight="muidocs-icon-navigation-expand-more" showMenuIconButton={false} style={styles.appBar} />
                 <CardText>
-                    
-                    <form onSubmit={this.handleSubmitUpdate.bind(this)} style={styles.formStyle}>
+                    <ValidatorForm onSubmit={this.handleSubmitUpdate.bind(this)} style={styles.formStyle}>
+                        <TextValidator
+                            type="text"
+                            name='title'
+                            value={flightData.title}
+                            onChange={this.handleChange}
+                            floatingLabelText="Title"
+                            style={styles.textField}
+                            validators={['required']}
+                            errorMessages={['this field is required']} />
+                        <TextValidator
+                            name="description"
+                            value={flightData.description}
+                            onChange={this.handleChange}
+                            floatingLabelText="Description"
+                            style={styles.textField}
+                            validators={['required']}
+                            errorMessages={['this field is required']} />
+                        <TextValidator
+                            type="text"
+                            name="airline"
+                            value={flightData.airline}
+                            onChange={this.handleChange}
+                            floatingLabelText="Airline"
+                            style={styles.textField}
+                            validators={['required']}
+                            errorMessages={['this field is required']} />
+                        <TextValidator
+                            type="text"
+                            name="departure"
+                            value={flightData.departure}
+                            onChange={this.handleChange}
+                            floatingLabelText="Departure"
+                            style={styles.textField}
+                            validators={['required']}
+                            errorMessages={['this field is required']} />
+                        <SelectValidator
+                            floatingLabelText="Region"
+                            name="region"
+                            value={flightData.region}                            
+                            onChange={this.handleChangeRegion.bind(this)}
+                            validators={['required']}
+                            errorMessages={['this field is required']}
+                            floatingLabelFocusStyle={styles.text_color_focused}
+                            floatingLabelStyle={styles.text_color}
+                            labelStyle={styles.text_color}
+                        >
+                            {region}
+                        </SelectValidator>
+                        <SelectValidator
+                            floatingLabelText="Destination"
+                            name="destination"
+                            value={flightData.destination}
+                            onChange={this.handleChangeDestination.bind(this)}
+                            validators={['required']}
+                            disabled={this.state.disableCity}
+                            errorMessages={['this field is required']}
+                            floatingLabelFocusStyle={styles.text_color_focused}
+                            floatingLabelStyle={styles.text_color}
+                            labelStyle={styles.text_color}
+                        >
+                            {cities}
+                        </SelectValidator>
 
-                        <TextField type="text" name='title' value={flightData.title} onChange={this.handleChange} floatingLabelText="Title" style={styles.textField} underlineShow={false} />
-                        <Divider />
-                        <TextField name="description" value={flightData.description} onChange={this.handleChange} floatingLabelText="Description" style={styles.textField} underlineShow={false} />
-                        <Divider />
-                        <TextField type="text" name="airline" value={flightData.airline} onChange={this.handleChange} floatingLabelText="Airline" style={styles.textField} underlineShow={false} />
-                        <Divider />
-                        <TextField type="text" name="country" value={flightData.country} onChange={this.handleChange} floatingLabelText="Country" style={styles.textField} underlineShow={false} />
-                        <Divider />
-                        <TextField type="text" name="origin" value={flightData.origin} onChange={this.handleChange} floatingLabelText="Origin" style={styles.textField} underlineShow={false} />
-                        <Divider />
-                        <TextField type="text" name="destination" value={flightData.destination} onChange={this.handleChange} floatingLabelText="Destination" style={styles.textField} underlineShow={false} />
-                        <Divider />
-                        <DatePicker type="text" mode="landscape" name="expiry" floatingLabelText="Expiry Date" value={flightData.expiry} onChange={this.handleChangeDate} />
-
+                        <DateValidator
+                            type="text"
+                            mode="landscape"
+                            name="traveDate"
+                            floatingLabelText="Travel Date"
+                            value={new Date(flightData.travelDate)}
+                            onChange={this.handleChangeTravelDate.bind(this)}                            
+                            format={null}
+                            validators={['required']}
+                            errorMessages={['you must pick a date']} />
+                        <DateValidator
+                            type="text"
+                            mode="landscape"
+                            name="bookBy"
+                            floatingLabelText="Book By"
+                            value={new Date(flightData.bookBy)}
+                            onChange={this.handleChangeBookBy.bind(this)}
+                            validators={['required']}
+                            errorMessages={['you must pick a date']} />
                         <RaisedButton type="submit" name="update" label="Update Flight Package" primary={true} style={styles.raisedButton}></RaisedButton>
                         <RaisedButton name="delete" label="Delete Flight Package" secondary={true} style={styles.raisedButton} onClick={this.handleSubmitDelete.bind(this)}></RaisedButton>
                         <Dialog
@@ -207,8 +323,7 @@ class FlightDetails extends Component {
                             onRequestClose={this.handleClose}>
                             {actionMsg}
                         </Dialog>
-                    </form>
-
+                    </ValidatorForm>
                 </CardText>
             </Card>
         )

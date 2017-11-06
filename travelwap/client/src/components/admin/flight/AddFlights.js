@@ -38,10 +38,11 @@ class AddFlights extends Component {
                 title: '',
                 description: '',
                 airline: '',
-                country: '',
-                origin: '',
+                departure: '',
+                region: '',
                 destination: '',
-                expiry: null
+                travelDate: '',
+                bookBy: ''
             },
             open: false,
             regions: [],
@@ -51,7 +52,6 @@ class AddFlights extends Component {
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.handleChangeDate = this.handleChangeDate.bind(this);
         this.clearFields = this.clearFields.bind(this);
     };
     componentWillMount() {
@@ -78,11 +78,16 @@ class AddFlights extends Component {
     }
 
     addFlights(flightData) {
-        axios.post('http://localhost:4000/api/flights/',
-            flightData).then(resp => {
+        axios.request({
+            method: 'post',
+            url: 'http://localhost:4000/flight/add/',
+            data: flightData
+        }).then(response => {
+            if (response.data.success === false)
+                alert(response.data.msg);
+            else
                 this.handleOpen();
-                console.log(resp);
-            }).catch(err => console.log(err));
+        }).catch(err => console.log(err));
     }
 
     handleSubmit(e) {
@@ -103,15 +108,6 @@ class AddFlights extends Component {
         });
     }
 
-    handleChangeDate(e, expiry) {
-        let flightData = this.state.flightData;
-        flightData.expiry = expiry;
-
-        this.setState({
-            flightData: flightData
-        })
-    }
-
     //Handles the changes in the region field
     handleChangeRegion(e, index, region) {
         let flightData = this.state.flightData;
@@ -123,6 +119,34 @@ class AddFlights extends Component {
         this.getCities(region);
         this.setState({ disableCity: false });
     };
+
+    //Handles the changes in the region field
+    handleChangeDestination(e, index, destination) {
+        let flightData = this.state.flightData;
+        flightData.destination = destination;
+
+        this.setState({ flightData: flightData });
+    };
+
+    //Handles the change in the Trave Date
+    handleChangeTravelDate(e, travelDate) {
+        let flightData = this.state.flightData;
+        flightData.travelDate = travelDate;
+        
+        this.setState({
+            flightData: flightData
+        })
+    }
+
+    //Handles the change in the bookBy date
+    handleChangeBookBy(e, bookBy) {
+        let flightData = this.state.flightData;
+        flightData.bookBy = bookBy;
+
+        this.setState({
+            flightData: flightData
+        })
+    }
 
     clearFields() {
         let flightData = this.state.flightData;
@@ -150,7 +174,7 @@ class AddFlights extends Component {
     render() {
         const { flightData } = this.state;
         const actions = [
-            <Link to='/flights/'>
+            <Link to='/adminFlight/'>
                 <FlatButton label="Ok" primary={true} keyboardFocused={true} onClick={this.handleClose} />
             </Link>,
         ];
@@ -198,7 +222,7 @@ class AddFlights extends Component {
                             errorMessages={['this field is required']} />
                         <TextValidator
                             type="text"
-                            name="airline"
+                            name="departure"
                             value={flightData.departure}
                             onChange={this.handleChange}
                             floatingLabelText="Departure"
@@ -213,7 +237,7 @@ class AddFlights extends Component {
                             validators={['required']}
                             errorMessages={['this field is required']}
                             floatingLabelFocusStyle={styles.text_color_focused}
-                            floatingLabedisableCitylStyle={styles.text_color}
+                            floatingLabelStyle={styles.text_color}
                             labelStyle={styles.text_color}
                         >
                             {region}
@@ -222,7 +246,7 @@ class AddFlights extends Component {
                             floatingLabelText="Destination"
                             name="destination"
                             value={flightData.destination}
-                            onChange={this.handleChangeDestination}
+                            onChange={this.handleChangeDestination.bind(this)}
                             validators={['required']}
                             disabled={this.state.disableCity}
                             errorMessages={['this field is required']}
@@ -236,10 +260,10 @@ class AddFlights extends Component {
                         <DateValidator
                             type="text"
                             mode="landscape"
-                            name="expiry"
+                            name="traveDate"
                             floatingLabelText="Travel Date"
-                            value={flightData.expiry}
-                            onChange={this.handleChangeDate}
+                            value={flightData.travelDate}
+                            onChange={this.handleChangeTravelDate.bind(this)}
                             validators={['required']}
                             errorMessages={['you must pick a date']} />
                         <DateValidator
@@ -247,8 +271,8 @@ class AddFlights extends Component {
                             mode="landscape"
                             name="bookBy"
                             floatingLabelText="Book By"
-                            value={flightData.expiry}
-                            onChange={this.handleChangeDate}
+                            value={flightData.bookBy}
+                            onChange={this.handleChangeBookBy.bind(this)}
                             validators={['required']}
                             errorMessages={['you must pick a date']} />
                         <RaisedButton type="submit" label="Add Flight Package" primary={true} style={styles.raisedButton}></RaisedButton>
