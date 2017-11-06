@@ -18,11 +18,10 @@ export default class SearchFlightDetail extends Component {
     }
 
     getFlights(region){
-        axios.get('http://localhost:4000/flight/getFlightsByRegion?region='+region)
+        axios.get('http://localhost:4000/flight/getFlightsByRegion/'+region)
         .then(response => {
             if (response.data.length !== 0) {
-                console.log(response.data);
-                this.setState({ flightList: response.data })
+                this.setState({ flightList: response.data.flights })
             }
             else {
                 alert('No flights available');
@@ -41,7 +40,7 @@ export default class SearchFlightDetail extends Component {
         });
 
         let divImage = {
-            backgroundImage: "linear-gradient(to bottom, rgba(0,0,0,0.20) 0%,rgba(0,0,0,0.20) 100%), url(" + require("../../images/search/" + this.props.match.params.image) + ")",
+            backgroundImage: "linear-gradient(to bottom, rgba(0,0,0,0.20) 0%,rgba(0,0,0,0.20) 100%), url(" + require("../../images/search/oceania.jpeg") + ")",
         }
 
         return (

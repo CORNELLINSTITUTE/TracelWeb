@@ -23,7 +23,7 @@ const styles = {
 
 };
 
-class CarsMain extends Component {
+class CruisesMain extends Component {
     state = { cars: [] }
     componentDidMount() {
         axios.get('http://localhost:4000/api/cars')

@@ -39,6 +39,7 @@ class AddFlights extends Component {
                 description: '',
                 airline: '',
                 departure: '',
+                price: '',
                 region: '',
                 destination: '',
                 travelDate: '',
@@ -56,6 +57,14 @@ class AddFlights extends Component {
     };
     componentWillMount() {
         this.getRegion();
+
+        // custom rule for validation
+        ValidatorForm.addValidationRule('isDateValid', (value) => {
+            if (value < this.state.flightData.travelDate) {
+                return false;
+            }
+            return true;
+        });
     }
 
     getRegion() {
@@ -132,7 +141,7 @@ class AddFlights extends Component {
     handleChangeTravelDate(e, travelDate) {
         let flightData = this.state.flightData;
         flightData.travelDate = travelDate;
-        
+
         this.setState({
             flightData: flightData
         })
@@ -170,6 +179,13 @@ class AddFlights extends Component {
         this.clearFields();
         this.setState({ open: false });
     };
+
+    disablePrevDates(startDate) {
+        const startSeconds = Date.parse(startDate);
+        return (date) => {
+            return Date.parse(date) < startSeconds;
+        }
+    }
 
     render() {
         const { flightData } = this.state;
@@ -229,6 +245,15 @@ class AddFlights extends Component {
                             style={styles.textField}
                             validators={['required']}
                             errorMessages={['this field is required']} />
+                        <TextValidator
+                            type="text"
+                            name="price"
+                            value={flightData.price}
+                            onChange={this.handleChange}
+                            floatingLabelText="Price"
+                            style={styles.textField}
+                            validators={['required', 'matchRegexp:^[0-9]+$']}
+                            errorMessages={['this field is required', 'this field should be a number']} />
                         <SelectValidator
                             floatingLabelText="Region"
                             name="region"
@@ -264,6 +289,7 @@ class AddFlights extends Component {
                             floatingLabelText="Travel Date"
                             value={flightData.travelDate}
                             onChange={this.handleChangeTravelDate.bind(this)}
+                            shouldDisableDate={this.disablePrevDates(new Date())}
                             validators={['required']}
                             errorMessages={['you must pick a date']} />
                         <DateValidator
@@ -273,8 +299,9 @@ class AddFlights extends Component {
                             floatingLabelText="Book By"
                             value={flightData.bookBy}
                             onChange={this.handleChangeBookBy.bind(this)}
-                            validators={['required']}
-                            errorMessages={['you must pick a date']} />
+                            shouldDisableDate={this.disablePrevDates(new Date())}
+                            validators={['required', 'isDateValid']}
+                            errorMessages={['you must pick a date', 'Invalid Date']} />
                         <RaisedButton type="submit" label="Add Flight Package" primary={true} style={styles.raisedButton}></RaisedButton>
 
                         <Dialog

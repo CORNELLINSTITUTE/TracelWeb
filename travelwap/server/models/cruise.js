@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 //Flight Schema
-const FlightSchema = mongoose.Schema({
+const CruiseSchema = mongoose.Schema({
     title: {
         type: String,
         required: true
@@ -10,38 +10,54 @@ const FlightSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    airline: {
+    ship: {
         type: String,
         required: true
     },
-    departure: {
+    departingInfo: {
         type: String,
         required: true
     },
-    price:{
+    price: {
         type: Number,
-        required:true
+        required: true
     },
-    region: {
+    journey: {
         type: String,
         required: true
     },
-    destination:{
-        type:String,
-        require:true
-    },
-    featured: {
-        type: Boolean,
-        required: true
+    departureDate: {
+        type: String,
+        require: true
     },
     travelDate: {
         type: Date,
         required: true
     },
-    bookBy: {
-        type: Date,
-        required: true
-    }
+    itinerary: [
+        {
+            day: {
+                type: String,
+                required: true
+            },
+            date: {
+                type: Date,
+                required: true
+            },
+            port: {
+                type: String,
+                required: true
+            },
+            arrive: {
+                type: String,
+                required: true
+            },
+            depart: {
+                type: String,
+                required: true
+            }
+        }
+    ]
 });
 
 /*******************/

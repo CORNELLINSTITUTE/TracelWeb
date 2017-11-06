@@ -40,6 +40,7 @@ class FlightDetails extends Component {
                 description: '',
                 airline: '',
                 departure: '',
+                price: '',
                 region: '',
                 destination: '',
                 travelDate: new Date(),
@@ -66,6 +67,14 @@ class FlightDetails extends Component {
                 this.getCities(resp.data.flight.region);
             })
             .catch(console.error);
+
+        // custom rule for validation
+        ValidatorForm.addValidationRule('isDateValid', (value) => {
+            if (value < this.state.flightData.travelDate) {
+                return false;
+            }
+            return true;
+        });
     };
 
     //Handles the changes in the region field
@@ -196,6 +205,14 @@ class FlightDetails extends Component {
             }).catch(err => console.log(err));
     }
 
+    disablePrevDates(startDate) {
+        const startSeconds = Date.parse(startDate);
+        return (date) => {
+            return Date.parse(date) < startSeconds;
+        }
+    }
+
+
     render() {
         const region = this.state.regions.map((region, i) => {
             return (
@@ -266,10 +283,19 @@ class FlightDetails extends Component {
                             style={styles.textField}
                             validators={['required']}
                             errorMessages={['this field is required']} />
+                        <TextValidator
+                            type="text"
+                            name="price"
+                            value={flightData.price}
+                            onChange={this.handleChange}
+                            floatingLabelText="Price"
+                            style={styles.textField}
+                            validators={['required', 'matchRegexp:^[0-9]+$']}
+                            errorMessages={['this field is required', 'this field should be a number']} />
                         <SelectValidator
                             floatingLabelText="Region"
                             name="region"
-                            value={flightData.region}                            
+                            value={flightData.region}
                             onChange={this.handleChangeRegion.bind(this)}
                             validators={['required']}
                             errorMessages={['this field is required']}
@@ -300,8 +326,8 @@ class FlightDetails extends Component {
                             name="traveDate"
                             floatingLabelText="Travel Date"
                             value={new Date(flightData.travelDate)}
-                            onChange={this.handleChangeTravelDate.bind(this)}                            
-                            format={null}
+                            onChange={this.handleChangeTravelDate.bind(this)}
+                            shouldDisableDate={this.disablePrevDates(new Date())}
                             validators={['required']}
                             errorMessages={['you must pick a date']} />
                         <DateValidator
@@ -311,8 +337,9 @@ class FlightDetails extends Component {
                             floatingLabelText="Book By"
                             value={new Date(flightData.bookBy)}
                             onChange={this.handleChangeBookBy.bind(this)}
-                            validators={['required']}
-                            errorMessages={['you must pick a date']} />
+                            shouldDisableDate={this.disablePrevDates(new Date())}
+                            validators={['required', 'isDateValid']}
+                            errorMessages={['you must pick a date', 'Invalid Date']} />
                         <RaisedButton type="submit" name="update" label="Update Flight Package" primary={true} style={styles.raisedButton}></RaisedButton>
                         <RaisedButton name="delete" label="Delete Flight Package" secondary={true} style={styles.raisedButton} onClick={this.handleSubmitDelete.bind(this)}></RaisedButton>
                         <Dialog

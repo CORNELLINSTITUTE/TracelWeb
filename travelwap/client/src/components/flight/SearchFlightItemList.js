@@ -48,7 +48,7 @@ export default class SearchFlightItemList extends Component {
         ];
 
         let detailImage = {
-            backgroundImage: "linear-gradient(to bottom, rgba(0,0,0,0.20) 0%,rgba(0,0,0,0.20) 100%), url(" + require("../../images/search/" + this.state.item.imageName) + ")",
+            backgroundImage: "linear-gradient(to bottom, rgba(0,0,0,0.20) 0%,rgba(0,0,0,0.20) 100%), url(" + require("../../images/search/oceania.jpeg") + ")",
         }
 
         return (

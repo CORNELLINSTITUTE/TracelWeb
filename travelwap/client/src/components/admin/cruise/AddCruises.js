@@ -32,7 +32,7 @@ const styles = {
     }
 };
 
-class AddCars extends Component {
+class AddCruises extends Component {
     constructor(props) {
         super(props);
 

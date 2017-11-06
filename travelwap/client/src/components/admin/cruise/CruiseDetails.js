@@ -27,7 +27,7 @@ const styles = {
     }
 };
 
-class CarDetails extends Component {
+class CruiseDetails extends Component {
     constructor(props) {
         super(props);
 
