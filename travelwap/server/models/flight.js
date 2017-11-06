@@ -68,16 +68,6 @@ module.exports.update = (req, res) => {
     });
 };
 
-<<<<<<< HEAD
-// Flight CRUD
-module.exports.addFlight = (req, res) => {
-    let flight = new Flight(req.body);
-    flight.save((err, flight) => {
-        if (err) {
-            res.json({ success: false, msg: 'Failed to create flight' });
-        }
-        res.json({ success: true, msg: 'Flight created' });
-=======
 module.exports.delete = (req, res) => {
     Flight.findByIdAndRemove({ _id: req.params.id }, (err, flight) => {
         if (err) {
@@ -86,7 +76,6 @@ module.exports.delete = (req, res) => {
         else {
             res.json({ success: true, msg: 'flight deleted' });
         }
->>>>>>> ee765aeb400ba7b75c3afa9b146e2b5b4c3062f6
     });
 };
 
