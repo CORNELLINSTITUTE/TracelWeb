@@ -12,10 +12,10 @@ const HotelSchema = mongoose.Schema({
     },
     region: {
         type: String,
-        require:true
+        require: true
     },
     city: {
-        type:String,
+        type: String,
         require: true
     },
     price: {
@@ -76,10 +76,10 @@ const Hotel = module.exports = mongoose.model('Hotel', HotelSchema);
 
 module.exports.add = (req, res) => {
     let hotel = new Hotel(req.body);
-    
+
     hotel.save((err, hotel) => {
         if (err) {
-            res.json({ success: false, msg: 'Failed to add hotel' , hotel: hotel});
+            res.json({ success: false, msg: 'Failed to add hotel', hotel: hotel });
         }
         else {
             res.json({ success: true, msg: 'Hotel created' });
@@ -112,10 +112,10 @@ module.exports.getAll = (req, res) => {
     Hotel.find({}, (err, hotels) => {
         if (err) {
             res.json({ success: false, msg: 'Failed to retrieve hotels' });
-        }else{
+        } else {
             res.json({ hotels });
         }
-        
+
     });
 };
 
@@ -123,19 +123,20 @@ module.exports.get = (req, res) => {
     Hotel.findById(req.params.id, (err, hotel) => {
         if (err) {
             res.json({ success: false, msg: 'Failed to retrieve hotel' });
-        }else{
+        } else {
             res.json({ hotel });
         }
-        
+
     });
 };
 
-module.exports.getByRegion = (req, res, next) => {
-    Hotel.find({"region": req.query.region}).then(function (hotels) {
-        if(err){
-            res.json({ success: false, msg: 'Failed to retrieve hotel' });
-        }else{
-            res.json({ hotel });
+module.exports.getByRegion = (req, res) => {
+    Hotel.find({ region: req.params.region }, (err, hotels) => {
+        if (err) {
+            res.json({ success: false, msg: 'Failed to retrieve hotels' });
+        } else {
+            res.json({ hotels });
         }
+
     });
 };

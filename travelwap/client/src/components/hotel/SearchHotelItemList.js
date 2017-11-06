@@ -48,7 +48,7 @@ export default class SearchHotelItemList extends Component {
         ];
 
         let detailImage = {
-            backgroundImage: "linear-gradient(to bottom, rgba(0,0,0,0.20) 0%,rgba(0,0,0,0.20) 100%), url(" + require("../../images/search/" + this.state.item.imageName) + ")",
+            backgroundImage: "linear-gradient(to bottom, rgba(0,0,0,0.20) 0%,rgba(0,0,0,0.20) 100%), url(" + require("../../images/search/oceania.jpeg") + ")",
         }
 
         return (
@@ -63,11 +63,11 @@ export default class SearchHotelItemList extends Component {
                                         {this.state.item.title}
                                     </div>
                                     <div className="detail-list-description">
-                                        {this.state.item.description}
+                                        {this.state.item.city} Accomodation
                                     </div>
                                 </div>
                                 <div className="col-md-5 detail-list-actions">
-                                    <div className="detail-list-price">${this.state.item.price}</div>
+                                    <div className="detail-list-price">1 night for ${this.state.item.price}</div>
                                     <RaisedButton style={styles.btn_action} onClick={this.handleOpen} primary={true}>More</RaisedButton>
                                 </div>
                             </div>

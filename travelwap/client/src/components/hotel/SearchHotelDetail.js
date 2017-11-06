@@ -18,11 +18,10 @@ export default class SearchHotelDetail extends Component {
     }
 
     getHotels(region){
-        axios.get('http://localhost:4000/hotel/getHotelsByRegion?region='+region)
+        axios.get('http://localhost:4000/hotel/getHotelsByRegion/'+region)
         .then(response => {
             if (response.data.length !== 0) {
-                console.log(response.data);
-                this.setState({ hotelList: response.data })
+                this.setState({ hotelList: response.data.hotels })
             }
             else {
                 alert('No hotels available');
@@ -41,7 +40,7 @@ export default class SearchHotelDetail extends Component {
         });
 
         let divImage = {
-            backgroundImage: "linear-gradient(to bottom, rgba(0,0,0,0.20) 0%,rgba(0,0,0,0.20) 100%), url(" + require("../../images/search/" + this.props.match.params.image) + ")",
+            backgroundImage: "linear-gradient(to bottom, rgba(0,0,0,0.20) 0%,rgba(0,0,0,0.20) 100%), url(" + require("../../images/search/oceania.jpeg") + ")",
         }
 
         return (
