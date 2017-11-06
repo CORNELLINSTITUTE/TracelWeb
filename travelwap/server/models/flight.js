@@ -22,7 +22,7 @@ const FlightSchema = mongoose.Schema({
         type: String,
         required:true
     },
-    description:{
+    destination:{
         type: String,
         required:true
     },
@@ -41,8 +41,69 @@ const FlightSchema = mongoose.Schema({
 /*******************/
 const Flight = module.exports = mongoose.model('Flight', FlightSchema);
 
-//Get the country by Id
-module.exports.getFlightById = (id, callback) => {
-    Flight.findById(id, callback);
-}
+module.exports.add = (req, res) => {
+    let flight = new Flight(req.body);
 
+    flight.save((err, flight) => {
+        if (err) {
+            res.json({ success: false, msg: 'Failed to add flight', flight: flight });
+        }
+        else {
+            res.json({ success: true, msg: 'Flight created' });
+        }
+    });
+};
+
+module.exports.update = (req, res) => {
+    Flight.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true }, (err, flight) => {
+        if (err) {
+            res.json({ success: false, msg: 'Failed to update flight' });
+        } else {
+            res.json({ success: true, msg: 'Flight updated' });
+        }
+    });
+};
+
+module.exports.delete = (req, res) => {
+    Flight.findByIdAndRemove({ _id: req.params.id }, (err, flight) => {
+        if (err) {
+            res.json({ success: false, msg: 'Failed to delete flight' });
+        }
+        else {
+            res.json({ success: true, msg: 'flight deleted' });
+        }
+    });
+};
+
+module.exports.getAll = (req, res) => {
+    Flight.find({}, (err, flights) => {
+        if (err) {
+            res.json({ success: false, msg: 'Failed to retrieve flights' });
+        } else {
+            res.json({ flights });
+        }
+
+    });
+};
+
+module.exports.get = (req, res) => {
+    Flight.findById(req.params.id, (err, flight) => {
+        if (err) {
+            res.json({ success: false, msg: 'Failed to retrieve flight' });
+        } else {
+            res.json({ flight });
+        }
+
+    });
+};
+
+module.exports.getByRegion = (req, res) => {
+    Flight.find({ region: req.params.region }, (err, flights) => {
+        if (err) {
+            res.json({ success: false, msg: 'Failed to retrieve flights' });
+        } else {
+            res.json({ flights });
+        }
+
+    });
+};
