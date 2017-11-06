@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
-import SearchFlightItemListDetail from "./SearchFlightItemListDetail";
+import SearchHotelItemListDetail from "./SearchHotelItemListDetail";
 import { Link } from "react-router-dom";
 
 const customContentStyle = {
@@ -18,7 +18,7 @@ const styles = {
     }
 };
 
-export default class SearchFlightItemList extends Component {
+export default class SearchHotelItemList extends Component {
     constructor(props) {
         super(props);
 
@@ -48,11 +48,11 @@ export default class SearchFlightItemList extends Component {
         ];
 
         let detailImage = {
-            backgroundImage: "linear-gradient(to bottom, rgba(0,0,0,0.20) 0%,rgba(0,0,0,0.20) 100%), url(" + require("../../images/search/" + this.state.item.imageName) + ")",
+            backgroundImage: "linear-gradient(to bottom, rgba(0,0,0,0.20) 0%,rgba(0,0,0,0.20) 100%), url(" + require("../../images/search/oceania.jpeg") + ")",
         }
 
         return (
-            <div className="SearchFlightItemList">
+            <div className="SearchHotelItemList">
                 <div className="detail-content">
                     <div className="container">
                         <div className="row">
@@ -63,11 +63,11 @@ export default class SearchFlightItemList extends Component {
                                         {this.state.item.title}
                                     </div>
                                     <div className="detail-list-description">
-                                        {this.state.item.description}
+                                        {this.state.item.city} Accomodation
                                     </div>
                                 </div>
                                 <div className="col-md-5 detail-list-actions">
-                                    <div className="detail-list-price">${this.state.item.price}</div>
+                                    <div className="detail-list-price">1 night for ${this.state.item.price}</div>
                                     <RaisedButton style={styles.btn_action} onClick={this.handleOpen} primary={true}>More</RaisedButton>
                                 </div>
                             </div>
@@ -75,7 +75,7 @@ export default class SearchFlightItemList extends Component {
                     </div>
                 </div>
                 <Dialog
-                    title="Flight Details"
+                    title="Hotel Details"
                     actions={actions}
                     modal={false}
                     open={this.state.open}
@@ -83,7 +83,7 @@ export default class SearchFlightItemList extends Component {
                     contentStyle={customContentStyle}
                     autoScrollBodyContent={true}
                 >
-                    <SearchFlightItemListDetail flightDetail={this.state.item} />
+                    <SearchHotelItemListDetail hotelDetail={this.state.item} />
                 </Dialog>
             </div>
         )

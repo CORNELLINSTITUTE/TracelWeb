@@ -6,8 +6,8 @@ import FlatButton from 'material-ui/FlatButton';
 const HotelHeader = () => {
     return (
         <nav>
-            <Link to='/hotels/'><FlatButton label="Hotels" secondary={true} /></Link>
-            <Link to='/hotels/add'><FlatButton label="Add Hotel Package" secondary={true} /></Link>
+            <Link to='/adminHotel/'><FlatButton label="Hotels" secondary={true} /></Link>
+            <Link to='/adminHotel/add'><FlatButton label="Add Hotel Package" secondary={true} /></Link>
         </nav>
     )
 }

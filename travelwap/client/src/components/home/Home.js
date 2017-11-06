@@ -82,7 +82,8 @@ export default class Home extends Component {
 						</div>
 					</div>
 					<div className="row package-list">
-						<a href="#">
+						{/* <Link to={"/SearchFlightDetail/"+this.state.item.name+"/"+this.state.item.nameImage}> */}
+						<Link to='/'>
 							<div className="col-lg-3 package-item package-animation-1">
 								<h2>Portugal</h2>
 								<div className="package-prefix">from</div>
@@ -90,7 +91,7 @@ export default class Home extends Component {
 								<div className="package-description">One way, fee may be applied</div>
 								<div className="package-link">See more</div>
 							</div>
-						</a>
+						</Link>
 						<a href="#">
 							<div className="col-lg-3 package-item package-animation-2">
 								<h2>Spain</h2>

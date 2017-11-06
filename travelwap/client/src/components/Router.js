@@ -7,6 +7,11 @@ import Admin from './admin/Admin';
 import AdminFlight from './admin/flight/Flights';
 import AdminFlightMain from './admin/flight/FlightsMain';
 import AddFlights from './admin/flight/AddFlights';
+import AdminHotelsHeader from './admin/hotel/HotelsHeader';
+import AdminHotelMain from './admin/hotel/HotelsMain';
+import AdminHotelDetails from './admin/hotel/HotelDetails';
+import AdminAddHotels from './admin/hotel/AddHotels';
+
 
 import Header from './layout/Header';
 import Footer from './layout/Footer';
@@ -14,11 +19,12 @@ import AddPerson from './person/AddPerson';
 import Login from './login/Login';
 import Home from './home/Home';
 import Profile from './profile/Profile';
-import Hotel from './hotel/Hotel';
-import Car from './car/Car';
 import SearchFlights from './flight/SearchFlights';
 import SearchFlightDetail from './flight/SearchFlightDetail';
 import SearchFlightItemListDetail from './flight/SearchFlightItemListDetail';
+import SearchHotels from './hotel/SearchHotels';
+import SearchHotelDetail from './hotel/SearchHotelDetail';
+import SearchHotelItemListDetail from './hotel/SearchHotelItemListDetail';
 
 //Define the routing of the webpages
 const routes = [
@@ -60,17 +66,24 @@ const routes = [
     footer: () => <Footer />
   },
   {
-    path: '/hotel',
+    path: '/SearchHotel',
     exact: true,
     header: () => <Header />,
-    content: () => <Hotel />,
+    content: () => <SearchHotels />,
     footer: () => <Footer />
   },
   {
-    path: '/car',
+    path: '/SearchHotelDetail/:name/:image',
     exact: true,
     header: () => <Header />,
-    content: () => <Car />,
+    content: (props) => <SearchHotelDetail  {...props}/>,
+    footer: () => <Footer />
+  },
+  {
+    path: '/SearchHotelItemListDetail',
+    exact: true,
+    header: () => <Header />,
+    content: (props) => <SearchHotelItemListDetail  {...props}/>,
     footer: () => <Footer />
   },
   {
@@ -87,6 +100,9 @@ const routes = [
     header: () => <HeaderAdmin/>,
     content: () => <Admin />
   },
+  /************************/
+  // ADMIN FLIGHT
+  /************************/
   {
     path: '/adminFlight',
     exact:true,
@@ -101,6 +117,27 @@ const routes = [
     path: '/adminFlight/add',
     exact:true,
     content: () => <AddFlights/>
+  },
+   /************************/
+  // ADMIN HOTEL
+  /************************/
+  {
+    path: "/adminHotel/",
+    exact:true,
+    header: () => <AdminHotelsHeader/>,
+    content: () => <AdminHotelMain/>
+  },
+  {
+    path: '/adminHotel/add',
+    exact:true,
+    header: () => <AdminHotelsHeader/>,
+    content: () => <AdminAddHotels/>
+  },
+  {
+    path: '/adminHotel/details/:id',
+    exact:true,
+    header: () => <AdminHotelsHeader/>,
+    content: (props) => <AdminHotelDetails {...props}/>
   }
 ]
 

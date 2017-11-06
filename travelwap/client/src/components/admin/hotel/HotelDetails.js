@@ -5,11 +5,13 @@ import axios from 'axios';
 import { Card, CardText } from 'material-ui/Card';
 import AppBar from 'material-ui/AppBar';
 import Dialog from 'material-ui/Dialog';
-import TextField from 'material-ui/TextField';
-// import DatePicker from 'material-ui/DatePicker';
 import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
 import FlatButton from 'material-ui/FlatButton';
+import { ValidatorForm } from 'react-form-validator-core';
+import { TextValidator, SelectValidator } from 'react-material-ui-form-validator';
+import Checkbox from 'material-ui/Checkbox';
+import MenuItem from 'material-ui/MenuItem';
 
 const styles = {
     appBar: {
@@ -23,7 +25,7 @@ const styles = {
         background: '#689F38'
     },
     textField: {
-        width: '800px'
+        width: '300px'
     }
 };
 
@@ -35,42 +37,91 @@ class HotelDetails extends Component {
             hotelData: {
                 title: '',
                 description: '',
-                category: '',
-
-            }, open: false
+                region: '',
+                city: '',
+                price: '',
+                propertyFeature: {
+                    wifi: false,
+                    bbq: false,
+                    library: false,
+                    bycicle: false,
+                    dinning: false
+                },
+                roomFeature: {
+                    airConditioning: false,
+                    fan: false,
+                    sharedFacilities: false,
+                    dvd: false,
+                    tv: false,
+                    fridge: false
+                }
+            },
+            open: false,
+            regions: [],
+            cities: []
         };
+
         this.deleteHotel = this.deleteHotel.bind(this);
-        // this.handleSubmit = this.handleSubmit.bind(this);
-        // this.handleDelete = this.handleDelete.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        // this.handleChangeDate = this.handleChangeDate.bind(this);
     }
 
-    componentDidMount() {
+    componentWillMount() {
         let hotelId = this.props.match.params.id;
-        axios.get(`http://localhost:4000/api/hotels/${hotelId}`)
-            .then(resp => {
-                let hotelResp = {
-                    title: resp.data.hotel.title,
-                    description: resp.data.hotel.description,
-                    category: resp.data.hotel.category,
-                }
-                this.setState({
-                    hotelData: hotelResp
-                })
-                console.log(this.state.hotelData)
-            })
-            .catch(console.error);
 
+        axios.get(`http://localhost:4000/hotel/get/${hotelId}`)
+            .then(resp => {
+                this.setState({
+                    hotelData: resp.data.hotel
+                });
+
+                this.getRegion();
+                this.getCities(resp.data.hotel.region);
+
+            }).catch(console.error);
     };
+
+    //Handles the changes in the region field
+    handleChangeRegion(e, index, region) {
+        let hotelData = this.state.hotelData;
+        hotelData.region = region;
+
+        this.setState({ hotelData: hotelData });
+
+        //Get cities data by region
+        this.getCities(region);
+        this.setState({ disableCity: false });
+    };
+
+    handleChangeCity(e, index, city) {
+        let hotelData = this.state.hotelData;
+        hotelData.city = city;
+
+        this.setState({ hotelData: hotelData });
+    }
+
+    updateCheckProperty(e, value) {
+        let hotelData = this.state.hotelData;
+        hotelData.propertyFeature[e.target.value] = value;
+
+        this.setState({
+            hotelData: hotelData
+        })
+    }
+
+    updateCheckRoom(e, value) {
+        let hotelData = this.state.hotelData;
+        hotelData.roomFeature[e.target.value] = value;
+
+        this.setState({
+            hotelData: hotelData
+        })
+    }
 
     updatehotel(hotelData) {
         let hotelId = this.props.match.params.id;
-        axios.post(`http://localhost:4000/api/hotels/${hotelId}`,
-            hotelData)
+        axios.post(`http://localhost:4000/hotel/update/${hotelId}`, hotelData)
             .then(resp => {
                 this.handleOpen();
-                console.log(resp);
             }).catch(err => console.log(err));
     }
 
@@ -85,10 +136,9 @@ class HotelDetails extends Component {
 
     deleteHotel() {
         let hotelId = this.props.match.params.id;
-        axios.delete(`http://localhost:4000/api/hotels/${hotelId}`)
+        axios.delete(`http://localhost:4000/hotel/delete/${hotelId}`)
             .then(resp => {
-                console.log(resp);
-                this.props.history.push('/hotels');
+                this.props.history.push('/adminHotel');
             }).catch(err => console.log(err));
     }
 
@@ -145,12 +195,41 @@ class HotelDetails extends Component {
         this.setState({ open: false });
     };
 
+    getRegion() {
+        axios.get('http://localhost:4000/region/getAll')
+            .then(response => {
+                if (response.data.length !== 0) {
+                    this.setState({ regions: response.data })
+                }
+                else {
+                    alert('Region not found');
+                }
+            }).catch(err => console.log(err));
+    }
+
+    getCities(region) {
+        axios.get('http://localhost:4000/city/getCitiesByRegion?region=' + region)
+            .then(response => {
+                this.setState({ cities: response.data })
+            }).catch(err => console.log(err));
+    }
+
     render() {
+        const region = this.state.regions.map((region, i) => {
+            return (
+                <MenuItem key={i} value={region.name} primaryText={region.name} />
+            )
+        })
+        const cities = this.state.cities.map((city, i) => {
+            return (
+                <MenuItem key={i} value={city.name} primaryText={city.name} />
+            )
+        })
         const { hotelData } = this.state;
         const actionType = this.state.actionType;
         const actionMsg = this.state.actionMsg;
         const actions = [
-            <Link to='/hotels/'>
+            <Link to='/adminHotel/'>
                 <FlatButton label="Ok" primary={true} keyboardFocused={true} />
             </Link>,
         ];
@@ -167,17 +246,129 @@ class HotelDetails extends Component {
             <Card>
                 <AppBar title="Hotel Package Details" iconClassNameRight="muidocs-icon-navigation-expand-more" showMenuIconButton={false} style={styles.appBar} />
                 <CardText>
-                    <form onSubmit={this.handleSubmitUpdate.bind(this)} style={styles.formStyle}>
+                    <ValidatorForm onSubmit={this.handleSubmitUpdate.bind(this)} style={styles.formStyle}>
 
-                        <TextField type="text" name='title' value={hotelData.title} onChange={this.handleChange} floatingLabelText="Title" style={styles.textField} underlineShow={false} />
-                        <Divider />
-                        <TextField name="description" value={hotelData.description} onChange={this.handleChange} floatingLabelText="Description" style={styles.textField} underlineShow={false} />
-                        <Divider />
-                        <TextField type="text" name="category" value={hotelData.category} onChange={this.handleChange} floatingLabelText="Category" style={styles.textField} underlineShow={false} />
-                        <Divider />
-
+                        <TextValidator type="text" name='title' value={hotelData.title} onChange={this.handleChange}
+                            floatingLabelText="Title" style={styles.textField}
+                            validators={['required']} errorMessages={['this field is required']} />
+                        <TextValidator name="description" value={hotelData.description} onChange={this.handleChange}
+                            floatingLabelText="Description" style={styles.textField}
+                            validators={['required']} errorMessages={['this field is required']} />
+                        <SelectValidator
+                            floatingLabelText="Region"
+                            name="region"
+                            value={hotelData.region}
+                            onChange={this.handleChangeRegion.bind(this)}
+                            validators={['required']}
+                            errorMessages={['this field is required']}
+                            floatingLabelFocusStyle={styles.text_color_focused}
+                            floatingLabelStyle={styles.text_color}
+                            labelStyle={styles.text_color}
+                        >
+                            {region}
+                        </SelectValidator>
+                        <SelectValidator
+                            floatingLabelText="City"
+                            name="city"
+                            value={hotelData.city}
+                            onChange={this.handleChangeCity.bind(this)}
+                            validators={['required']}
+                            disabled={this.state.disableCity}
+                            errorMessages={['this field is required']}
+                            floatingLabelFocusStyle={styles.text_color_focused}
+                            floatingLabelStyle={styles.text_color}
+                            labelStyle={styles.text_color}
+                        >
+                            {cities}
+                        </SelectValidator>
+                        <TextValidator type="text" name="price" value={hotelData.price} onChange={this.handleChange}
+                            floatingLabelText="Price per night" style={styles.textField}
+                            validators={['required']} errorMessages={['this field is required']} />
+                        <br />
+                        <br />
+                        <h4>Property Features</h4>
+                        <Checkbox
+                            label="Wi-Fi"
+                            value="wifi"
+                            checked={this.state.hotelData.propertyFeature.wifi}
+                            onCheck={this.updateCheckProperty.bind(this)}
+                            style={styles.checkbox}
+                        />
+                        <Checkbox
+                            label="Barbecue Area"
+                            value="bbq"
+                            checked={this.state.hotelData.propertyFeature.bbq}
+                            onCheck={this.updateCheckProperty.bind(this)}
+                            style={styles.checkbox}
+                        />
+                        <Checkbox
+                            label="Library"
+                            value="library"
+                            checked={this.state.hotelData.propertyFeature.library}
+                            onCheck={this.updateCheckProperty.bind(this)}
+                            style={styles.checkbox}
+                        />
+                        <Checkbox
+                            label="Bicycle Area"
+                            value="bycicle"
+                            checked={this.state.hotelData.propertyFeature.bycicle}
+                            onCheck={this.updateCheckProperty.bind(this)}
+                            style={styles.checkbox}
+                        />
+                        <Checkbox
+                            label="Dinning Area"
+                            value="dinning"
+                            checked={this.state.hotelData.propertyFeature.dinning}
+                            onCheck={this.updateCheckProperty.bind(this)}
+                            style={styles.checkbox}
+                        />
+                        <br />
+                        <h4>Room Features</h4>
+                        <Checkbox
+                            label="Air-conditioning"
+                            value="airConditioning"
+                            checked={this.state.hotelData.roomFeature.airConditioning}
+                            onCheck={this.updateCheckRoom.bind(this)}
+                            style={styles.checkbox}
+                        />
+                        <Checkbox
+                            label="Fan"
+                            value="fan"
+                            checked={this.state.hotelData.roomFeature.fan}
+                            onCheck={this.updateCheckRoom.bind(this)}
+                            style={styles.checkbox}
+                        />
+                        <Checkbox
+                            label="Shared Facilities"
+                            value="sharedFacilities"
+                            checked={this.state.hotelData.roomFeature.sharedFacilities}
+                            onCheck={this.updateCheckRoom.bind(this)}
+                            style={styles.checkbox}
+                        />
+                        <Checkbox
+                            label="DVD Player"
+                            value="dvd"
+                            checked={this.state.hotelData.roomFeature.dvd}
+                            onCheck={this.updateCheckRoom.bind(this)}
+                            style={styles.checkbox}
+                        />
+                        <Checkbox
+                            label="TV"
+                            value="tv"
+                            checked={this.state.hotelData.roomFeature.tv}
+                            onCheck={this.updateCheckRoom.bind(this)}
+                            style={styles.checkbox}
+                        />
+                        <Checkbox
+                            label="Fridge"
+                            value="fridge"
+                            checked={this.state.hotelData.roomFeature.fridge}
+                            onCheck={this.updateCheckRoom.bind(this)}
+                            style={styles.checkbox}
+                        />
+                        <br />
                         <RaisedButton type="submit" label="Update Hotel Package" primary={true} style={styles.raisedButton}></RaisedButton>
-                        <RaisedButton name="delete" label="Delete Car Package" secondary={true} style={styles.raisedButton} onClick={this.handleSubmitDelete.bind(this)}></RaisedButton>
+                        <RaisedButton name="delete" label="Delete Hotel Package" secondary={true} style={styles.raisedButton} onClick={this.handleSubmitDelete.bind(this)}></RaisedButton>
                         <Dialog
                             title="Message"
                             actions={(actionType === 'update') ? actions : actionsDelete}
@@ -186,10 +377,9 @@ class HotelDetails extends Component {
                             onRequestClose={this.handleClose}>
                             {actionMsg}
                         </Dialog>
-                    </form>
-
+                    </ValidatorForm>
                 </CardText>
-            </Card>
+            </Card >
         )
     }
 }

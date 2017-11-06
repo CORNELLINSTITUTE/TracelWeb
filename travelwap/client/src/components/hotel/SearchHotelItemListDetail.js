@@ -25,13 +25,15 @@ const styles = {
     }
 };
 
-export default class SearchFlightItemListDetail extends Component {
+export default class SearchHotelItemListDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            flightDetail: props.flightDetail,
+            hotelDetail: props.hotelDetail,
             cookies: new Cookies(),
-            open: false
+            open: false,
+            propertyFeature: [],
+            roomFeature: []
         };
     }
 
@@ -45,8 +47,8 @@ export default class SearchFlightItemListDetail extends Component {
         let book = {
             user_id: this.state.cookies.get('user_id'),
             username: this.state.cookies.get('username'),
-            type_id: this.state.flightDetail._id,
-            type_name: 'Flight'
+            type_id: this.state.hotelDetail._id,
+            type_name: 'Hotel'
         }
 
         return book;
@@ -83,6 +85,52 @@ export default class SearchFlightItemListDetail extends Component {
         this.setState({ open: false, openContact: false });
     };
 
+    CreatePropertyFeatureList() {
+        let propertyFeature = [];
+
+        if (this.state.hotelDetail.propertyFeature.wifi === true) {
+            propertyFeature.push("Wifi");
+        }
+        if (this.state.hotelDetail.propertyFeature.bbq === true) {
+            propertyFeature.push("Barbecue Area");
+        }
+        if (this.state.hotelDetail.propertyFeature.library === true) {
+            propertyFeature.push("Library");
+        }
+        if (this.state.hotelDetail.propertyFeature.bycicle === true) {
+            propertyFeature.push("Bycicle Area");
+        }
+        if (this.state.hotelDetail.propertyFeature.dinning === true) {
+            propertyFeature.push("Dinning Area");
+        }
+
+        return propertyFeature;
+    }
+
+    CreateRoomFeatureList() {
+        let roomFeature = [];
+
+        if (this.state.hotelDetail.roomFeature.airConditioning === true) {
+            roomFeature.push("Air Conditioning");
+        }
+        if (this.state.hotelDetail.roomFeature.fan === true) {
+            roomFeature.push("Fan");
+        }
+        if (this.state.hotelDetail.roomFeature.sharedFacilities === true) {
+            roomFeature.push("Shared Facilities");
+        }
+        if (this.state.hotelDetail.roomFeature.dvd === true) {
+            roomFeature.push("DVD");
+        }
+        if (this.state.hotelDetail.roomFeature.tv === true) {
+            roomFeature.push("TV");
+        }
+        if (this.state.hotelDetail.roomFeature.fridge === true) {
+            roomFeature.push("Fridge");
+        }
+
+        return roomFeature;
+    }
 
     render() {
         //Set message action button
@@ -95,13 +143,27 @@ export default class SearchFlightItemListDetail extends Component {
 
         //Set message action button
         const actionsContact = [
-            <Link to='/SearchFlight'>
+            <Link to='/SearchHotel'>
                 <FlatButton label="Ok" primary={true} keyboardFocused={true} onClick={this.handleClose} />
             </Link>,
         ];
 
+        //Create the list property feature list
+        const propertyList = this.CreatePropertyFeatureList().map((item, i) => {
+            return (
+                <p>{item}</p>
+            )
+        });
+
+        //Create the list room feature list
+        const roomList = this.CreateRoomFeatureList().map((item, i) => {
+            return (
+                <p>{item}</p>
+            )
+        });
+
         return (
-            <div className="SearchFlightItemListDetail">
+            <div className="SearchHotelItemListDetail">
                 <div className="container">
                     <div className="detail-main">
                         <Tabs>
@@ -110,57 +172,53 @@ export default class SearchFlightItemListDetail extends Component {
                                 buttonStyle={styles.tab}>
                                 <div className="row row-align">
                                     <div className="col-md-6 main-text">
-                                        Airline
+                                        Description
                                     </div>
-                                    <div className="col-md-6 content-item">
-                                        {this.state.flightDetail.airline}
-                                    </div>
-                                </div>
-                                <div className="row row-align">
-                                    <div className="col-md-6 main-text">
-                                        From
-                                    </div>
-                                    <div className="col-md-6 content-item">
-                                        {this.state.flightDetail.departure}
+                                    <div className="col-md-6">
+                                        {this.state.hotelDetail.description}
                                     </div>
                                 </div>
                                 <div className="row row-align">
                                     <div className="col-md-6 main-text">
-                                        Travel Dates
-                                        </div>
+                                        Property Feature
+                                    </div>
                                     <div className="col-md-6 content-item">
-                                        {this.formatDate(this.state.flightDetail.travelDate)}
+                                        {propertyList}
                                     </div>
                                 </div>
                                 <div className="row row-align">
                                     <div className="col-md-6 main-text">
-                                        Book By
+                                        Room Feature
                                     </div>
                                     <div className="col-md-6 content-item">
-                                        {this.formatDate(this.state.flightDetail.bookBy)}
+                                        {roomList}
+                                    </div>
+                                </div>
+                                <div className="row row-align">
+                                    <div className="col-md-6 main-text">
+                                        City
+                                    </div>
+                                    <div className="col-md-6 content-item">
+                                        {this.state.hotelDetail.city}
                                     </div>
                                 </div>
                             </Tab>
                             <Tab
                                 label="Book"
                                 buttonStyle={styles.tab}>
-                                <div className="row available-flights available-flights-tab">
+                                <div className="row available-hotels available-hotels-tab">
                                     <Table>
                                         <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                                             <TableRow>
-                                                <TableHeaderColumn>FROM</TableHeaderColumn>
-                                                <TableHeaderColumn>TO</TableHeaderColumn>
+                                                <TableHeaderColumn>CITY</TableHeaderColumn>
                                                 <TableHeaderColumn>PRICE</TableHeaderColumn>
-                                                <TableHeaderColumn>Flight Date</TableHeaderColumn>
                                                 <TableHeaderColumn>OPTION</TableHeaderColumn>
                                             </TableRow>
                                         </TableHeader>
                                         <TableBody displayRowCheckbox={false}>
                                             <TableRow>
-                                                <TableRowColumn>{this.state.flightDetail.departure}</TableRowColumn>
-                                                <TableRowColumn>{this.state.flightDetail.destination}</TableRowColumn>
-                                                <TableRowColumn>${this.state.flightDetail.price}</TableRowColumn>
-                                                <TableRowColumn>{this.formatDate(this.state.flightDetail.travelDate)}</TableRowColumn>
+                                                <TableRowColumn>{this.state.hotelDetail.city}</TableRowColumn>
+                                                <TableRowColumn>${this.state.hotelDetail.price}</TableRowColumn>
                                                 <TableRowColumn><RaisedButton style={styles.book} onClick={this.book.bind(this)} primary={true}>Book</RaisedButton></TableRowColumn>
                                             </TableRow>
                                         </TableBody>
@@ -178,7 +236,7 @@ export default class SearchFlightItemListDetail extends Component {
                     modal={true}
                     open={this.state.open}
                     onRequestClose={this.handleClose}>
-                    Please SignIn, to book a flight
+                    Please SignIn, to book a hotel
                 </Dialog>
 
                 <Dialog

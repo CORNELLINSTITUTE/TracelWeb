@@ -26,7 +26,7 @@ const styles = {
 class HotelsMain extends Component {
     state = { hotels: [] }
     componentDidMount() {
-        axios.get('http://localhost:4000/api/hotels')
+        axios.get('http://localhost:4000/hotel/getAll')
             .then(resp => {
                 this.setState({
                     hotels: resp.data.hotels
@@ -48,7 +48,7 @@ class HotelsMain extends Component {
                                     hotels.map((hotel, index) => (
                                         <TableRow key={hotel._id}>
                                             <TableRowColumn>
-                                                <Link to={`/hotels/details/${hotel._id}`}>
+                                                <Link to={`/adminHotel/details/${hotel._id}`}>
                                                     <MenuItem>
                                                         {hotel.title}
                                                     </MenuItem>
