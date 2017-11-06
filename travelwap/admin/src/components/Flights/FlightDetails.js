@@ -5,11 +5,12 @@ import axios from 'axios';
 import { Card, CardText } from 'material-ui/Card';
 import AppBar from 'material-ui/AppBar';
 import Dialog from 'material-ui/Dialog';
-import TextField from 'material-ui/TextField';
-import DatePicker from 'material-ui/DatePicker';
 import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
 import FlatButton from 'material-ui/FlatButton';
+
+import { ValidatorForm } from 'react-form-validator-core';
+import { TextValidator, DateValidator } from 'react-material-ui-form-validator';
 
 const styles = {
     appBar: {
@@ -36,10 +37,11 @@ class FlightDetails extends Component {
                 title: '',
                 description: '',
                 airline: '',
-                country: '',
-                origin: '',
-                destination: '',
-                expiry: null
+                departure: '',
+                region: '',
+                featured: false,
+                travelDate: null,
+                bookBy: null
             }, open: false
             , actionType: ''
             , actionMsg: ''
@@ -140,10 +142,10 @@ class FlightDetails extends Component {
         flightData.title = '';
         flightData.description = '';
         flightData.airline = '';
-        flightData.country = '';
-        flightData.origin = '';
-        flightData.destination = '';
-        flightData.expiry = null;
+        flightData.departure = '';
+        flightData.region = '';
+        flightData.travelDate = null;
+        flightData.bookBy = null;
         this.setState({
             flightData: flightData
         })
@@ -181,21 +183,21 @@ class FlightDetails extends Component {
                 <AppBar title="Flight Package Details" iconClassNameRight="muidocs-icon-navigation-expand-more" showMenuIconButton={false} style={styles.appBar} />
                 <CardText>
                     
-                    <form onSubmit={this.handleSubmitUpdate.bind(this)} style={styles.formStyle}>
+                    <ValidatorForm onSubmit={this.handleSubmitUpdate.bind(this)} style={styles.formStyle}>
 
-                        <TextField type="text" name='title' value={flightData.title} onChange={this.handleChange} floatingLabelText="Title" style={styles.textField} underlineShow={false} />
+                        <TextValidator type="text" name='title' value={flightData.title} onChange={this.handleChange} floatingLabelText="Title" style={styles.textField} underlineShow={false} />
                         <Divider />
-                        <TextField name="description" value={flightData.description} onChange={this.handleChange} floatingLabelText="Description" style={styles.textField} underlineShow={false} />
+                        <TextValidator name="description" value={flightData.description} onChange={this.handleChange} floatingLabelText="Description" style={styles.textField} underlineShow={false} />
                         <Divider />
-                        <TextField type="text" name="airline" value={flightData.airline} onChange={this.handleChange} floatingLabelText="Airline" style={styles.textField} underlineShow={false} />
+                        <TextValidator type="text" name="airline" value={flightData.airline} onChange={this.handleChange} floatingLabelText="Airline" style={styles.textField} underlineShow={false} />
                         <Divider />
-                        <TextField type="text" name="country" value={flightData.country} onChange={this.handleChange} floatingLabelText="Country" style={styles.textField} underlineShow={false} />
+                        <TextValidator type="text" name="country" value={flightData.country} onChange={this.handleChange} floatingLabelText="Country" style={styles.textField} underlineShow={false} />
                         <Divider />
-                        <TextField type="text" name="origin" value={flightData.origin} onChange={this.handleChange} floatingLabelText="Origin" style={styles.textField} underlineShow={false} />
+                        <TextValidator type="text" name="origin" value={flightData.origin} onChange={this.handleChange} floatingLabelText="Origin" style={styles.textField} underlineShow={false} />
                         <Divider />
-                        <TextField type="text" name="destination" value={flightData.destination} onChange={this.handleChange} floatingLabelText="Destination" style={styles.textField} underlineShow={false} />
+                        <TextValidator type="text" name="destination" value={flightData.destination} onChange={this.handleChange} floatingLabelText="Destination" style={styles.textField} underlineShow={false} />
                         <Divider />
-                        <DatePicker type="text" mode="landscape" name="expiry" floatingLabelText="Expiry Date" value={flightData.expiry} onChange={this.handleChangeDate} />
+                        <DateValidator type="text" mode="landscape" name="expiry" floatingLabelText="Expiry Date" value={flightData.expiry} onChange={this.handleChangeDate} />
 
                         <RaisedButton type="submit" name="update" label="Update Flight Package" primary={true} style={styles.raisedButton}></RaisedButton>
                         <RaisedButton name="delete" label="Delete Flight Package" secondary={true} style={styles.raisedButton} onClick={this.handleSubmitDelete.bind(this)}></RaisedButton>
@@ -207,7 +209,7 @@ class FlightDetails extends Component {
                             onRequestClose={this.handleClose}>
                             {actionMsg}
                         </Dialog>
-                    </form>
+                    </ValidatorForm>
 
                 </CardText>
             </Card>

@@ -69,14 +69,12 @@ module.exports.getFlight = (req, res) => {
 // Flight CRUD
 module.exports.addFlight = (req, res) => {
     let flight = new Flight(req.body);
-    console.log(flight);
-    
-    // flight.save((err, flight) => {
-    //     if (err) {
-    //         res.json({ success: false, msg: 'Failed to create flight' });
-    //     }
-    //     res.json({ success: true, msg: 'Flight created' });
-    // });
+    flight.save((err, flight) => {
+        if (err) {
+            res.json({ success: false, msg: 'Failed to create flight' });
+        }
+        res.json({ success: true, msg: 'Flight created' });
+    });
 };
 
 module.exports.updateFlight = (req, res) => {

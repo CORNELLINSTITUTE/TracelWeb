@@ -26,7 +26,7 @@ const styles = {
 class FlightsMain extends Component {
     state = { flights: [] }
     componentDidMount() {
-        axios.get('http://localhost:4000/api/flights')
+        axios.get('http://localhost:4000/flight/getAll/')
             .then(resp => {
                 this.setState({
                     flights: resp.data.flights
