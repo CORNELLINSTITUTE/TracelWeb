@@ -55,8 +55,8 @@ const country = require('./routes/country');
 const region = require('./routes/region');
 const city = require('./routes/city');
 const flight = require('./routes/flight');
-const voucher = require('./routes/voucher');
-
+const hotel = require('./routes/hotel');
+const book = require('./routes/book');
 const voucher = require('./routes/voucher');
 
 //Access route file
@@ -66,8 +66,8 @@ app.use('/country', country);
 app.use('/region', region);
 app.use('/city', city);
 app.use('/flight', flight);
-app.use('/voucher', voucher);
-
+app.use('/hotel', hotel);
+app.use('/book', book);
 app.use('/voucher', voucher);
 
 /***************************************************/

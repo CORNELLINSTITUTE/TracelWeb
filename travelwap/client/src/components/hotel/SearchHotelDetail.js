@@ -1,31 +1,31 @@
 import React, { Component } from "react";
-import SearchFlightItemList from "./SearchFlightItemList";
+import SearchHotelItemList from "./SearchHotelItemList";
 import axios from "axios";
 
-export default class SearchFlightDetail extends Component {
+export default class SearchHotelDetail extends Component {
     constructor(props) {
         super(props);
         
         this.state = {            
-            flightList: []            
+            hotelList: []            
         }
     }
     /******************/
     /*FUNCTION*/
     /******************/
     componentWillMount(){
-        this.getFlights(this.props.match.params.name);
+        this.getHotels(this.props.match.params.name);
     }
 
-    getFlights(region){
-        axios.get('http://localhost:4000/flight/getFlightsByRegion?region='+region)
+    getHotels(region){
+        axios.get('http://localhost:4000/hotel/getHotelsByRegion?region='+region)
         .then(response => {
             if (response.data.length !== 0) {
                 console.log(response.data);
-                this.setState({ flightList: response.data })
+                this.setState({ hotelList: response.data })
             }
             else {
-                alert('No flights available');
+                alert('No hotels available');
             }
         }).catch(err => console.log(err));
     }
@@ -34,9 +34,9 @@ export default class SearchFlightDetail extends Component {
     /*TEMPLATE*/
     /******************/
     render() {
-        const items = this.state.flightList.map((item, i) => {
+        const items = this.state.hotelList.map((item, i) => {
 			return (
-				<SearchFlightItemList item={item} />
+				<SearchHotelItemList item={item} />
 			)
         });
 
@@ -45,7 +45,7 @@ export default class SearchFlightDetail extends Component {
         }
 
         return (
-            <div className="SearchFlightDetail">
+            <div className="SearchHotelDetail">
                 <div className="detail-main">
                     <div className="container">
                         <div className="row">

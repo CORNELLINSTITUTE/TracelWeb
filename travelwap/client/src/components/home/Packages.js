@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Countdown from 'react-count-down';
+import { Link } from "react-router-dom";
 
 export default class Packages extends Component {
     constructor(props) {
@@ -28,7 +29,7 @@ export default class Packages extends Component {
             console.log('expired callback')
         }
 
-        const OPTIONS = { endDate: this.state.item.expire_date , prefix: 'to end', cb }
+        const OPTIONS = { endDate: this.state.item.expire_date, prefix: 'to end', cb }
 
         const CountdownComponent = () => (
             <Countdown options={OPTIONS} />
@@ -41,26 +42,28 @@ export default class Packages extends Component {
         return (
             <div className="Packages">
                 <div className="col-sm-6 col-md-3">
-                    <div className="dl" style={divImage}>
-                        <div className="countdown">
-                            <CountdownComponent />
+                    <Link to='/'>
+                        <div className="dl" style={divImage}>
+                            <div className="countdown">
+                                <CountdownComponent />
+                            </div>
+                            <div className="brand">
+                                <h2>{this.state.item.title}</h2>
+                            </div>
+                            <div className={`discount ${this.state.item.color}`}>{this.state.item.discount}
+                                <div className="type">{this.state.item.type}</div>
+                            </div>
+                            <div className="descr">
+                                <strong>{this.state.item.topic}</strong>
+                                {this.state.item.description}
+                            </div>
+                            <div className="ends">
+                                <small>
+                                    {this.state.item.conditions}
+                                </small>
+                            </div>
                         </div>
-                        <div className="brand">
-                            <h2>{this.state.item.title}</h2>
-                        </div>
-                        <div className={`discount ${this.state.item.color}`}>{this.state.item.discount}
-                            <div className="type">{this.state.item.type}</div>
-                        </div>
-                        <div className="descr">
-                            <strong>{this.state.item.topic}</strong>
-                            {this.state.item.description}
-                        </div>
-                        <div className="ends">
-                            <small>
-                                {this.state.item.conditions}
-                            </small>
-                        </div>
-                    </div>
+                    </Link>
                 </div>
             </div>
         );
