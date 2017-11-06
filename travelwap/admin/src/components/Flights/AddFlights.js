@@ -40,10 +40,11 @@ class AddFlights extends Component {
                 title: '',
                 description: '',
                 airline: '',
-                country: '',
-                origin: '',
-                destination: '',
-                expiry: null
+                departure: '',
+                region: '',
+                featured: false,
+                travelDate: null,
+                bookBy: null
             }, open: false
         };
 
@@ -54,7 +55,7 @@ class AddFlights extends Component {
     };
 
     addFlights(flightData) {
-        axios.post('http://localhost:4000/api/flights/',
+        axios.post('http://localhost:4000/flight/add',
             flightData).then(resp => {
                 this.handleOpen();
                 console.log(resp);

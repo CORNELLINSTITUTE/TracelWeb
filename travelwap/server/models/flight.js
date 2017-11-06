@@ -18,22 +18,26 @@ const FlightSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    region:{
+    region: {
         type: String,
-        required:true
+        required: true
     },
     destination:{
-        type: String,
-        required:true
+        type:String,
+        require:true
     },
-    travelDate:{
-        type: Date,
-        required:true
+    featured: {
+        type: Boolean,
+        required: true
     },
-    bookBy:{
+    travelDate: {
         type: Date,
-        required:true
-    }   
+        required: true
+    },
+    bookBy: {
+        type: Date,
+        required: true
+    }
 });
 
 /*******************/
@@ -104,6 +108,5 @@ module.exports.getByRegion = (req, res) => {
         } else {
             res.json({ flights });
         }
-
     });
 };
