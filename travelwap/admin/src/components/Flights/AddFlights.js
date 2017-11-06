@@ -53,7 +53,6 @@ class AddFlights extends Component {
 
         };
 
-        this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleChangeTravelDate = this.handleChangeTravelDate.bind(this);
         this.handleChangeBookBy = this.handleChangeBookBy.bind(this);
