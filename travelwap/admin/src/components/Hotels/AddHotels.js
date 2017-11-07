@@ -38,6 +38,24 @@ class AddHotels extends Component {
             hotelData: {
                 title: '',
                 description: '',
+                region: '',
+                city: '',
+                price: '',
+                propertyFeature: {
+                    wifi: false,
+                    bbq: false,
+                    library: false,
+                    bicycle: false,
+                    dining: false
+                },
+                roomFeature: {
+                    aircondition: false,
+                    fan: false,
+                    sharedFacilities: false,
+                    dvd: false,
+                    tv: false,
+                    fridge: false
+                },
                 category: '',
             }, open: false
         };
