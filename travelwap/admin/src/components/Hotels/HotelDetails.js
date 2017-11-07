@@ -57,16 +57,19 @@ class HotelDetails extends Component {
                     tv: false,
                     fridge: false
                 },
-            }, open: false,
+                featured: false,
+            },
+            open: false,
             actionType: '',
             actionMsg: ''
         };
-        
+
         // this.handleSubmit = this.handleSubmit.bind(this);
         // this.handleDelete = this.handleDelete.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleChangePropertyFeature = this.handleChangePropertyFeature.bind(this);
         this.handleChangeRoomFeature = this.handleChangeRoomFeature.bind(this);
+        this.handleChangeFeatured = this.handleChangeFeatured.bind(this);
         this.deleteHotel = this.deleteHotel.bind(this);
         // this.handleChangeDate = this.handleChangeDate.bind(this);
     }
@@ -95,7 +98,8 @@ class HotelDetails extends Component {
                         dvd: resp.data.hotel.roomFeature.dvd,
                         tv: resp.data.hotel.roomFeature.tv,
                         fridge: resp.data.hotel.roomFeature.fridge
-                    }
+                    },
+                    featured: resp.data.hotel.featured
                 }
                 this.setState({
                     hotelData: hotelResp
@@ -195,6 +199,15 @@ class HotelDetails extends Component {
         })
     }
 
+    handleChangeFeatured(e) {
+        let hotelData = this.state.hotelData;
+        hotelData.featured = e.target.checked;
+        this.setState({
+            hotelData: hotelData
+        })
+    }
+
+
     handleOpen = () => {
         this.setState({ open: true });
     };
@@ -266,7 +279,9 @@ class HotelDetails extends Component {
                             checked={hotelData.roomFeature.tv} onClick={this.handleChangeRoomFeature} style={styles.checkbox} />
                         <Checkbox type="checkbox" label="Fridge" name="fridge"
                             checked={hotelData.roomFeature.fridge} onClick={this.handleChangeRoomFeature} style={styles.checkbox} />
-
+                        <h3>Featured</h3>
+                        <Checkbox type="checkbox" label="Featured" name="featured"
+                            checked={hotelData.featured} onClick={this.handleChangeFeatured} style={styles.checkbox} />
                         <RaisedButton type="submit" label="Update Hotel Package" primary={true} style={styles.raisedButton}></RaisedButton>
                         <RaisedButton name="delete" label="Delete Car Package" secondary={true} style={styles.raisedButton} onClick={this.handleSubmitDelete.bind(this)}></RaisedButton>
                         <Dialog

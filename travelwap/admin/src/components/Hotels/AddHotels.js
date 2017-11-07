@@ -57,13 +57,16 @@ class AddHotels extends Component {
                     tv: false,
                     fridge: false
                 },
-            }, open: false
+                featured: false,
+            },
+            open: false
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleChangePropertyFeature = this.handleChangePropertyFeature.bind(this);
         this.handleChangeRoomFeature = this.handleChangeRoomFeature.bind(this);
+        this.handleChangeFeatured = this.handleChangeFeatured.bind(this);
         // this.handleChangeDate = this.handleChangeDate.bind(this);
         // this.clearFields = this.clearFields.bind(this);
     };
@@ -131,6 +134,14 @@ class AddHotels extends Component {
         })
     }
 
+    handleChangeFeatured(e) {
+        let hotelData = this.state.hotelData;
+        hotelData.featured = e.target.checked;
+        this.setState({
+            hotelData: hotelData
+        })
+    }
+
     handleOpen = () => {
         this.setState({ open: true });
     };
@@ -192,6 +203,9 @@ class AddHotels extends Component {
                             checked={hotelData.roomFeature.tv} onClick={this.handleChangeRoomFeature} style={styles.checkbox} />
                         <Checkbox type="checkbox" label="Fridge" name="fridge"
                             checked={hotelData.roomFeature.fridge} onClick={this.handleChangeRoomFeature} style={styles.checkbox} />
+                        <h3>Featured</h3>
+                        <Checkbox type="checkbox" label="Featured" name="featured"
+                            checked={hotelData.featured} onClick={this.handleChangeFeatured} style={styles.checkbox} />
                         <RaisedButton type="submit" label="Add Hotel Package" primary={true} style={styles.raisedButton}></RaisedButton>
 
                         <Dialog

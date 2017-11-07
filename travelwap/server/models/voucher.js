@@ -71,3 +71,12 @@ module.exports.getVoucher = (req, res) => {
         res.json({ voucher });
     });
 };
+
+module.exports.getVoucherByCode = (req, res) => {
+    Voucher.find({ code: req.params.code }, (err, voucher) => {
+        if (err) {
+            res.json({ success: false, msg: 'Failed to retrieve voucher' });
+        }
+        res.json({ voucher });
+    });
+};

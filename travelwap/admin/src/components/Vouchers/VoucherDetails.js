@@ -55,7 +55,7 @@ class VoucherDetails extends Component {
 
     componentDidMount() {
         let voucherId = this.props.match.params.id;
-        axios.get(`http://localhost:4000/voucher/getVoucher/${voucherId}`)
+        axios.get(`http://localhost:4000/voucher/getVoucher/id/${voucherId}`)
             .then(resp => {
                 let voucherResp = {
                     name: resp.data.voucher.name,
