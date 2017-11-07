@@ -125,6 +125,11 @@ export default class AddCruises extends Component {
 
 
     render() {
+        // const itinerary = this.state.regions.map((region, i) => {
+        //     return (
+        //         <MenuItem key={i} value={region.name} primaryText={region.name} />
+        //     )
+        // })
         const { cruiseData } = this.state;
         const actions = [
             <Link to='/cruises/'>

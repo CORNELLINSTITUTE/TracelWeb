@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-//Flight Schema
+//Cruise Schema
 const CruiseSchema = mongoose.Schema({
     title: {
         type: String,
@@ -63,70 +63,70 @@ const CruiseSchema = mongoose.Schema({
 /*******************/
 //FUNCTIONS
 /*******************/
-const Flight = module.exports = mongoose.model('Flight', FlightSchema);
+const Cruise = module.exports = mongoose.model('Cruise', CruiseSchema);
 
 module.exports.add = (req, res) => {
-    let flight = new Flight(req.body);
+    let cruise = new Cruise(req.body);
 
-    flight.save((err, flight) => {
+    cruise.save((err, cruise) => {
         if (err) {
-            res.json({ success: false, msg: 'Failed to add flight', flight: flight });
+            res.json({ success: false, msg: 'Failed to add cruise', cruise: cruise });
         }
         else {
-            res.json({ success: true, msg: 'Flight created' });
+            res.json({ success: true, msg: 'Cruise created' });
         }
     });
 };
 
 module.exports.update = (req, res) => {
-    Flight.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true }, (err, flight) => {
+    Cruise.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true }, (err, cruise) => {
         if (err) {
-            res.json({ success: false, msg: 'Failed to update flight' });
+            res.json({ success: false, msg: 'Failed to update cruise' });
         } else {
-            res.json({ success: true, msg: 'Flight updated' });
+            res.json({ success: true, msg: 'Cruise updated' });
         }
     });
 };
 
 module.exports.delete = (req, res) => {
-    Flight.findByIdAndRemove({ _id: req.params.id }, (err, flight) => {
+    Cruise.findByIdAndRemove({ _id: req.params.id }, (err, cruise) => {
         if (err) {
-            res.json({ success: false, msg: 'Failed to delete flight' });
+            res.json({ success: false, msg: 'Failed to delete cruise' });
         }
         else {
-            res.json({ success: true, msg: 'flight deleted' });
+            res.json({ success: true, msg: 'cruise deleted' });
         }
     });
 };
 
 module.exports.getAll = (req, res) => {
-    Flight.find({}, (err, flights) => {
+    Cruise.find({}, (err, cruises) => {
         if (err) {
-            res.json({ success: false, msg: 'Failed to retrieve flights' });
+            res.json({ success: false, msg: 'Failed to retrieve cruises' });
         } else {
-            res.json({ flights });
+            res.json({ cruises });
         }
 
     });
 };
 
 module.exports.get = (req, res) => {
-    Flight.findById(req.params.id, (err, flight) => {
+    Cruise.findById(req.params.id, (err, cruise) => {
         if (err) {
-            res.json({ success: false, msg: 'Failed to retrieve flight' });
+            res.json({ success: false, msg: 'Failed to retrieve cruise' });
         } else {
-            res.json({ flight });
+            res.json({ cruise });
         }
 
     });
 };
 
 module.exports.getByRegion = (req, res) => {
-    Flight.find({ region: req.params.region }, (err, flights) => {
+    Cruise.find({ region: req.params.region }, (err, cruises) => {
         if (err) {
-            res.json({ success: false, msg: 'Failed to retrieve flights' });
+            res.json({ success: false, msg: 'Failed to retrieve cruises' });
         } else {
-            res.json({ flights });
+            res.json({ cruises });
         }
     });
 };
