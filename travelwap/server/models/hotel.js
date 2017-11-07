@@ -35,11 +35,11 @@ const HotelSchema = mongoose.Schema({
             type: Boolean,
             required: true
         },
-        bycicle: {
+        bicycle: {
             type: Boolean,
             required: true
         },
-        dinning: {
+        dining: {
             type: Boolean,
             required: true
         }
@@ -69,6 +69,10 @@ const HotelSchema = mongoose.Schema({
             type: Boolean,
             required: true
         }
+    },
+    featured: {
+        type: Boolean,
+        required: true
     }
 });
 

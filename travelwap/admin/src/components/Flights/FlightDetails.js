@@ -43,9 +43,9 @@ class FlightDetails extends Component {
                 travelDate: null,
                 bookBy: null,
                 featured: false,
-            }, open: false
-            , actionType: ''
-            , actionMsg: ''
+            }, open: false,
+            actionType: '',
+            actionMsg: ''
         };
         
         this.handleChange = this.handleChange.bind(this);

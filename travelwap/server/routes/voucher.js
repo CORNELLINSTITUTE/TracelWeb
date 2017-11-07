@@ -18,7 +18,8 @@ router.get('/getAll', Voucher.getAllVouchers);
 /***************/
 // Get Voucher
 /***************/
-router.get('/getVoucher/:id', Voucher.getVoucher);
+router.get('/getVoucher/id/:id', Voucher.getVoucher);
+router.get('/getVoucher/code/:code', Voucher.getVoucherByCode);
 
 
 module.exports = router;
