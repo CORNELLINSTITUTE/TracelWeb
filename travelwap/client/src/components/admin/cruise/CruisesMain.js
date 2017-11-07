@@ -23,7 +23,7 @@ const styles = {
 
 };
 
-class CruisesMain extends Component {
+export default class CruisesMain extends Component {
     state = { cars: [] }
     componentDidMount() {
         axios.get('http://localhost:4000/api/cars')
@@ -66,5 +66,4 @@ class CruisesMain extends Component {
     }
 }
 
-export default CarsMain;
 

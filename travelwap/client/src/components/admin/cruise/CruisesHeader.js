@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import FlatButton from 'material-ui/FlatButton';
 
-const CruiseHeader = () => {
+const CruisesHeader = () => {
     return (
         <nav>
             <Link to='/adminCruise/'><FlatButton label="Cruise" secondary={true} /></Link>

@@ -56,6 +56,7 @@ const region = require('./routes/region');
 const city = require('./routes/city');
 const flight = require('./routes/flight');
 const hotel = require('./routes/hotel');
+const cruise = require('./routes/cruise');
 const book = require('./routes/book');
 const voucher = require('./routes/voucher');
 
@@ -67,6 +68,7 @@ app.use('/region', region);
 app.use('/city', city);
 app.use('/flight', flight);
 app.use('/hotel', hotel);
+app.use('/cruise', cruise);
 app.use('/book', book);
 app.use('/voucher', voucher);
 

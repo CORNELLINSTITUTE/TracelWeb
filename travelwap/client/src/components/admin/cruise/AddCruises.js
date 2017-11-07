@@ -1,43 +1,43 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import { Card, CardText } from 'material-ui/Card';
 import AppBar from 'material-ui/AppBar';
 import Dialog from 'material-ui/Dialog';
-import TextField from 'material-ui/TextField';
-// import DatePicker from 'material-ui/DatePicker';
 import RaisedButton from 'material-ui/RaisedButton';
-import Divider from 'material-ui/Divider';
 import FlatButton from 'material-ui/FlatButton';
 
 import { ValidatorForm } from 'react-form-validator-core';
-import { TextValidator } from 'react-material-ui-form-validator';
-
-// import Proptypes from 'prop-types';
+import { TextValidator, DateValidator } from 'react-material-ui-form-validator';
+import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 
 const styles = {
     appBar: {
         background: '#d32f2f'
     },
     formStyle: {
-        padding: '20px'
+        padding: '20px',
+        width: '650px',
     },
     raisedButton: {
         margin: '12px',
         background: '#689F38'
     },
     textField: {
-        width: '800px'
+        width: '400px'        
+    },
+    table_size:{
+        width:'600px'
     }
 };
 
-class AddCruises extends Component {
+export default class AddCruises extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            carData: {
+            cruiseData: {
                 title: '',
                 description: '',
                 category: '',
@@ -46,20 +46,19 @@ class AddCruises extends Component {
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        // this.handleChangeDate = this.handleChangeDate.bind(this);
         this.clearFields = this.clearFields.bind(this);
     };
 
-    addCars(carData) {
-        axios.post('http://localhost:4000/api/cars/',
-            carData).then(resp => {
+    addCruises(cruiseData) {
+        axios.post('http://localhost:4000/cruise/add',
+            cruiseData).then(resp => {
                 this.handleOpen();
                 console.log(resp);
             }).catch(err => console.log(err));
     }
 
     handleSubmit(e) {
-        this.addCars(this.state.carData);
+        this.addCruises(this.state.cruiseData);
         e.preventDefault();
     }
 
@@ -68,31 +67,22 @@ class AddCruises extends Component {
     }
 
     handleChange(e) {
-        let carData = this.state.carData;
-        carData[e.target.name] = this.getFieldValue(e.target);
+        let cruiseData = this.state.cruiseData;
+        cruiseData[e.target.name] = this.getFieldValue(e.target);
 
         this.setState({
-            carData: carData
+            cruiseData: cruiseData
         });
     }
 
-    // handleChangeDate(e, expiry) {
-    //     let carData = this.state.carData;
-    //     carData.expiry = expiry;
-
-    //     this.setState({
-    //         carData: carData
-    //     })
-    // }
-
     clearFields() {
-        let carData = this.state.carData;
-        carData.title = '';
-        carData.description = '';
-        carData.category = '';
-        
+        let cruiseData = this.state.cruiseData;
+        cruiseData.title = '';
+        cruiseData.description = '';
+        cruiseData.category = '';
+
         this.setState({
-            carData: carData
+            cruiseData: cruiseData
         })
     }
 
@@ -105,30 +95,138 @@ class AddCruises extends Component {
         this.setState({ open: false });
     };
 
+    //Handles the change in the Departure Date
+    handleChangeDepartureDate(e, departureDate) {
+        let cruiseData = this.state.cruiseData;
+        cruiseData.departureDate = departureDate;
+
+        this.setState({
+            cruiseData: cruiseData
+        })
+    }
+
+     //Handles the change in the Travel Date
+     handleChangeTravelDate(e, travelDate) {
+        let cruiseData = this.state.cruiseData;
+        cruiseData.travelDate = travelDate;
+
+        this.setState({
+            cruiseData: cruiseData
+        })
+    }
+
+    //Disable dates before the current date
+    disablePrevDates(startDate) {
+        const startSeconds = Date.parse(startDate);
+        return (date) => {
+            return Date.parse(date) < startSeconds;
+        }
+    }
+
+
     render() {
-        const { carData } = this.state;
+        const { cruiseData } = this.state;
         const actions = [
-            <Link to='/cars/'>
+            <Link to='/cruises/'>
                 <FlatButton label="Ok" primary={true} keyboardFocused={true} onClick={this.handleClose} />
             </Link>,
         ];
         return (
             <Card>
-                <AppBar title="Add Car Package" iconClassNameRight="muidocs-icon-navigation-expand-more" showMenuIconButton={false} style={styles.appBar} />
+                <AppBar title="Add Cruise Package" iconClassNameRight="muidocs-icon-navigation-expand-more" showMenuIconButton={false} style={styles.appBar} />
                 <CardText>
                     <ValidatorForm onSubmit={this.handleSubmit.bind(this)} style={styles.formStyle}>
-
-                        <TextValidator  type="text" name='title' value={carData.title} onChange={this.handleChange}
-                                    floatingLabelText="Title" style={styles.textField}
-                                    validators={['required']} errorMessages={['this field is required']}/>
-                        <TextValidator  name="description" value={carData.description} onChange={this.handleChange}
-                                    floatingLabelText="Description" style={styles.textField}
-                                    validators={['required']} errorMessages={['this field is required']}/>
-                        <TextValidator  type="text" name="category" value={carData.airline} onChange={this.handleChange}
-                                    floatingLabelText="Category" style={styles.textField}
-                                    validators={['required']} errorMessages={['this field is required']}/>
-                        <br />
-                        <RaisedButton type="submit" label="Add Car Package" primary={true} style={styles.raisedButton}></RaisedButton>
+                        <TextValidator
+                            type="text"
+                            name='title'
+                            value={cruiseData.title}
+                            onChange={this.handleChange}
+                            floatingLabelText="Title"
+                            style={styles.textField}
+                            validators={['required']}
+                            errorMessages={['this field is required']} />
+                        <TextValidator
+                            name="description"
+                            value={cruiseData.description}
+                            onChange={this.handleChange}
+                            floatingLabelText="Description"
+                            style={styles.textField}
+                            validators={['required']}
+                            errorMessages={['this field is required']} />
+                        <TextValidator
+                            type="text"
+                            name="ship"
+                            value={cruiseData.ship}
+                            onChange={this.handleChange}
+                            floatingLabelText="Ship"
+                            style={styles.textField}
+                            validators={['required']} errorMessages={['this field is required']} />
+                        <TextValidator
+                            type="text"
+                            name="departingInfo"
+                            value={cruiseData.departingInfo}
+                            onChange={this.handleChange}
+                            floatingLabelText="Departing Info"
+                            style={styles.textField}
+                            validators={['required']} errorMessages={['this field is required']} />
+                        <TextValidator
+                            type="text"
+                            name="price"
+                            value={cruiseData.price}
+                            onChange={this.handleChange}
+                            floatingLabelText="Price"
+                            style={styles.textField}
+                            validators={['required']} errorMessages={['this field is required']} />
+                        <TextValidator
+                            type="text"
+                            name="journey"
+                            value={cruiseData.journey}
+                            onChange={this.handleChange}
+                            floatingLabelText="Journey"
+                            style={styles.textField}
+                            validators={['required']} errorMessages={['this field is required']} />
+                        <DateValidator
+                            type="text"
+                            mode="landscape"
+                            name="departureDate"
+                            floatingLabelText="Departure Date"
+                            value={cruiseData.departureDate}
+                            onChange={this.handleChangeDepartureDate.bind(this)}
+                            shouldDisableDate={this.disablePrevDates(new Date())}
+                            validators={['required']}
+                            errorMessages={['you must pick a date']} />
+                        <DateValidator
+                            type="text"
+                            mode="landscape"
+                            name="travelDate"
+                            floatingLabelText="Travel Date"
+                            value={cruiseData.travelDate}
+                            onChange={this.handleChangeTravelDate.bind(this)}
+                            shouldDisableDate={this.disablePrevDates(new Date())}
+                            validators={['required', 'isDateValid']}
+                            errorMessages={['you must pick a date', 'Invalid Date']} />
+                            <br/>
+                        <Table style={styles.table_size}>
+                            <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+                                <TableRow>
+                                    <TableHeaderColumn>Day</TableHeaderColumn>
+                                    <TableHeaderColumn>Date</TableHeaderColumn>
+                                    <TableHeaderColumn>Port</TableHeaderColumn>
+                                    <TableHeaderColumn>Arrive</TableHeaderColumn>
+                                    <TableHeaderColumn>Depart</TableHeaderColumn>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody  displayRowCheckbox={false}>
+                                <TableRow>
+                                    <TableRowColumn>1</TableRowColumn>
+                                    <TableRowColumn>John Smith</TableRowColumn>
+                                    <TableRowColumn>Employed</TableRowColumn>
+                                    <TableRowColumn>Employed</TableRowColumn>
+                                    <TableRowColumn>Employed</TableRowColumn>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                        <RaisedButton type="submit" label="Add Cruise Package" primary={true} style={styles.raisedButton}></RaisedButton>
 
                         <Dialog
                             title="Message"
@@ -136,7 +234,7 @@ class AddCruises extends Component {
                             modal={false}
                             open={this.state.open}
                             onRequestClose={this.handleClose}>
-                            Car Package has been Added.
+                            Cruise Package has been Added.
                         </Dialog>
                     </ValidatorForm>
                 </CardText>
@@ -144,5 +242,3 @@ class AddCruises extends Component {
         )
     }
 }
-
-export default AddCars;

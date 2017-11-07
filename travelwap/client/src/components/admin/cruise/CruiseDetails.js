@@ -27,7 +27,7 @@ const styles = {
     }
 };
 
-class CruiseDetails extends Component {
+export default class CruiseDetails extends Component {
     constructor(props) {
         super(props);
 
@@ -193,7 +193,6 @@ class CruiseDetails extends Component {
     }
 }
 
-export default CarDetails;
 
 
 

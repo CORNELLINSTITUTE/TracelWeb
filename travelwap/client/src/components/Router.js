@@ -12,7 +12,10 @@ import AdminHotelsHeader from './admin/hotel/HotelsHeader';
 import AdminHotelMain from './admin/hotel/HotelsMain';
 import AdminHotelDetails from './admin/hotel/HotelDetails';
 import AdminAddHotels from './admin/hotel/AddHotels';
-
+import AdminCruisesHeader from './admin/cruise/CruisesHeader';
+import AdminCruiseMain from './admin/cruise/CruisesMain';
+import AdminCruiseDetails from './admin/cruise/CruiseDetails';
+import AdminAddCruises from './admin/cruise/AddCruises';
 
 import Header from './layout/Header';
 import Footer from './layout/Footer';
@@ -149,6 +152,30 @@ const routes = [
     header: () => <HeaderAdmin/>,
     headerSub: () => <AdminHotelsHeader/>,
     content: (props) => <AdminHotelDetails {...props}/>
+  },
+   /************************/
+  // ADMIN CRUISE
+  /************************/
+  {
+    path: "/adminCruise/",
+    exact:true,
+    header: () => <HeaderAdmin/>,
+    headerSub: () => <AdminCruisesHeader/>,
+    content: () => <AdminCruiseMain/>
+  },
+  {
+    path: '/adminCruise/add',
+    exact:true,
+    header: () => <HeaderAdmin/>,
+    headerSub: () => <AdminCruisesHeader/>,
+    content: () => <AdminAddCruises/>
+  },
+  {
+    path: '/adminCruise/details/:id',
+    exact:true,
+    header: () => <HeaderAdmin/>,
+    headerSub: () => <AdminCruisesHeader/>,
+    content: (props) => <AdminCruiseDetails {...props}/>
   }
 ]
 
