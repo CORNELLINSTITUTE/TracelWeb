@@ -21,8 +21,7 @@ export default class SearchCruiseDetail extends Component {
         axios.get('http://localhost:4000/cruise/getCruisesByRegion/'+region)
         .then(response => {
             if (response.data.length !== 0) {
-                console.log(response.data);
-                this.setState({ cruiseList: response.data })
+                this.setState({ cruiseList: response.data.cruises })
             }
             else {
                 alert('No cruises available');

@@ -48,7 +48,7 @@ export default class SearchCruiseItemList extends Component {
         ];
 
         let detailImage = {
-            backgroundImage: "linear-gradient(to bottom, rgba(0,0,0,0.20) 0%,rgba(0,0,0,0.20) 100%), url(" + require("../../images/search/" + this.state.item.imageName) + ")",
+            backgroundImage: "linear-gradient(to bottom, rgba(0,0,0,0.20) 0%,rgba(0,0,0,0.20) 100%), url(" + require("../../images/search/oceania.jpeg") + ")",
         }
 
         return (
@@ -61,6 +61,9 @@ export default class SearchCruiseItemList extends Component {
                                 <div className="col-md-5 detail-list-content">
                                     <div className="detail-list-title">
                                         {this.state.item.title}
+                                    </div>
+                                    <div className="detail-list-departing">
+                                        {this.state.item.departingInfo}
                                     </div>
                                     <div className="detail-list-description">
                                         {this.state.item.description}
