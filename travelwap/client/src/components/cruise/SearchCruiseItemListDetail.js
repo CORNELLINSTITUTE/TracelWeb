@@ -22,6 +22,10 @@ const styles = {
     book: {
         color: "white",
         border: "2px solid #26d8ef"
+    },
+    table: {
+        color: '#ffffff',
+        width: '100%'
     }
 };
 
@@ -69,6 +73,7 @@ export default class SearchCruiseItemListDetail extends Component {
             this.handleOpen();
         }
     }
+
     //Handle the opening of the message 
     handleOpen = () => {
         this.setState({ open: true });
@@ -100,6 +105,21 @@ export default class SearchCruiseItemListDetail extends Component {
             </Link>,
         ];
 
+        //Create the content of the table
+        const itinerary = this.state.cruiseDetail.itinerary.map((item, i) => {
+            return (
+                <TableRow>
+                    <TableRowColumn>{item.day}</TableRowColumn>
+                    <TableRowColumn>{this.formatDate(item.date)}</TableRowColumn>
+                    <TableRowColumn>{item.port}</TableRowColumn>
+                    <TableRowColumn>{item.arrive}</TableRowColumn>
+                    <TableRowColumn>{item.depart}</TableRowColumn>
+                </TableRow>
+            )
+        });
+
+        console.log(this.state.cruiseDetail.itinerary);
+
         return (
             <div className="SearchCruiseItemListDetail">
                 <div className="container">
@@ -110,34 +130,47 @@ export default class SearchCruiseItemListDetail extends Component {
                                 buttonStyle={styles.tab}>
                                 <div className="row row-align">
                                     <div className="col-md-6 main-text">
-                                        Airline
+                                        Journey
                                     </div>
                                     <div className="col-md-6 content-item">
-                                        {this.state.cruiseDetail.airline}
+                                        {this.state.cruiseDetail.journey}
                                     </div>
                                 </div>
                                 <div className="row row-align">
                                     <div className="col-md-6 main-text">
-                                        From
+                                        Ship
                                     </div>
                                     <div className="col-md-6 content-item">
-                                        {this.state.cruiseDetail.departure}
+                                        {this.state.cruiseDetail.ship}
                                     </div>
                                 </div>
                                 <div className="row row-align">
                                     <div className="col-md-6 main-text">
-                                        Travel Dates
-                                        </div>
+                                        Departure Date
+                                    </div>
                                     <div className="col-md-6 content-item">
-                                        {this.formatDate(this.state.cruiseDetail.travelDate)}
+                                        {this.formatDate(this.state.cruiseDetail.departureDate)}
                                     </div>
                                 </div>
                                 <div className="row row-align">
-                                    <div className="col-md-6 main-text">
-                                        Book By
+                                    <div className="col-md-12 main-text">
+                                        Itinerary
                                     </div>
-                                    <div className="col-md-6 content-item">
-                                        {this.formatDate(this.state.cruiseDetail.bookBy)}
+                                    <div className="col-md-12 content-item">
+                                        <Table style={styles.table}>
+                                            <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+                                                <TableRow>
+                                                    <TableHeaderColumn>Day</TableHeaderColumn>
+                                                    <TableHeaderColumn>Date</TableHeaderColumn>
+                                                    <TableHeaderColumn>Port</TableHeaderColumn>
+                                                    <TableHeaderColumn>Arrive</TableHeaderColumn>
+                                                    <TableHeaderColumn>Depart</TableHeaderColumn>
+                                                </TableRow>
+                                            </TableHeader>
+                                            <TableBody displayRowCheckbox={false}>
+                                                {itinerary}
+                                            </TableBody>
+                                        </Table>
                                     </div>
                                 </div>
                             </Tab>
@@ -148,19 +181,17 @@ export default class SearchCruiseItemListDetail extends Component {
                                     <Table>
                                         <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                                             <TableRow>
-                                                <TableHeaderColumn>FROM</TableHeaderColumn>
-                                                <TableHeaderColumn>TO</TableHeaderColumn>
+                                                <TableHeaderColumn>SHIP</TableHeaderColumn>
+                                                <TableHeaderColumn>DEPARTURE DATE</TableHeaderColumn>
                                                 <TableHeaderColumn>PRICE</TableHeaderColumn>
-                                                <TableHeaderColumn>Cruise Date</TableHeaderColumn>
                                                 <TableHeaderColumn>OPTION</TableHeaderColumn>
                                             </TableRow>
                                         </TableHeader>
                                         <TableBody displayRowCheckbox={false}>
                                             <TableRow>
-                                                <TableRowColumn>{this.state.cruiseDetail.departure}</TableRowColumn>
-                                                <TableRowColumn>{this.state.cruiseDetail.destination}</TableRowColumn>
+                                                <TableRowColumn>{this.state.cruiseDetail.ship}</TableRowColumn>
+                                                <TableRowColumn>{this.formatDate(this.state.cruiseDetail.departureDate)}</TableRowColumn>
                                                 <TableRowColumn>${this.state.cruiseDetail.price}</TableRowColumn>
-                                                <TableRowColumn>{this.formatDate(this.state.cruiseDetail.travelDate)}</TableRowColumn>
                                                 <TableRowColumn><RaisedButton style={styles.book} onClick={this.book.bind(this)} primary={true}>Book</RaisedButton></TableRowColumn>
                                             </TableRow>
                                         </TableBody>
