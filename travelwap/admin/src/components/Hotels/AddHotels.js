@@ -72,7 +72,7 @@ class AddHotels extends Component {
     };
 
     addHotels(hotelData) {
-        // console.log(hotelData)
+        console.log(hotelData);
         axios.post('http://localhost:4000/hotel/add/',
             hotelData).then(resp => {
                 this.handleOpen();

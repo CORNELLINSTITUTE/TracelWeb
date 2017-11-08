@@ -123,6 +123,17 @@ module.exports.getAll = (req, res) => {
     });
 };
 
+module.exports.getAllFeatured = (req, res) => {
+    Hotel.find({ featured: true }, (err, hotels) => {
+        if (err) {
+            res.json({ success: false, msg: 'Failed to retrieve hotels' });
+        } else {
+            res.json({ hotels });
+        }
+
+    });
+};
+
 module.exports.get = (req, res) => {
     Hotel.findById(req.params.id, (err, hotel) => {
         if (err) {

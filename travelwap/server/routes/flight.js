@@ -8,6 +8,8 @@ router.post('/add', Flight.add);
 
 router.get('/getAll', Flight.getAll);
 
+router.get('/getAll/featured', Flight.getAllFeatured);
+
 router.get('/get/:id', Flight.get);
 
 router.post('/update/:id', Flight.update);

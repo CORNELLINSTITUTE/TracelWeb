@@ -18,17 +18,17 @@ const FlightSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    price:{
+    price: {
         type: Number,
-        required:true
+        required: true
     },
     region: {
         type: String,
         required: true
     },
-    destination:{
-        type:String,
-        require:true
+    destination: {
+        type: String,
+        require: true
     },
     featured: {
         type: Boolean,
@@ -93,6 +93,18 @@ module.exports.getAll = (req, res) => {
 
     });
 };
+
+module.exports.getAllFeatured = (req, res) => {
+    Flight.find({ featured: true }, (err, flights) => {
+        if (err) {
+            res.json({ success: false, msg: 'Failed to retrieve flights' });
+        } else {
+            res.json({ flights });
+        }
+
+    });
+};
+
 
 module.exports.get = (req, res) => {
     Flight.findById(req.params.id, (err, flight) => {
