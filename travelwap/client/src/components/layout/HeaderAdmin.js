@@ -41,7 +41,7 @@ class HeaderNav extends Component {
                     <Divider />
                     <Link to='/adminHotel/' onClick={this.handleClose} style={styles.link}><MenuItem style={styles.menuItem}>Hotels</MenuItem></Link>
                     <Divider />
-                    <Link to='/adminCruise/' onClick={this.handleClose} style={styles.link}><MenuItem style={styles.menuItem}>Cars</MenuItem></Link>
+                    <Link to='/adminCruise/' onClick={this.handleClose} style={styles.link}><MenuItem style={styles.menuItem}>Cruise</MenuItem></Link>
                     <Divider />
 
                 </Drawer>

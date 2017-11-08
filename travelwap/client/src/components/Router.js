@@ -1,5 +1,5 @@
 import React from 'react'
-import {Route} from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 
 import HeaderAdmin from './layout/HeaderAdmin';
@@ -29,6 +29,9 @@ import SearchFlightItemListDetail from './flight/SearchFlightItemListDetail';
 import SearchHotels from './hotel/SearchHotels';
 import SearchHotelDetail from './hotel/SearchHotelDetail';
 import SearchHotelItemListDetail from './hotel/SearchHotelItemListDetail';
+import SearchCruises from './cruise/SearchCruise';
+import SearchCruiseDetail from './cruise/SearchCruiseDetail';
+import SearchCruiseItemListDetail from './cruise/SearchCruiseItemListDetail';
 
 //Define the routing of the webpages
 const routes = [
@@ -48,6 +51,9 @@ const routes = [
     exact: true,
     content: () => <Login />
   },
+  /************************/
+  // FLIGHT
+  /************************/
   {
     path: '/SearchFlight',
     exact: true,
@@ -59,16 +65,19 @@ const routes = [
     path: '/SearchFlightDetail/:name/:image',
     exact: true,
     header: () => <Header />,
-    content: (props) => <SearchFlightDetail  {...props}/>,
+    content: (props) => <SearchFlightDetail  {...props} />,
     footer: () => <Footer />
   },
   {
     path: '/SearchFlightItemListDetail',
     exact: true,
     header: () => <Header />,
-    content: (props) => <SearchFlightItemListDetail  {...props}/>,
+    content: (props) => <SearchFlightItemListDetail  {...props} />,
     footer: () => <Footer />
   },
+  /************************/
+  // HOTEL
+  /************************/
   {
     path: '/SearchHotel',
     exact: true,
@@ -80,28 +89,56 @@ const routes = [
     path: '/SearchHotelDetail/:name/:image',
     exact: true,
     header: () => <Header />,
-    content: (props) => <SearchHotelDetail  {...props}/>,
+    content: (props) => <SearchHotelDetail  {...props} />,
     footer: () => <Footer />
   },
   {
     path: '/SearchHotelItemListDetail',
     exact: true,
     header: () => <Header />,
-    content: (props) => <SearchHotelItemListDetail  {...props}/>,
+    content: (props) => <SearchHotelItemListDetail  {...props} />,
+    footer: () => <Footer />
+  },
+
+  /************************/
+  // CRUISE
+  /************************/
+  {
+    path: '/SearchCruise',
+    exact: true,
+    header: () => <Header />,
+    content: () => <SearchCruises />,
     footer: () => <Footer />
   },
   {
-    path:'/profile',
+    path: '/SearchCruiseDetail/:name/:image',
     exact: true,
-    content: () => <Profile/>
+    header: () => <Header />,
+    content: (props) => <SearchCruiseDetail  {...props} />,
+    footer: () => <Footer />
+  },
+  {
+    path: '/SearchCruiseItemListDetail',
+    exact: true,
+    header: () => <Header />,
+    content: (props) => <SearchCruiseItemListDetail  {...props} />,
+    footer: () => <Footer />
+  },
+  /************************/
+  // PROFILE
+  /************************/
+  {
+    path: '/profile',
+    exact: true,
+    content: () => <Profile />
   },
   /************************/
   // ADMIN
   /************************/
   {
-    path:'/admin',
-    exact:true,
-    header: () => <HeaderAdmin/>,
+    path: '/admin',
+    exact: true,
+    header: () => <HeaderAdmin />,
     content: () => <Admin />
   },
   /************************/
@@ -109,122 +146,122 @@ const routes = [
   /************************/
   {
     path: "/adminFlight/",
-    exact:true,
-    header: () => <HeaderAdmin/>,
-    headerSub: () => <AdminFlightsHeader/>,
-    content: () => <AdminFlightMain/>
+    exact: true,
+    header: () => <HeaderAdmin />,
+    headerSub: () => <AdminFlightsHeader />,
+    content: () => <AdminFlightMain />
   },
   {
     path: '/adminFlight/add',
-    exact:true,
-    header: () => <HeaderAdmin/>,
-    headerSub: () => <AdminFlightsHeader/>,
-    content: () => <AdminAddFlights/>
+    exact: true,
+    header: () => <HeaderAdmin />,
+    headerSub: () => <AdminFlightsHeader />,
+    content: () => <AdminAddFlights />
   },
   {
     path: '/adminFlight/details/:id',
-    exact:true,
-    header: () => <HeaderAdmin/>,
-    headerSub: () => <AdminFlightsHeader/>,
-    content: (props) => <AdminFlightDetails {...props}/>
+    exact: true,
+    header: () => <HeaderAdmin />,
+    headerSub: () => <AdminFlightsHeader />,
+    content: (props) => <AdminFlightDetails {...props} />
   },
 
-   /************************/
+  /************************/
   // ADMIN HOTEL
   /************************/
   {
     path: "/adminHotel/",
-    exact:true,
-    header: () => <HeaderAdmin/>,
-    headerSub: () => <AdminHotelsHeader/>,
-    content: () => <AdminHotelMain/>
+    exact: true,
+    header: () => <HeaderAdmin />,
+    headerSub: () => <AdminHotelsHeader />,
+    content: () => <AdminHotelMain />
   },
   {
     path: '/adminHotel/add',
-    exact:true,
-    header: () => <HeaderAdmin/>,
-    headerSub: () => <AdminHotelsHeader/>,
-    content: () => <AdminAddHotels/>
+    exact: true,
+    header: () => <HeaderAdmin />,
+    headerSub: () => <AdminHotelsHeader />,
+    content: () => <AdminAddHotels />
   },
   {
     path: '/adminHotel/details/:id',
-    exact:true,
-    header: () => <HeaderAdmin/>,
-    headerSub: () => <AdminHotelsHeader/>,
-    content: (props) => <AdminHotelDetails {...props}/>
+    exact: true,
+    header: () => <HeaderAdmin />,
+    headerSub: () => <AdminHotelsHeader />,
+    content: (props) => <AdminHotelDetails {...props} />
   },
-   /************************/
+  /************************/
   // ADMIN CRUISE
   /************************/
   {
     path: "/adminCruise/",
-    exact:true,
-    header: () => <HeaderAdmin/>,
-    headerSub: () => <AdminCruisesHeader/>,
-    content: () => <AdminCruiseMain/>
+    exact: true,
+    header: () => <HeaderAdmin />,
+    headerSub: () => <AdminCruisesHeader />,
+    content: () => <AdminCruiseMain />
   },
   {
     path: '/adminCruise/add',
-    exact:true,
-    header: () => <HeaderAdmin/>,
-    headerSub: () => <AdminCruisesHeader/>,
-    content: () => <AdminAddCruises/>
+    exact: true,
+    header: () => <HeaderAdmin />,
+    headerSub: () => <AdminCruisesHeader />,
+    content: () => <AdminAddCruises />
   },
   {
     path: '/adminCruise/details/:id',
-    exact:true,
-    header: () => <HeaderAdmin/>,
-    headerSub: () => <AdminCruisesHeader/>,
-    content: (props) => <AdminCruiseDetails {...props}/>
+    exact: true,
+    header: () => <HeaderAdmin />,
+    headerSub: () => <AdminCruisesHeader />,
+    content: (props) => <AdminCruiseDetails {...props} />
   }
 ]
 
 const RouterComponent = () => (
-    <div>
-      <div className="Header">
-        {routes.map((route, index) => (
-          <Route
-            key={index}
-            path={route.path}
-            exact={route.exact}
-            component={route.header}
-          />
-        ))}
-      </div>
-
-      <div className="Header-sub">
-        {routes.map((route, index) => (
-          <Route
-            key={index}
-            path={route.path}
-            exact={route.exact}
-            component={route.headerSub}
-          />
-        ))}
-      </div>
-
-      <div className="Content">
-        {routes.map((route, index) => (
-          <Route
-            key={index}
-            path={route.path}
-            exact={route.exact}
-            component={route.content}
-          />
-        ))}
-      </div>
-
-      <div className="Footer">
-        {routes.map((route, index) => (
-          <Route
-            key={index}
-            path={route.path}
-            exact={route.exact}
-            component={route.footer}
-          />
-        ))}
-      </div>
+  <div>
+    <div className="Header">
+      {routes.map((route, index) => (
+        <Route
+          key={index}
+          path={route.path}
+          exact={route.exact}
+          component={route.header}
+        />
+      ))}
     </div>
+
+    <div className="Header-sub">
+      {routes.map((route, index) => (
+        <Route
+          key={index}
+          path={route.path}
+          exact={route.exact}
+          component={route.headerSub}
+        />
+      ))}
+    </div>
+
+    <div className="Content">
+      {routes.map((route, index) => (
+        <Route
+          key={index}
+          path={route.path}
+          exact={route.exact}
+          component={route.content}
+        />
+      ))}
+    </div>
+
+    <div className="Footer">
+      {routes.map((route, index) => (
+        <Route
+          key={index}
+          path={route.path}
+          exact={route.exact}
+          component={route.footer}
+        />
+      ))}
+    </div>
+  </div>
 )
 
 export default RouterComponent;

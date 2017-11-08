@@ -50,7 +50,7 @@ export default class Header extends Component {
                                         <li ><Link to={'/'}>Home</Link></li>
                                         <li ><Link to={'/SearchFlight'}>Flights</Link></li>
                                         <li ><Link to={'/SearchHotel'}>Hotels</Link></li>
-                                        <li ><Link to={'/SearchCar'}>Rent a Car</Link></li>
+                                        <li ><Link to={'/SearchCruise'}>Cruise</Link></li>
                                     </ul>
                                     <ul className="nav navbar-nav pull-right hide-on-med-and-down navbar-right">
                                         <li className="dropdown">

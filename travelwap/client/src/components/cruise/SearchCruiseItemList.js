@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
-import SearchFlightItemListDetail from "./SearchFlightItemListDetail";
+import SearchCruiseItemListDetail from "./SearchCruiseItemListDetail";
 import { Link } from "react-router-dom";
 
 const customContentStyle = {
@@ -18,7 +18,7 @@ const styles = {
     }
 };
 
-export default class SearchFlightItemList extends Component {
+export default class SearchCruiseItemList extends Component {
     constructor(props) {
         super(props);
 
@@ -52,7 +52,7 @@ export default class SearchFlightItemList extends Component {
         }
 
         return (
-            <div className="SearchFlightItemList">
+            <div className="SearchCruiseItemList">
                 <div className="detail-content">
                     <div className="container">
                         <div className="row">
@@ -75,7 +75,7 @@ export default class SearchFlightItemList extends Component {
                     </div>
                 </div>
                 <Dialog
-                    title="Flight Details"
+                    title="Cruise Details"
                     actions={actions}
                     modal={false}
                     open={this.state.open}
@@ -83,7 +83,7 @@ export default class SearchFlightItemList extends Component {
                     contentStyle={customContentStyle}
                     autoScrollBodyContent={true}
                 >
-                    <SearchFlightItemListDetail flightDetail={this.state.item} />
+                    <SearchCruiseItemListDetail cruiseDetail={this.state.item} />
                 </Dialog>
             </div>
         )

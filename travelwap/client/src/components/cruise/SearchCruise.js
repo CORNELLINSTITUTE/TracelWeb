@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import SearchFlightItem from "./SearchFlightItem";
+import SearchCruiseItem from "./SearchCruiseItem";
 import axios from 'axios';
-import "./Flight.css";
+import "./Cruise.css";
 
-export default class SearchFlight extends Component {
+export default class SearchCruise extends Component {
     constructor(props){
         super(props);
 
@@ -16,7 +16,7 @@ export default class SearchFlight extends Component {
         this.getRegion();
     }
 
-    //Retrieve the list of regions availables for flights
+    //Retrieve the list of regions availables for cruises
     getRegion(){
         axios.get('http://localhost:4000/region/getAll')
             .then(response => {
@@ -32,13 +32,13 @@ export default class SearchFlight extends Component {
     render() {
         const region = this.state.regions.map((region, i) => {
 			return (
-				<SearchFlightItem item={region} />
+				<SearchCruiseItem item={region} />
 			)
         })
         
         return (
-            <div className="SearchFlight">
-                <div className="flight-main">
+            <div className="SearchCruise">
+                <div className="cruise-main">
                     <div className="container">
                         <div className="row">
                             {region}

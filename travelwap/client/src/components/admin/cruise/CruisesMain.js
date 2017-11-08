@@ -24,33 +24,33 @@ const styles = {
 };
 
 export default class CruisesMain extends Component {
-    state = { cars: [] }
+    state = { cruises: [] }
     componentDidMount() {
-        axios.get('http://localhost:4000/api/cars')
+        axios.get('http://localhost:4000/cruise/getAll')
             .then(resp => {
                 this.setState({
-                    cars: resp.data.cars
+                    cruises: resp.data.cruises
                 });
             })
             .catch(console.error)
     }
 
     render() {
-        const { cars } = this.state;
+        const { cruises } = this.state;
         return (
             <div>
                 <Card>
-                    <AppBar title="Cars" iconClassNameRight="muidocs-icon-navigation-expand-more" showMenuIconButton={false} style={styles.appBar} />
+                    <AppBar title="Cruise" iconClassNameRight="muidocs-icon-navigation-expand-more" showMenuIconButton={false} style={styles.appBar} />
                     <CardText>
                         <Table selectable={false}>
                             <TableBody displayRowCheckbox={false}>
                                 {
-                                    cars.map((car, index) => (
-                                        <TableRow key={car._id}>
+                                    cruises.map((cruise, index) => (
+                                        <TableRow key={cruise._id}>
                                             <TableRowColumn>
-                                                <Link to={`/cars/details/${car._id}`}>
+                                                <Link to={`/adminCruise/details/${cruise._id}`}>
                                                     <MenuItem>
-                                                        {car.title}
+                                                        {cruise.title}
                                                     </MenuItem>
                                                 </Link>
                                             </TableRowColumn>

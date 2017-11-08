@@ -14,6 +14,10 @@ const CruiseSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    region: {
+        type: String,
+        require: true
+    },
     departingInfo: {
         type: String,
         required: true
@@ -29,10 +33,6 @@ const CruiseSchema = mongoose.Schema({
     departureDate: {
         type: String,
         require: true
-    },
-    travelDate: {
-        type: Date,
-        required: true
     },
     itinerary: [
         {

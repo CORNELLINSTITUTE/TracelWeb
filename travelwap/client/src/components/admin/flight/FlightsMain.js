@@ -67,18 +67,3 @@ class FlightsMain extends Component {
 }
 
 export default FlightsMain;
-
-
-// <Link to={`/flights/details/${flight._id}`}>
-// <FlatButton label="Full width" fullWidth={true} >
-//     <TableRow key={flight._id}>
-//         <TableRowColumn>{flight.title}</TableRowColumn>
-//         <TableRowColumn>{flight.country}</TableRowColumn>
-//         <TableRowColumn>{flight.airline}</TableRowColumn>
-//     </TableRow>
-// </FlatButton>
-// </Link>
-
-// <FlatButton><Link to={`/flights/details/${flight._id}`}>{flight.title}</Link></FlatButton>
-//                                             <TableRowColumn><Link to={`/flights/details/${flight._id}`}>{flight.country}</Link></TableRowColumn>
-//                                             <TableRowColumn><Link to={`/flights/details/${flight._id}`}>{flight.airline}</Link></TableRowColumn>
