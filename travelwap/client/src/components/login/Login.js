@@ -6,14 +6,25 @@ import { Link } from "react-router-dom";
 import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import { ValidatorForm } from 'react-form-validator-core';
+import { TextValidator } from 'react-material-ui-form-validator';
+import RaisedButton from 'material-ui/RaisedButton';
 import './Login.css';
 
 const styles = {
     text_color: {
-        color:'#ffffff'
+        color: '#ffffff'
     },
-    text_color_focused:{
-        color:'#00bad4'
+    text_color_focused: {
+        color: '#00bad4'
+    },
+    text_email: {
+        width: '100%',
+        color:'#000000'
+    },
+    btn_submit: {
+        width: '100%',
+        height: '50%',
     }
 };
 
@@ -28,10 +39,12 @@ export default class Login extends Component {
             },
             toogleBtn: false,
             recoverPassword: 'pr-wrap',
-            open: false
+            open: false,
+            emailInput: ''
         };
 
         this.handleChange = this.handleChange.bind(this);
+
     }
 
     /**********************/
@@ -49,26 +62,26 @@ export default class Login extends Component {
                 this.state.cookies.set('user_id', response.data[0]._id, { path: '/' });
                 this.state.cookies.set('username', response.data[0].username, { path: '/' });
                 this.state.cookies.set('email', response.data[0].personDetails[0].email, { path: '/' });
-                this.state.cookies.set('role', response.data[0].role, {path: '/'});
-                
+                this.state.cookies.set('role', response.data[0].role, { path: '/' });
+
                 //Redirects the user to home page
-                if(response.data[0].role === 'user')
+                if (response.data[0].role === 'user')
                     history.push('/');
                 else
                     history.push('/admin');
             }
             else {
-                this.handleOpen();                
+                this.handleOpen();
             }
         }).catch(err => console.log(err));
     }
 
     //Submit the login of the user
-    onSubmit(e) {        
+    onSubmit(e) {
         this.login(this.state.login);
         e.preventDefault();
     }
-    
+
     //Displays the modal to recover the password
     RecoverPassword() {
         if (this.state.toogleBtn === false)
@@ -80,6 +93,26 @@ export default class Login extends Component {
         this.setState({ toogleBtn: !this.state.toogleBtn });
     }
 
+    //Send email to user
+    sendEmail() {
+        let email = {
+            to: this.state.emailInput,
+            subject: 'Recover Password',
+            text: 'Password: ',
+            html: `Please access the following link to reset your password: 
+                   <a href='http://localhost:3000/profile/resetPassword'>Reset Password</a>`
+        }
+
+        axios.request({
+            method: 'post',
+            url: 'http://localhost:4000/email/send/',
+            data: email
+        }).then(response => {
+        }).catch(err => console.log(err));
+
+        alert('Email sent, please check your email');        
+    }
+
     //Handle changes in the form
     handleChange(e) {
         let loginData = this.state.login;
@@ -87,6 +120,15 @@ export default class Login extends Component {
 
         this.setState({
             login: loginData
+        });
+    }
+
+    //Handle change in the recover email input
+    handleChangeEmail(e) {
+        let input = e.target.value;
+
+        this.setState({
+            emailInput: input
         });
     }
 
@@ -117,10 +159,25 @@ export default class Login extends Component {
                             {/* Recover password */}
                             <div className={this.state.recoverPassword}>
                                 <div className="pass-reset">
-                                    <label>
-                                        Enter the email you signed up with</label>
-                                    <input type="email" placeholder="Email" />
-                                    <input type="submit" value="Submit" className="pass-reset-submit btn btn-success btn-sm" />
+                                    <ValidatorForm className="form-person" ref="form" onSubmit={this.sendEmail.bind(this)} onError={errors => console.log(errors)}>
+                                        <label>
+                                            Enter the email you signed up with</label>
+                                        <TextValidator
+                                            floatingLabelText="Email"
+                                            onChange={this.handleChangeEmail.bind(this)}
+                                            name="email"
+                                            value={this.state.emailInput}
+                                            validators={['required', 'isEmail']}
+                                            errorMessages={['this field is required', 'email is not valid']}
+                                            style={styles.text_email}
+                                        />
+                                        <RaisedButton
+                                            type="submit"
+                                            label="Submit"
+                                            primary={true}
+                                            style = {styles.btn_submit}
+                                            />
+                                    </ValidatorForm>
                                 </div>
                             </div>
                             <div className="wrap">
@@ -135,7 +192,7 @@ export default class Login extends Component {
                                         onChange={this.handleChange}
                                         floatingLabelFocusStyle={styles.text_color_focused}
                                         floatingLabelStyle={styles.text_color}
-                                        inputStyle={styles.text_color}
+                                        inputStyle={styles.text_size}
                                     />
                                     <TextField
                                         id="password"
@@ -169,8 +226,8 @@ export default class Login extends Component {
                     </div>
                 </div>
 
-                 {/* Message component */}
-                 <Dialog
+                {/* Message component */}
+                <Dialog
                     title="Warning"
                     actions={actions}
                     modal={false}

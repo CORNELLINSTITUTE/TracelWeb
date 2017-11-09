@@ -14,7 +14,8 @@
     "body-parser": "*",
     "cors": "^2.8.4",
     "express": "*",
-    "mongoose": "*"
+    "mongoose": "*",
+    "nodemailer": "^4.3.1"
   },
   "devDependencies": {
     "nodemon": "^1.12.1"

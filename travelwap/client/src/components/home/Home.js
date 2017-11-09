@@ -63,6 +63,7 @@ export default class Home extends Component {
 		}
 	}
 
+
 	/**********************/
 	//TEMPLATE	
 	/**********************/
@@ -161,7 +162,7 @@ export default class Home extends Component {
 								<div className="content-description">
 									Find out about more about our amazing selection of vehicles
 									</div>
-									<Link to={'/SearchFlight'}>Find Cars</Link>
+								<Link to={'/SearchFlight'}>Find Cars</Link>
 							</div>
 							<div className="col-lg-4 hotel-animation">
 								<Link to={'/SearchFlight'}>
@@ -173,7 +174,7 @@ export default class Home extends Component {
 								<div className="content-description">
 									Amazing selection of hotels, search a wide variaty of available hotels across the globe
 									</div>
-									<Link to={'/SearchFlight'}>Find Hotels</Link>
+								<Link to={'/SearchFlight'}>Find Hotels</Link>
 							</div>
 						</div>
 					</div>

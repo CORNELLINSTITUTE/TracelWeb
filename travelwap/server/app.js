@@ -58,7 +58,9 @@ const flight = require('./routes/flight');
 const hotel = require('./routes/hotel');
 const cruise = require('./routes/cruise');
 const book = require('./routes/book');
+const email = require('./routes/email');
 const voucher = require('./routes/voucher');
+
 
 //Access route file
 app.use('/person', person);
@@ -70,7 +72,9 @@ app.use('/flight', flight);
 app.use('/hotel', hotel);
 app.use('/cruise', cruise);
 app.use('/book', book);
+app.use('/email', email);
 app.use('/voucher', voucher);
+
 
 /***************************************************/
 //ROUTERS
