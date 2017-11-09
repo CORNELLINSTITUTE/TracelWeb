@@ -16,6 +16,10 @@ import AdminCruisesHeader from './admin/cruise/CruisesHeader';
 import AdminCruiseMain from './admin/cruise/CruisesMain';
 import AdminCruiseDetails from './admin/cruise/CruiseDetails';
 import AdminAddCruises from './admin/cruise/AddCruises';
+import AdminVouchers from './admin/voucher/Vouchers';
+import AdminVouchersMain from './admin/voucher/VouchersMain';
+import AdminVoucherDetails from './admin/voucher/VoucherDetails';
+import AdminAddVouchers from './admin/voucher/AddVouchers';
 
 import Header from './layout/Header';
 import Footer from './layout/Footer';
@@ -124,6 +128,7 @@ const routes = [
     content: (props) => <SearchCruiseItemListDetail  {...props} />,
     footer: () => <Footer />
   },
+  
   /************************/
   // PROFILE
   /************************/
@@ -213,6 +218,30 @@ const routes = [
     header: () => <HeaderAdmin />,
     headerSub: () => <AdminCruisesHeader />,
     content: (props) => <AdminCruiseDetails {...props} />
+  },
+  /************************/
+  // ADMIN VOUCHER
+  /************************/
+  {
+    path: "/adminVoucher/",
+    exact: true,
+    header: () => <HeaderAdmin />,
+    headerSub: () => <AdminVouchers />,
+    content: () => <AdminVouchersMain />
+  },
+  {
+    path: '/adminVoucher/add',
+    exact: true,
+    header: () => <HeaderAdmin />,
+    headerSub: () => <AdminVouchers />,
+    content: () => <AdminAddVouchers />
+  },
+  {
+    path: '/adminVoucher/details/:id',
+    exact: true,
+    header: () => <HeaderAdmin />,
+    headerSub: () => <AdminVouchers />,
+    content: (props) => <AdminVoucherDetails {...props} />
   }
 ]
 
