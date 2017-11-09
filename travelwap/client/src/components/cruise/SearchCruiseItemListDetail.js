@@ -66,12 +66,33 @@ export default class SearchCruiseItemListDetail extends Component {
                 url: 'http://localhost:4000/book/add',
                 data: newBook
             }).then(response => {
+                this.sendEmail();
                 this.handleOpenContact();
             }).catch(err => console.log(err));
         }
         else {
             this.handleOpen();
         }
+    }
+
+     //Send email to user
+	sendEmail() {
+        let email = {
+            to: 'travelwaps@gmail.com',
+            subject: `Book:Cruise | User:${this.state.cookies.get('username')} | UserId:${this.state.cookies.get('user_id')}`,
+            text: `Cruise: ${this.state.cruiseDetail._id}|${this.state.cruiseDetail.title} booked by the user ${this.state.cookies.get('username')}`,
+            html: `<h3>Cruise:</h3>
+                   ${this.state.cruiseDetail._id}|${this.state.cruiseDetail.title} 
+                   <h3>Booked By:</h3>
+                   ${this.state.cookies.get('username')}` 
+        }
+
+		axios.request({
+			method: 'post',
+			url: 'http://localhost:4000/email/send/',
+			data: email
+		}).then(response => {
+		}).catch(err => console.log(err));
     }
 
     //Handle the opening of the message 

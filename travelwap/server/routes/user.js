@@ -39,4 +39,5 @@ router.get('/getAll', (req, res, next) => {
     });
 });
 
+
 module.exports = router;
