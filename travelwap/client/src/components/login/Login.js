@@ -60,9 +60,6 @@ export default class Login extends Component {
             else {
                 this.handleOpen();                
             }
-            // this.setState({users: response.data}, () => {
-            //     console.log(this.state);
-            // })
         }).catch(err => console.log(err));
     }
 

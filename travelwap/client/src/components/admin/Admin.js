@@ -13,8 +13,8 @@ export default class Admin extends Component{
 
     componentWillMount(){
         let role = this.state.cookies.get('role');
-        // if(role !== 'admin')
-        //     history.push('/');
+        if(role !== 'admin')
+            history.push('/');
     }
     
     render(){

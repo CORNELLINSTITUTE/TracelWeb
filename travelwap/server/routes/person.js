@@ -30,7 +30,7 @@ router.post('/add', (req, res, next) => {
             let newUser = new User
             ({
                 username: req.body.username,
-                password: req.body.password,
+                password: Person.generateEncryptedPassword(req.body.password),
                 role: "user",
                 date_account_created: JSON.stringify(Date.now()),
                 person_id: new mongoose.Types.ObjectId(person._id)

@@ -42,6 +42,7 @@ class AddFlights extends Component {
                 price: '',
                 region: '',
                 destination: '',
+                feature: false,
                 travelDate: '',
                 bookBy: ''
             },
@@ -60,7 +61,7 @@ class AddFlights extends Component {
 
         // custom rule for validation
         ValidatorForm.addValidationRule('isDateValid', (value) => {
-            if (value < this.state.flightData.travelDate) {
+            if (value > this.state.flightData.travelDate) {
                 return false;
             }
             return true;
@@ -165,6 +166,7 @@ class AddFlights extends Component {
         flightData.country = '';
         flightData.origin = '';
         flightData.destination = '';
+        feature: false,
         flightData.expiry = null;
         this.setState({
             flightData: flightData
@@ -321,10 +323,3 @@ class AddFlights extends Component {
 }
 
 export default AddFlights;
-
-
-// <input type="submit" value="add" />
-
-// <DatePicker hintText="Landscape Dialog" mode="landscape" name="expiry" value={flightData.expiry} onChange={this.handleChange} floatingLabelText="Expiry Date" />
-
-// <RaisedButton type="submit" label="clear" secondary={true} style={styles.raisedButton} onClick={this.clearFields}></RaisedButton>

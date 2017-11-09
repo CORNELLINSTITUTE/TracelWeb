@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 //User Schema
 const UserSchema = mongoose.Schema({
@@ -40,3 +42,8 @@ module.exports.login = (user, callback) => {
     User.findOne(callback);
 }
 
+//Generates an encrypted password
+module.exports.generateEncryptedPassword = (password) => {
+    var hash = bcrypt.hashSync(password, saltRounds);
+    return hash;
+}

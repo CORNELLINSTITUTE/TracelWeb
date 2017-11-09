@@ -70,7 +70,7 @@ class FlightDetails extends Component {
 
         // custom rule for validation
         ValidatorForm.addValidationRule('isDateValid', (value) => {
-            if (value < this.state.flightData.travelDate) {
+            if (value > this.state.flightData.travelDate) {
                 return false;
             }
             return true;
