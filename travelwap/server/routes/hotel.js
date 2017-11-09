@@ -8,6 +8,8 @@ router.post('/add', Hotel.add);
 
 router.get('/getAll', Hotel.getAll);
 
+router.get('/getAll/featured', Hotel.getAllFeatured);
+
 router.get('/get/:id', Hotel.get);
 
 router.post('/update/:id', Hotel.update);
