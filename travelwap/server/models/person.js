@@ -41,6 +41,17 @@ module.exports.addPerson = (newPerson, callback) => {
     newPerson.save(callback);    
 }
 
+//Update person data
+module.exports.update = (req, res) => {
+    Person.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true }, (err, cruise) => {
+        if (err) {
+            res.json({ success: false, msg: 'Failed to update person' });
+        } else {
+            res.json({ success: true, msg: 'Person updated' });
+        }
+    });
+};
+
 //Generates an encrypted password
 module.exports.generateEncryptedPassword = (password) => {
     var hash = bcrypt.hashSync(password, saltRounds);

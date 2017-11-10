@@ -8,4 +8,10 @@ const Book = require('../models/book');
 /***************/
 router.post('/add', Book.addBook);
 
+router.get('/getUserFlight/:username', Book.getUserFlightBooking);
+
+router.get('/getUserHotel/:username', Book.getUserHotelBooking);
+
+router.get('/getUserCruise/:username', Book.getUserCruiseBooking);
+
 module.exports = router;

@@ -42,4 +42,57 @@ module.exports.addBook = (req, res) => {
     });
 };
 
+//Get the user booked flight
+module.exports.getUserFlightBooking = (req, res, next) => {
+    Book.aggregate([        
+        { $match: { "username": req.params.username, type_name:"Flight"}},
+        {
+            $lookup:
+            {
+                from: 'flights',
+                localField: 'type_id',
+                foreignField: '_id',
+                as: 'flightDetails'
+            }
+        }
+    ]).then(function (flight) {
+        res.send(flight);
+    });
+};
 
+//Get the user booked Hotel
+module.exports.getUserHotelBooking = (req, res, next) => {
+    Book.aggregate([
+        { $match: { "username": req.params.username, type_name:"Hotel"}},
+        {
+            $lookup:
+            {
+                from: 'hotels',
+                localField: 'type_id',
+                foreignField: '_id',
+                as: 'hotelDetails'
+            }
+        }
+    ]).then(function (hotel) {
+        res.send(hotel);
+    });
+};
+
+
+//Get the user booked Cruise
+module.exports.getUserCruiseBooking = (req, res, next) => {
+    Book.aggregate([
+        { $match: { "username": req.params.username, type_name:"Cruise"}},
+        {
+            $lookup:
+            {
+                from: 'cruises',
+                localField: 'type_id',
+                foreignField: '_id',
+                as: 'cruiseDetails'
+            }
+        }
+    ]).then(function (cruise) {
+        res.send(cruise);
+    });
+};

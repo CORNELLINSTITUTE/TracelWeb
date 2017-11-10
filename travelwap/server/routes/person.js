@@ -61,4 +61,6 @@ router.get('/getAll', (req, res, next) => {
 
 router.get('/getUserId/:email', Person.getUserId);
 
+router.post('/update/:id', Person.update);
+
 module.exports = router;
