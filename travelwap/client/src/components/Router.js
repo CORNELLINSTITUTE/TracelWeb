@@ -130,7 +130,9 @@ const routes = [
   {
     path: '/profile',
     exact: true,
-    content: () => <Profile />
+    header: () => <Header/>,
+    content: () => <Profile />,
+    footer: () => <Footer/>
   },
   /************************/
   // ADMIN

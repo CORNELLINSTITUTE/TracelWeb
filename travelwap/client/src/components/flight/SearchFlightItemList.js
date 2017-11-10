@@ -20,7 +20,7 @@ const styles = {
 
 export default class SearchFlightItemList extends Component {
     constructor(props) {
-        super(props);
+        super();
 
         this.state = {
             item: props.item,

@@ -192,7 +192,7 @@ export default class Login extends Component {
                                         onChange={this.handleChange}
                                         floatingLabelFocusStyle={styles.text_color_focused}
                                         floatingLabelStyle={styles.text_color}
-                                        inputStyle={styles.text_size}
+                                        inputStyle={styles.text_color}
                                     />
                                     <TextField
                                         id="password"
