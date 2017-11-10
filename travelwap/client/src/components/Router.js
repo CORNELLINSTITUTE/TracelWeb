@@ -27,6 +27,7 @@ import AddPerson from './person/AddPerson';
 import Login from './login/Login';
 import Home from './home/Home';
 import Profile from './profile/Profile';
+import ResetPassword from './profile/ResetPassword';
 import SearchFlights from './flight/SearchFlights';
 import SearchFlightDetail from './flight/SearchFlightDetail';
 import SearchFlightItemListDetail from './flight/SearchFlightItemListDetail';
@@ -135,7 +136,14 @@ const routes = [
   {
     path: '/profile',
     exact: true,
-    content: () => <Profile />
+    header: () => <Header/>,
+    content: () => <Profile />,
+    footer: () => <Footer/>
+  },
+  {
+    path: '/resetPassword/:id',
+    exact: true,
+    content: (props) => <ResetPassword {...props}/>,
   },
   /************************/
   // ADMIN

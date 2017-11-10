@@ -59,4 +59,6 @@ router.get('/getAll', (req, res, next) => {
   });
 });
 
+router.get('/getUserId/:email', Person.getUserId);
+
 module.exports = router;

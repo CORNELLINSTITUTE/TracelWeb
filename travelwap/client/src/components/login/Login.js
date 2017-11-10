@@ -20,7 +20,7 @@ const styles = {
     },
     text_email: {
         width: '100%',
-        color:'#000000'
+        color: '#000000'
     },
     btn_submit: {
         width: '100%',
@@ -93,24 +93,37 @@ export default class Login extends Component {
         this.setState({ toogleBtn: !this.state.toogleBtn });
     }
 
-    //Send email to user
-    sendEmail() {
-        let email = {
-            to: this.state.emailInput,
-            subject: 'Recover Password',
-            text: 'Password: ',
-            html: `Please access the following link to reset your password: 
-                   <a href='http://localhost:3000/profile/resetPassword'>Reset Password</a>`
-        }
+    sendEmail(){
+        this.sendLinktoUser(this.state.emailInput);
+    }
 
-        axios.request({
-            method: 'post',
-            url: 'http://localhost:4000/email/send/',
-            data: email
-        }).then(response => {
-        }).catch(err => console.log(err));
+    //Get user id
+    sendLinktoUser(email) {
+        axios.get('http://localhost:4000/person/getUserId/' + email)
+            .then(response => {
+                    console.log(response.data.person);
+                if (response.data.length !== 0) {
+                    let email = {
+                        to: this.state.emailInput,
+                        subject: 'Recover Password',
+                        text: 'Password: ',
+                        html: `Please access the following link to reset your password: 
+                               <a href='http://localhost:3000/resetPassword/${response.data.person[0]._id}'>Reset Password</a>`
+                    }
 
-        alert('Email sent, please check your email');        
+                    axios.request({
+                        method: 'post',
+                        url: 'http://localhost:4000/email/send/',
+                        data: email
+                    }).then(response => {
+                    }).catch(err => console.log(err));
+
+                    alert('Email sent, please check your email');
+                }
+                else {
+                    alert('Email not found');
+                }
+            }).catch(err => console.log(err));
     }
 
     //Handle changes in the form
@@ -175,8 +188,8 @@ export default class Login extends Component {
                                             type="submit"
                                             label="Submit"
                                             primary={true}
-                                            style = {styles.btn_submit}
-                                            />
+                                            style={styles.btn_submit}
+                                        />
                                     </ValidatorForm>
                                 </div>
                             </div>
@@ -192,7 +205,7 @@ export default class Login extends Component {
                                         onChange={this.handleChange}
                                         floatingLabelFocusStyle={styles.text_color_focused}
                                         floatingLabelStyle={styles.text_color}
-                                        inputStyle={styles.text_size}
+                                        inputStyle={styles.text_color}
                                     />
                                     <TextField
                                         id="password"

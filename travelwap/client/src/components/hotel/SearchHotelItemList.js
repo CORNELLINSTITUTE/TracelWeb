@@ -20,7 +20,7 @@ const styles = {
 
 export default class SearchHotelItemList extends Component {
     constructor(props) {
-        super(props);
+        super();
 
         this.state = {
             item: props.item,
