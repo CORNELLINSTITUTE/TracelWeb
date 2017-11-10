@@ -18,7 +18,7 @@ import MenuItem from 'material-ui/MenuItem';
 
 const styles = {
     appBar: {
-        background: '#33691E    '
+        background: '#1B5E20'
     },
     formStyle: {
         padding: '20px'
@@ -43,12 +43,13 @@ class AddHotels extends Component {
                 region: '',
                 city: '',
                 price: '',
+                featured: false,
                 propertyFeature: {
                     wifi: false,
                     bbq: false,
                     library: false,
-                    bycicle: false,
-                    dinning: false
+                    bicycle: false,
+                    dining: false
                 },
                 roomFeature: {
                     airConditioning: false,
@@ -67,6 +68,7 @@ class AddHotels extends Component {
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleChangeFeatured = this.handleChangeFeatured.bind(this);
         this.clearFields = this.clearFields.bind(this);
     };
 
@@ -75,6 +77,7 @@ class AddHotels extends Component {
     }
 
     addHotels(hotelData) {
+        console.log(hotelData);
         axios.request({
             method: 'post',
             url: 'http://localhost:4000/hotel/add/',
@@ -105,6 +108,14 @@ class AddHotels extends Component {
         });
     }
 
+    handleChangeFeatured(e) {
+        let hotelData = this.state.hotelData;
+        hotelData.featured = e.target.checked;
+        this.setState({
+            hotelData: hotelData
+        })
+    }
+
     clearFields() {
         let hotelData = this.state.hotelData;
         hotelData.title = '';
@@ -114,8 +125,8 @@ class AddHotels extends Component {
             wifi: false,
             bbq: false,
             library: false,
-            bycicle: false,
-            dinning: false
+            bicycle: false,
+            dining: false
         };
         hotelData.roomFeature = {
             airConditioning: false,
@@ -219,7 +230,9 @@ class AddHotels extends Component {
                 <AppBar title="Add Hotel Package" iconClassNameRight="muidocs-icon-navigation-expand-more" showMenuIconButton={false} style={styles.appBar} />
                 <CardText>
                     <ValidatorForm onSubmit={this.handleSubmit.bind(this)} style={styles.formStyle}>
-
+                        <Checkbox type="checkbox" label="Featured" name="featured"
+                            checked={hotelData.featured} onClick={this.handleChangeFeatured}
+                            style={styles.checkbox} />
                         <TextValidator type="text" name='title' value={hotelData.title} onChange={this.handleChange}
                             floatingLabelText="Title" style={styles.textField}
                             validators={['required']} errorMessages={['this field is required']} />
@@ -282,15 +295,15 @@ class AddHotels extends Component {
                         />
                         <Checkbox
                             label="Bicycle Area"
-                            value="bycicle"
-                            checked={this.state.hotelData.propertyFeature.bycicle}
+                            value="bicycle"
+                            checked={this.state.hotelData.propertyFeature.bicycle}
                             onCheck={this.updateCheckProperty.bind(this)}
                             style={styles.checkbox}
                         />
                         <Checkbox
-                            label="Dinning Area"
-                            value="dinning"
-                            checked={this.state.hotelData.propertyFeature.dinning}
+                            label="Dining Area"
+                            value="dining"
+                            checked={this.state.hotelData.propertyFeature.dining}
                             onCheck={this.updateCheckProperty.bind(this)}
                             style={styles.checkbox}
                         />

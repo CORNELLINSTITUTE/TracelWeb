@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Card, CardText } from 'material-ui/Card';
 import AppBar from 'material-ui/AppBar';
 import Dialog from 'material-ui/Dialog';
+import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import MenuItem from 'material-ui/MenuItem';
@@ -15,7 +16,7 @@ import { TextValidator, SelectValidator, DateValidator } from 'react-material-ui
 
 const styles = {
     appBar: {
-        background: '#3F51B5'
+        background: '#0D47A1'
     },
     formStyle: {
         padding: '20px'
@@ -43,8 +44,9 @@ class AddFlights extends Component {
                 region: '',
                 destination: '',
                 feature: false,
-                travelDate: '',
-                bookBy: ''
+                travelDate: null,
+                bookBy: null,
+                featured: false
             },
             open: false,
             regions: [],
@@ -54,6 +56,7 @@ class AddFlights extends Component {
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleChangeFeatured = this.handleChangeFeatured.bind(this);
         this.clearFields = this.clearFields.bind(this);
     };
     componentWillMount() {
@@ -158,6 +161,14 @@ class AddFlights extends Component {
         })
     }
 
+    handleChangeFeatured(e) {
+        let flightData = this.state.flightData;
+        flightData.featured = e.target.checked;
+        this.setState({
+            flightData: flightData
+        })
+    }
+
     clearFields() {
         let flightData = this.state.flightData;
         flightData.title = '';
@@ -167,7 +178,7 @@ class AddFlights extends Component {
         flightData.origin = '';
         flightData.destination = '';
         feature: false,
-        flightData.expiry = null;
+            flightData.expiry = null;
         this.setState({
             flightData: flightData
         })
@@ -212,6 +223,9 @@ class AddFlights extends Component {
                 <AppBar title="Add Flight Package" iconClassNameRight="muidocs-icon-navigation-expand-more" showMenuIconButton={false} style={styles.appBar} />
                 <CardText>
                     <ValidatorForm onSubmit={this.handleSubmit.bind(this)} style={styles.formStyle}>
+                        <Checkbox type="checkbox" label="Featured" name="featured"
+                            checked={flightData.featured} onClick={this.handleChangeFeatured}
+                            style={styles.checkbox} />
                         <TextValidator
                             type="text"
                             name='title'
@@ -305,14 +319,13 @@ class AddFlights extends Component {
                             validators={['required', 'isDateValid']}
                             errorMessages={['you must pick a date', 'Invalid Date']} />
                         <RaisedButton type="submit" label="Add Flight Package" primary={true} style={styles.raisedButton}></RaisedButton>
-
-                        <Dialog
-                            title="Message"
-                            actions={actions}
-                            modal={false}
-                            open={this.state.open}
-                            onRequestClose={this.handleClose}>
-                            Flight Package has been Added.
+                    <Dialog
+                        title="Message"
+                        actions={actions}
+                        modal={false}
+                        open={this.state.open}
+                        onRequestClose={this.handleClose}>
+                        Flight Package has been Added.
                         </Dialog>
                     </ValidatorForm>
 

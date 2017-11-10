@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Card, CardText } from 'material-ui/Card';
 import AppBar from 'material-ui/AppBar';
 import Dialog from 'material-ui/Dialog';
+import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
 import FlatButton from 'material-ui/FlatButton';
@@ -44,7 +45,8 @@ class FlightDetails extends Component {
                 region: '',
                 destination: '',
                 travelDate: new Date(),
-                bookBy: new Date()
+                bookBy: new Date(),
+                featured: false,
             }, open: false,
             actionType: '',
             actionMsg: '',
@@ -53,6 +55,7 @@ class FlightDetails extends Component {
         };
         this.deleteFlight = this.deleteFlight.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleChangeFeatured = this.handleChangeFeatured.bind(this);
     }
 
     componentDidMount() {
@@ -131,6 +134,14 @@ class FlightDetails extends Component {
         let flightData = this.state.flightData;
         flightData.bookBy = bookBy;
 
+        this.setState({
+            flightData: flightData
+        })
+    }
+
+    handleChangeFeatured(e) {
+        let flightData = this.state.flightData;
+        flightData.featured = e.target.checked;
         this.setState({
             flightData: flightData
         })
@@ -248,6 +259,9 @@ class FlightDetails extends Component {
                 <AppBar title="Flight Package Details" iconClassNameRight="muidocs-icon-navigation-expand-more" showMenuIconButton={false} style={styles.appBar} />
                 <CardText>
                     <ValidatorForm onSubmit={this.handleSubmitUpdate.bind(this)} style={styles.formStyle}>
+                    <Checkbox type="checkbox" label="Featured" name="featured"
+                            checked={flightData.featured} onClick={this.handleChangeFeatured}
+                            style={styles.checkbox} />
                         <TextValidator
                             type="text"
                             name='title'

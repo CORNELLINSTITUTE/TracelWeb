@@ -12,7 +12,7 @@ const styles = {
         padding: '10px'
     },
     appBar: {
-        background: '#3F51B5'
+        background: '#0D47A1'
     },
     raisedButton: {
         margin: '12px'

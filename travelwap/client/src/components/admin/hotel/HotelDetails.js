@@ -63,6 +63,7 @@ class HotelDetails extends Component {
 
         this.deleteHotel = this.deleteHotel.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleChangeFeatured = this.handleChangeFeatured.bind(this);
     }
 
     componentWillMount() {
@@ -167,6 +168,14 @@ class HotelDetails extends Component {
         });
     }
 
+    handleChangeFeatured(e) {
+        let hotelData = this.state.hotelData;
+        hotelData.featured = e.target.checked;
+        this.setState({
+            hotelData: hotelData
+        })
+    }
+
     handleChangeDate(e, expiry) {
         let hotelData = this.state.hotelData;
         hotelData.expiry = expiry;
@@ -247,7 +256,9 @@ class HotelDetails extends Component {
                 <AppBar title="Hotel Package Details" iconClassNameRight="muidocs-icon-navigation-expand-more" showMenuIconButton={false} style={styles.appBar} />
                 <CardText>
                     <ValidatorForm onSubmit={this.handleSubmitUpdate.bind(this)} style={styles.formStyle}>
-
+                        <Checkbox type="checkbox" label="Featured" name="featured"
+                            checked={hotelData.featured} onClick={this.handleChangeFeatured}
+                            style={styles.checkbox} />
                         <TextValidator type="text" name='title' value={hotelData.title} onChange={this.handleChange}
                             floatingLabelText="Title" style={styles.textField}
                             validators={['required']} errorMessages={['this field is required']} />
@@ -310,15 +321,15 @@ class HotelDetails extends Component {
                         />
                         <Checkbox
                             label="Bicycle Area"
-                            value="bycicle"
-                            checked={this.state.hotelData.propertyFeature.bycicle}
+                            value="bicycle"
+                            checked={this.state.hotelData.propertyFeature.bicycle}
                             onCheck={this.updateCheckProperty.bind(this)}
                             style={styles.checkbox}
                         />
                         <Checkbox
-                            label="Dinning Area"
-                            value="dinning"
-                            checked={this.state.hotelData.propertyFeature.dinning}
+                            label="Dining Area"
+                            value="dining"
+                            checked={this.state.hotelData.propertyFeature.dining}
                             onCheck={this.updateCheckProperty.bind(this)}
                             style={styles.checkbox}
                         />
