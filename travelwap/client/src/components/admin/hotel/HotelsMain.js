@@ -17,8 +17,8 @@ const styles = {
     raisedButton: {
         margin: '12px'
     },
-    textField: {
-        width: '400px'
+    link: {
+        textDecoration: 'none'
     }
 
 };
@@ -48,8 +48,8 @@ class HotelsMain extends Component {
                                     hotels.map((hotel, index) => (
                                         <TableRow key={hotel._id}>
                                             <TableRowColumn>
-                                                <Link to={`/adminHotel/details/${hotel._id}`}>
-                                                    <MenuItem>
+                                                <Link to={`/adminHotel/details/${hotel._id}`} style={styles.link}>
+                                                    <MenuItem className="text-center">
                                                         {hotel.title}
                                                     </MenuItem>
                                                 </Link>

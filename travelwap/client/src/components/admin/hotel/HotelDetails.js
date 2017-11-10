@@ -18,14 +18,15 @@ const styles = {
         background: '#33691E'
     },
     formStyle: {
-        padding: '20px'
+        padding: '20px',
+        width: '30%'
     },
     raisedButton: {
-        margin: '12px',
+        margin: '50px 20px',
         background: '#689F38'
     },
     textField: {
-        width: '300px'
+        width: '100%'
     }
 };
 
@@ -377,7 +378,6 @@ class HotelDetails extends Component {
                             onCheck={this.updateCheckRoom.bind(this)}
                             style={styles.checkbox}
                         />
-                        <br />
                         <RaisedButton type="submit" label="Update Hotel Package" primary={true} style={styles.raisedButton}></RaisedButton>
                         <RaisedButton name="delete" label="Delete Hotel Package" secondary={true} style={styles.raisedButton} onClick={this.handleSubmitDelete.bind(this)}></RaisedButton>
                         <Dialog

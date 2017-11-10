@@ -17,8 +17,8 @@ const styles = {
     raisedButton: {
         margin: '12px'
     },
-    textField: {
-        width: '400px'
+    link: {
+        textDecoration: 'none'
     }
 
 };
@@ -48,8 +48,8 @@ class FlightsMain extends Component {
                                     flights.map((flight, index) => (
                                         <TableRow key={flight._id}>
                                             <TableRowColumn>
-                                                <Link to={`/adminFlight/details/${flight._id}`}>
-                                                    <MenuItem>
+                                                <Link to={`/adminFlight/details/${flight._id}`} style={styles.link}>
+                                                    <MenuItem  className="text-center">
                                                         {flight.title}
                                                     </MenuItem>
                                                 </Link>
