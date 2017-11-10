@@ -19,14 +19,15 @@ const styles = {
         background: '#0D47A1'
     },
     formStyle: {
-        padding: '20px'
+        padding: '20px',
+        width: '30%'
     },
     raisedButton: {
         margin: '12px',
         background: '#689F38'
     },
     textField: {
-        width: '300px'
+        width: '100%'
     }
 };
 

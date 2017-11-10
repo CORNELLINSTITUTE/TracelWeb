@@ -20,14 +20,15 @@ const styles = {
         background: '#3F51B5'
     },
     formStyle: {
-        padding: '20px'
+        padding: '20px',
+        width: '30%'
     },
     raisedButton: {
-        margin: '12px',
+        margin: '50px 20px',
         background: '#689F38'
     },
     textField: {
-        width: '300px'
+        width: '100%'
     }
 };
 
@@ -259,7 +260,7 @@ class FlightDetails extends Component {
                 <AppBar title="Flight Package Details" iconClassNameRight="muidocs-icon-navigation-expand-more" showMenuIconButton={false} style={styles.appBar} />
                 <CardText>
                     <ValidatorForm onSubmit={this.handleSubmitUpdate.bind(this)} style={styles.formStyle}>
-                    <Checkbox type="checkbox" label="Featured" name="featured"
+                        <Checkbox type="checkbox" label="Featured" name="featured"
                             checked={flightData.featured} onClick={this.handleChangeFeatured}
                             style={styles.checkbox} />
                         <TextValidator

@@ -21,14 +21,15 @@ const styles = {
         background: '#1B5E20'
     },
     formStyle: {
-        padding: '20px'
+        padding: '20px',
+        width: '30%'
     },
     raisedButton: {
-        margin: '12px',
+        margin: '50px 20px',
         background: '#689F38'
     },
     textField: {
-        width: '300px'
+        width: '100%'
     }
 };
 
@@ -351,7 +352,6 @@ class AddHotels extends Component {
                             onCheck={this.updateCheckRoom.bind(this)}
                             style={styles.checkbox}
                         />
-                        <br />
                         <RaisedButton type="submit" label="Add Hotel Package" primary={true} style={styles.raisedButton}></RaisedButton>
 
                         <Dialog
