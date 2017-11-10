@@ -4,9 +4,7 @@ const bcrypt = require('bcrypt');
 const User = require('../models/user');
 const saltRounds = 10;
 
-/***************/
-//CHECK USER
-/***************/
+//Check user    
 router.get('/login', (req, res, next) => {
     User.aggregate([
         { $match: { "username": req.query.username } },
@@ -30,14 +28,14 @@ router.get('/login', (req, res, next) => {
     })
 });
 
-/***************/
-//GET ALL USERS
-/***************/
+//Get all users
 router.get('/getAll', (req, res, next) => {
     User.find().then(function (users) {
         res.send(users);
     });
 });
 
+//Set a new password to the user
+router.post('/resetPassword/:id/:password', User.resetPassword);
 
 module.exports = router;

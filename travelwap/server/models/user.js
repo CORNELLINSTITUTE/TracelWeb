@@ -42,8 +42,25 @@ module.exports.login = (user, callback) => {
     User.findOne(callback);
 }
 
+//Reset the user password
+module.exports.resetPassword = (req, res) => {
+    User.update({ person_id: req.params.id }, {$set:{password: generateEncryptedPassword(req.params.password)}}, (err, result) => {
+        if (err) {
+            res.json({ success: false, msg: 'Failed to reset the password' });
+        } else {
+            res.json({ success: true, msg: 'password updated' });
+        }
+    });
+};
+
 //Generates an encrypted password
 module.exports.generateEncryptedPassword = (password) => {
     var hash = bcrypt.hashSync(password, saltRounds);
     return hash;
 }
+
+generateEncryptedPassword = (password) => {
+    var hash = bcrypt.hashSync(password, saltRounds);
+    return hash;
+}
+

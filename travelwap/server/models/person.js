@@ -47,3 +47,16 @@ module.exports.generateEncryptedPassword = (password) => {
     return hash;
 }
 
+//Get the id of the user
+module.exports.getUserId = (req, res) => {
+    Person.find({email:req.params.email}, (err, person) => {
+        if (err) {
+            res.json({ success: false, msg: 'Failed get user' });
+        } else {
+            res.json({ person });
+        }
+
+    });
+};
+
+
