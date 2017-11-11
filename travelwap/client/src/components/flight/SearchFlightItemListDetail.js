@@ -8,6 +8,7 @@ import axios from "axios";
 import Dialog from 'material-ui/Dialog';
 import { Link } from "react-router-dom";
 import FlatButton from 'material-ui/FlatButton';
+import TextField from 'material-ui/TextField';
 
 const styles = {
     headline: {
@@ -22,6 +23,9 @@ const styles = {
     book: {
         color: "white",
         border: "2px solid #26d8ef"
+    },
+    text_voucher: {
+        width: "100px"
     }
 };
 
@@ -31,7 +35,10 @@ export default class SearchFlightItemListDetail extends Component {
         this.state = {
             flightDetail: props.flightDetail,
             cookies: new Cookies(),
-            open: false
+            open: false,
+            voucherCode: '',
+            voucherDiscount: '',
+            voucherData: []
         };
     }
 
@@ -62,7 +69,7 @@ export default class SearchFlightItemListDetail extends Component {
                 url: 'http://localhost:4000/book/add',
                 data: newBook
             }).then(response => {
-                this.sendEmail();
+                this.getVoucher(this.state.voucherCode);
                 this.handleOpenContact();
             }).catch(err => console.log(err));
         }
@@ -71,8 +78,23 @@ export default class SearchFlightItemListDetail extends Component {
         }
     }
 
+
     //Send email to user
-	sendEmail() {
+    sendEmail() {
+        if(this.state.voucherData.length !== 0){
+            let discountedPrice =  this.state.flightDetail.price * (this.state.voucherData[0].discount/100);
+            console.log(discountedPrice);
+            this.setState({
+                voucherDiscount: discountedPrice
+            });
+        }
+        else {
+            this.setState({
+                voucherCode: 'none',
+                voucherDiscount: 'none'
+            });
+        }
+
         let email = {
             to: 'travelwaps@gmail.com',
             subject: `Book:Flight | User:${this.state.cookies.get('username')} | UserId:${this.state.cookies.get('user_id')}`,
@@ -80,17 +102,23 @@ export default class SearchFlightItemListDetail extends Component {
             html: `<h3>Flight:</h3>
                    ${this.state.flightDetail._id}|${this.state.flightDetail.title} 
                    <h3>Booked By:</h3>
-                   ${this.state.cookies.get('username')}` 
+                   ${this.state.cookies.get('username')}
+                   <h3>Price:</h3>
+                   ${this.state.flightDetail.price}
+                   <h3>Voucher:</h3>
+                   ${this.state.voucherCode}
+                   <h3>Discount:</h3>
+                   ${this.state.voucherDiscount}`
         }
 
-		axios.request({
-			method: 'post',
-			url: 'http://localhost:4000/email/send/',
-			data: email
-		}).then(response => {
-		}).catch(err => console.log(err));
+        axios.request({
+            method: 'post',
+            url: 'http://localhost:4000/email/send/',
+            data: email
+        }).then(response => {
+        }).catch(err => console.log(err));
     }
-    
+
     //Handle the opening of the message 
     handleOpen = () => {
         this.setState({ open: true });
@@ -104,6 +132,24 @@ export default class SearchFlightItemListDetail extends Component {
     handleClose = () => {
         this.setState({ open: false, openContact: false });
     };
+
+    //Handles the change in the bookBy date
+    handleChangeVoucher(e, voucher) {
+        this.setState({
+            voucherCode: voucher
+        })
+    }
+
+    //Get the voucher data
+    getVoucher(code) {
+        axios.get('http://localhost:4000/voucher/getVoucher/code/' + code)
+            .then(response => {
+                if(response.data.length !== 0)
+                    this.setState({ voucherData: response.data.voucher });
+
+                this.sendEmail();                
+            }).catch(err => console.log(err), this.sendEmail());
+    }
 
 
     render() {
@@ -183,6 +229,15 @@ export default class SearchFlightItemListDetail extends Component {
                                                 <TableRowColumn>{this.state.flightDetail.destination}</TableRowColumn>
                                                 <TableRowColumn>${this.state.flightDetail.price}</TableRowColumn>
                                                 <TableRowColumn>{this.formatDate(this.state.flightDetail.travelDate)}</TableRowColumn>
+                                                <TableRowColumn>
+                                                    <TextField
+                                                        type="text"
+                                                        name="voucher"
+                                                        value={this.state.voucher}
+                                                        onChange={this.handleChangeVoucher.bind(this)}
+                                                        floatingLabelText="Voucher"
+                                                        style={styles.text_voucher}/>
+                                                </TableRowColumn>
                                                 <TableRowColumn><RaisedButton style={styles.book} onClick={this.book.bind(this)} primary={true}>Book</RaisedButton></TableRowColumn>
                                             </TableRow>
                                         </TableBody>

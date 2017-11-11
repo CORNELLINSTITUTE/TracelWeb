@@ -73,7 +73,7 @@ module.exports.getVoucher = (req, res) => {
 };
 
 module.exports.getVoucherByCode = (req, res) => {
-    Voucher.find({ code: req.params.code }, (err, voucher) => {
+    Voucher.find({ code: req.params.code, date_start: {$lte: new Date()}, date_end:{$gte: new Date()} }, (err, voucher) => {
         if (err) {
             res.json({ success: false, msg: 'Failed to retrieve voucher' });
         }
