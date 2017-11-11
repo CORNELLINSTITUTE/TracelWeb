@@ -20,6 +20,10 @@ import AdminVouchers from './admin/voucher/Vouchers';
 import AdminVouchersMain from './admin/voucher/VouchersMain';
 import AdminVoucherDetails from './admin/voucher/VoucherDetails';
 import AdminAddVouchers from './admin/voucher/AddVouchers';
+import AdminPackagesHeader from './admin/package/PackagesHeader';
+import AdminPackagesMain from './admin/package/PackagesMain';
+import AdminPackageDetails from './admin/package/PackageDetails';
+import AdminAddPackages from './admin/package/AddPackages';
 
 import Header from './layout/Header';
 import Footer from './layout/Footer';
@@ -250,6 +254,30 @@ const routes = [
     header: () => <HeaderAdmin />,
     headerSub: () => <AdminVouchers />,
     content: (props) => <AdminVoucherDetails {...props} />
+  },
+  /************************/
+  // ADMIN PACKAGES
+  /************************/
+  {
+    path: "/adminPackage/",
+    exact: true,
+    header: () => <HeaderAdmin />,
+    headerSub: () => <AdminPackagesHeader />,
+    content: () => <AdminPackagesMain />
+  },
+  {
+    path: '/adminPackage/add',
+    exact: true,
+    header: () => <HeaderAdmin />,
+    headerSub: () => <AdminPackagesHeader />,
+    content: () => <AdminAddPackages />
+  },
+  {
+    path: '/adminPackage/details/:id',
+    exact: true,
+    header: () => <HeaderAdmin />,
+    headerSub: () => <AdminPackagesHeader />,
+    content: (props) => <AdminPackageDetails {...props} />
   }
 ]
 

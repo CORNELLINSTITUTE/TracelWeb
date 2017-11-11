@@ -29,20 +29,20 @@ export default class Packages extends Component {
             console.log('expired callback')
         }
 
-        const OPTIONS = { endDate: this.state.item.expire_date, prefix: 'to end', cb }
+        const OPTIONS = { endDate: this.state.item.expireDate, prefix: 'to end', cb }
 
         const CountdownComponent = () => (
             <Countdown options={OPTIONS} />
         )
 
         let divImage = {
-            backgroundImage: "linear-gradient(to bottom, rgba(0,0,0,0.50) 0%,rgba(0,0,0,0.50) 100%), url(" + this.state.item.imagePath + ")"
+            backgroundImage: "linear-gradient(to bottom, rgba(0,0,0,0.50) 0%,rgba(0,0,0,0.50) 100%), url(" + require("../../images/" + this.state.item.image) + ")"
         }
 
         return (
             <div className="Packages">
                 <div className="col-sm-6 col-md-3">
-                    <Link to='/'>
+                    <Link to='/SearchFlight'>
                         <div className="dl" style={divImage}>
                             <div className="countdown">
                                 <CountdownComponent />
@@ -50,8 +50,8 @@ export default class Packages extends Component {
                             <div className="brand">
                                 <h2>{this.state.item.title}</h2>
                             </div>
-                            <div className={`discount ${this.state.item.color}`}>{this.state.item.discount}
-                                <div className="type">{this.state.item.type}</div>
+                            <div className="discount alizarin">{this.state.item.discount}%
+                                <div className="type">off</div>
                             </div>
                             <div className="descr">
                                 <strong>{this.state.item.topic}</strong>
@@ -59,7 +59,7 @@ export default class Packages extends Component {
                             </div>
                             <div className="ends">
                                 <small>
-                                    {this.state.item.conditions}
+                                    * Conditions and restrictions apply.
                                 </small>
                             </div>
                         </div>

@@ -13,6 +13,7 @@ export default class Home extends Component {
 		super();
 
 		this.state = {
+			flightData: [],
 			packages:
 			[
 				{
@@ -59,20 +60,68 @@ export default class Home extends Component {
 					imagePath: require('../../images/pattaya.jpg'),
 					expire_date: '02/11/2018 10:55 AM'
 				},
-			]
+			],
+			packagesData: []
 		}
 	}
 
+	/**********************/
+	//FUNCTIONS
+	/**********************/
+	componentWillMount() {
+		this.getFlights('Europe');
+		this.getPackages();
+	}
+
+	getFlights(region) {
+		axios.get('http://localhost:4000/flight/getFlightsByRegion/' + region)
+			.then(response => {
+				if (response.data.length !== 0) {
+					this.setState({ flightData: response.data.flights })
+				}
+				else {
+					alert('No flights available');
+				}
+			}).catch(err => console.log(err));
+	}
+
+	getPackages() {
+		axios.get('http://localhost:4000/package/getAll/')
+			.then(response => {
+				if (response.data.length !== 0) {
+					console.log(response);
+					this.setState({ packagesData: response.data.packages})
+				}
+				else {
+					console.log('no packages available')
+				}
+			}).catch(err => console.log(err));
+	}
 
 	/**********************/
 	//TEMPLATE	
 	/**********************/
 	render() {
-		const packageItem = this.state.packages.map((packageItem, i) => {
+		const packageItem = this.state.packagesData.map((packageItem, i) => {
 			return (
-				<Packages key={packageItem.id} item={packageItem} />
+				<Packages key={packageItem._id} item={packageItem} />
 			)
 		})
+
+		const flightItem = this.state.flightData.slice(0, 4).map((flightItem, i) => {
+			return (
+				<Link to={"/SearchFlightDetail/" + flightItem.region + "/" + "europe.jpeg"}>
+					<div className={`col-lg-3 package-item package-animation-${i + 1}`}>
+						<h2>{flightItem.destination}</h2>
+						<div className="package-prefix">from</div>
+						<div className="package-price"><small>$</small>{flightItem.price}</div>
+						<div className="package-description">One way, fee may be applied</div>
+						<div className="package-link">See more</div>
+					</div>
+				</Link>
+			)
+		})
+
 		return (
 			<div className="Home">
 				{/* Packages */}
@@ -83,43 +132,7 @@ export default class Home extends Component {
 						</div>
 					</div>
 					<div className="row package-list">
-						{/* <Link to={"/SearchFlightDetail/"+this.state.item.name+"/"+this.state.item.nameImage}> */}
-						<Link to='/'>
-							<div className="col-lg-3 package-item package-animation-1">
-								<h2>Portugal</h2>
-								<div className="package-prefix">from</div>
-								<div className="package-price"><small>$</small> 800</div>
-								<div className="package-description">One way, fee may be applied</div>
-								<div className="package-link">See more</div>
-							</div>
-						</Link>
-						<a href="#">
-							<div className="col-lg-3 package-item package-animation-2">
-								<h2>Spain</h2>
-								<div className="package-prefix">from</div>
-								<div className="package-price"><small>$</small> 300</div>
-								<div className="package-description">One way, fee may be applied</div>
-								<div className="package-link">See more</div>
-							</div>
-						</a>
-						<a href="#">
-							<div className="col-lg-3 package-item package-animation-3">
-								<h2>Germany</h2>
-								<div className="package-prefix">from</div>
-								<div className="package-price"><small>$</small> 600</div>
-								<div className="package-description">One way, fee may be applied</div>
-								<div className="package-link">See more</div>
-							</div>
-						</a>
-						<a href="#">
-							<div className="col-lg-3 package-item package-animation-4">
-								<h2>UK</h2>
-								<div className="package-prefix">from</div>
-								<div className="package-price"><small>$</small> 800</div>
-								<div className="package-description">One way, fee may be applied</div>
-								<div className="package-link">See more</div>
-							</div>
-						</a>
+						{flightItem}
 					</div>
 					<div className="button-search">
 						<Link to='/SearchFlight' className="btnSearch hover">Search and Book<i className="ion-clipboard"></i></Link>
@@ -157,12 +170,12 @@ export default class Home extends Component {
 									<div className="round-item car-img"></div>
 								</Link>
 								<div className="content-title">
-									Rent and Pick-up
+									Book your trip
 									</div>
 								<div className="content-description">
-									Find out about more about our amazing selection of vehicles
+									Find out about more about our amazing selection of cruises
 									</div>
-								<Link to={'/SearchFlight'}>Find Cars</Link>
+								<Link to={'/SearchFlight'}>Find Cruises</Link>
 							</div>
 							<div className="col-lg-4 hotel-animation">
 								<Link to={'/SearchFlight'}>
